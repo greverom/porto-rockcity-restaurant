@@ -14,6 +14,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { themeReducer } from './store/theme/theme.reducer';
+import { spinnerReducer } from './store/spinner/spinner.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,7 +25,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
 
     // NgRx Store and DevTools
-    provideStore({ user: userReducer, theme: themeReducer }),
+    provideStore({ user: userReducer, theme: themeReducer, spinner: spinnerReducer, }),
     provideStoreDevtools({
       maxAge: 25, 
       logOnly: !isDevMode(), 

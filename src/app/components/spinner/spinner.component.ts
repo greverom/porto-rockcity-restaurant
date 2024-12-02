@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { SpinnerService } from '../../services/spinner.service';
+import { selectIsLoading } from '../../store/spinner/spinner.selector';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-spinner',
@@ -9,14 +11,8 @@ import { SpinnerService } from '../../services/spinner.service';
   templateUrl: './spinner.component.html',
   styleUrl: './spinner.component.css'
 })
-export class SpinnerComponent implements OnInit {
-  isLoading = false;
+export class SpinnerComponent {
+  isLoading$ = this.store.select(selectIsLoading); 
 
-  constructor(private spinnerService: SpinnerService) {}
-
-  ngOnInit(): void {
-    this.spinnerService.spinnerState$.subscribe(state => {
-      this.isLoading = state;
-    });
-  }
+  constructor(private store: Store) {}
 }

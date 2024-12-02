@@ -3,12 +3,14 @@ import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectIsDarkTheme } from './store/theme/theme.selectors';
 import { isPlatformBrowser } from '@angular/common';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet],
+    RouterOutlet,
+    SpinnerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
