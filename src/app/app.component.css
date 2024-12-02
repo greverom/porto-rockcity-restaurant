@@ -1,0 +1,23 @@
+/* Estilos generales del layout */
+
+/* Contenedor principal que incluye el sidebar y el contenido */
+.app-container {
+    display: flex;
+    height: 100vh; /* Altura completa de la ventana */
+    width: 100%; /* Ancho completo */
+    overflow: hidden; /* Evita el scroll horizontal */
+  }
+  
+  /* Sidebar: Fijo en el lado izquierdo */
+  app-sidebar {
+    width: 250px; /* Ancho fijo del sidebar */
+    flex-shrink: 0; /* Evita que el sidebar se reduzca */
+  }
+  
+  /* Contenido principal */
+  .content {
+    flex: 1; /* Ocupa el espacio restante */
+    overflow-y: auto; /* Permite scroll vertical para contenido largo */
+    padding: 20px; /* Espaciado interno para el contenido */
+    background-color: #f8f9fa; /* Color de fondo */
+  }

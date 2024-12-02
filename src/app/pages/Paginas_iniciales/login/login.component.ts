@@ -25,14 +25,14 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,  // Inyectamos el servicio AuthService
+    private authService: AuthService,  
     private router: Router,
     private store: Store
   ) {
     // Creamos el formulario con validación
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],  // Validación del email
-      password: ['', [Validators.required]]  // Validación de la contraseña
+      email: ['', [Validators.required, Validators.email]],  
+      password: ['', [Validators.required]] 
     });
   }
 
@@ -41,10 +41,9 @@ export class LoginComponent {
     this.showPassword = !this.showPassword;
   }
 
-  // Método que se ejecuta al enviar el formulario
   onSubmit() {
     if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched(); // Marcar todos los campos como tocados para mostrar los errores
+      this.loginForm.markAllAsTouched(); 
       this.modal = {
         ...modalInitializer(),
         show: true,
@@ -57,7 +56,6 @@ export class LoginComponent {
 
     const { email, password } = this.loginForm.value;
 
-    // Llamar al servicio de login
     this.authService.login(email, password).then(() => {
       this.modal = {
         ...modalInitializer(),
@@ -66,7 +64,7 @@ export class LoginComponent {
         isSuccess: true,
         autoCloseDuration: 2500
       };
-      this.router.navigate(['/home']); // Redirigir al dashboard o página principal
+      this.router.navigate(['/home']); 
       this.loginForm.reset();
     }).catch((error) => {
       this.modal = {
@@ -79,7 +77,6 @@ export class LoginComponent {
     });
   }
 
-  // Cerrar el modal de error
   closeModal() {
     this.modal.show = false;
   }

@@ -13,7 +13,7 @@ import {CommonModule, NgClass, NgIf} from "@angular/common";
 export class ModalComponent {
   @Input() showModal: boolean = false;
   @Input() message: string = 'An error occurred'; // Default message
-  @Input() isError: boolean = true;  // Flag to determine error or success
+  @Input() isError: boolean = false;  // Flag to determine error or success
   @Input() isSuccess: boolean = false;  // Success flag for success message
   @Input() isConfirm: boolean = false;
   @Input() showRedirectButton: boolean = false;

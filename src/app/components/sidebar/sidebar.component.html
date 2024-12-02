@@ -1,0 +1,34 @@
+<div class="sidebar">
+    <ul class="menu-list">
+      <!-- Inicio -->
+      <li>
+        <a routerLink="/home" routerLinkActive="active">Inicio</a>
+      </li>
+  
+      <!-- Gestión de Usuarios-->
+      <ng-container>
+        <li *ngFor="let menu of userMenu" class="menu-item">
+          <a [routerLink]="menu.path" routerLinkActive="active">{{ menu.label }}</a>
+        </li>
+      </ng-container>
+  
+      <!-- Configuración -->
+      <li>
+        <a routerLink="/perfil-usuario" routerLinkActive="active">Configuración</a>
+      </li>
+    </ul>
+  
+    <!-- Cerrar sesión -->
+    <div class="logout-container">
+      <button (click)="openLogoutModal()">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <app-modal
+  [showModal]="modal.show"
+  [message]="modal.message"
+  [isConfirm]="modal.isConfirm"
+  (confirm)="logout()"
+  (cancel)="closeLogoutModal()"
+  (close)="closeLogoutModal()">
+</app-modal> 

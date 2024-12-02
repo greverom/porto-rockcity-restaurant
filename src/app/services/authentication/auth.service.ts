@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Database, get, ref, set } from '@angular/fire/database';
 import { Store } from '@ngrx/store';
 import { Register, UserRole } from '../../models/register&login';
@@ -84,22 +84,37 @@ export class AuthService {
     }
   }
   
-  // Método de login
+  
   async login(email: string, password: string): Promise<void> {
     try {
-      this.store.dispatch(showSpinner()); // Mostrar spinner al iniciar
-
+      this.store.dispatch(showSpinner());
+  
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
       const uid = userCredential.user.uid;
-
-      const userRef = ref(this.db, `usuarios/administradores/${uid}`);
-      const snapshot = await get(userRef);
-
+  
+      const usersRef = ref(this.db, `usuarios`);
+      const snapshot = await get(usersRef);
+  
       if (!snapshot.exists()) {
         throw new Error('Usuario no encontrado en la base de datos.');
       }
-
-      const userData = snapshot.val();
+  
+      const roles = snapshot.val();
+      let userRole: UserRole | null = null;
+      let userData = null;
+  
+      for (const role in roles) {
+        if (roles[role]?.[uid]) {
+          userRole = role.toUpperCase() as UserRole; 
+          userData = roles[role][uid];
+          break;
+        }
+      }
+  
+      if (!userRole || !userData) {
+        throw new Error('Usuario o rol no encontrados.');
+      }
+  
       const fullUserData = {
         id: uid,
         nombres: userData.nombres || '',
@@ -107,23 +122,82 @@ export class AuthService {
         cedula: userData.cedula || '',
         usuario: userData.usuario || '',
         email: userData.email || '',
-        rol: userData.rol || '',
+        rol: userRole, 
         fechaCreacion: userData.fechaCreacion ? new Date(userData.fechaCreacion) : new Date(),
         activo: userData.activo ?? true,
       };
-
+  
       this.store.dispatch(setUserData({ data: fullUserData }));
       this.store.dispatch(setLoggedInStatus({ isLoggedIn: true }));
-
+  
       const token = await userCredential.user.getIdToken();
-      localStorage.setItem('authToken', token); // Almacenar el token en localStorage
+      localStorage.setItem('authToken', token);
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       throw error;
     } finally {
-      this.store.dispatch(hideSpinner()); // Ocultar el spinner
+      this.store.dispatch(hideSpinner());
     }
   }
 
+  async restoreSession(): Promise<void> {
+    const token = localStorage.getItem('authToken'); // Obtén el token desde el localStorage
   
+    if (!token) {
+      console.warn('No hay token en el localStorage.');
+      return;
+    }
+  
+    onAuthStateChanged(this.auth, async (user) => {
+      if (!user) {
+        console.warn('El usuario no está autenticado en Firebase.');
+        return;
+      }
+  
+      try {
+        const uid = user.uid;
+        const usersRef = ref(this.db, `usuarios`);
+        const snapshot = await get(usersRef);
+  
+        if (!snapshot.exists()) {
+          console.error('No se encontraron datos de usuario en la base de datos.');
+          return;
+        }
+  
+        const roles = snapshot.val();
+        let userRole: UserRole | null = null;
+        let userData = null;
+  
+        for (const role in roles) {
+          if (roles[role]?.[uid]) {
+            userRole = role.toUpperCase() as UserRole;
+            userData = roles[role][uid];
+            break;
+          }
+        }
+  
+        if (!userRole || !userData) {
+          throw new Error('Usuario o rol no encontrados.');
+        }
+  
+        const fullUserData = {
+          id: uid,
+          nombres: userData.nombres || '',
+          apellidos: userData.apellidos || '',
+          cedula: userData.cedula || '',
+          usuario: userData.usuario || '',
+          email: userData.email || '',
+          rol: userRole,
+          fechaCreacion: userData.fechaCreacion ? new Date(userData.fechaCreacion) : new Date(),
+          activo: userData.activo ?? true,
+        };
+  
+        // Despacha los datos al Store
+        this.store.dispatch(setUserData({ data: fullUserData }));
+        this.store.dispatch(setLoggedInStatus({ isLoggedIn: true }));
+      } catch (error) {
+        console.error('Error al restaurar la sesión:', error);
+      }
+    });
+  }
 }

@@ -2,9 +2,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Ocupa toda la altura de la pantalla */
-    padding: 15px; /* Espaciado en los lados para pantallas pequeñas */
-    background-color: #f8f9fa; /* Color de fondo opcional */
+    height: 100vh;
+    padding: 15px;
+    background-color: #f8f9fa;
   }
   
   /* Ajustar el tamaño de la tarjeta */
@@ -12,16 +12,16 @@
     max-width: 400px; 
     width: 100%; 
     border-radius: 8px; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-    padding: 20px; /* Espaciado interno */
-    background: #fff; /* Fondo blanco */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    padding: 20px; 
+    background: #fff; 
   }
   
   /* Título centrado */
   .card-title {
     font-size: 1.5rem;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 40px !important;
     color: #333;
     text-align: center;
   }
@@ -38,7 +38,7 @@
   }
   
   .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem !important;
   }
   
   .toggle-password-icon {
