@@ -9,6 +9,7 @@ export const modalInitializer = (): ModalDto => {
       redirect: () => {},
       close: () => {},
       confirm: () => {},
+      autoCloseDuration: 0,
     })
   }
   
@@ -22,5 +23,6 @@ export const modalInitializer = (): ModalDto => {
     redirect?: () => void;       
     close: () => void;
     confirm?: () => void;
+    autoCloseDuration?: number
   }
   

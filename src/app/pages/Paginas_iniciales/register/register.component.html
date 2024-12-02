@@ -1,1 +1,139 @@
-<p>register works!</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow p-4">
+          <div class="card-body">
+            <h2 class="card-title text-center mb-4">Registro de Usuario</h2>
+            <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+              <!-- Nombres -->
+              <div class="mb-3">
+                <label for="nombres" class="form-label">Nombres</label>
+                <input
+                  type="text"
+                  id="nombres"
+                  formControlName="nombres"
+                  class="form-control"
+                  placeholder="Ingrese sus nombres"
+                />
+                <div class="text-danger small" *ngIf="registerForm.get('nombres')?.invalid && registerForm.get('nombres')?.touched">
+                  Este campo es requerido
+                </div>
+              </div>
+  
+              <!-- Apellidos -->
+              <div class="mb-3">
+                <label for="apellidos" class="form-label">Apellidos</label>
+                <input
+                  type="text"
+                  id="apellidos"
+                  formControlName="apellidos"
+                  class="form-control"
+                  placeholder="Ingrese sus apellidos"
+                />
+                <div class="text-danger small" *ngIf="registerForm.get('apellidos')?.invalid && registerForm.get('apellidos')?.touched">
+                  Este campo es requerido
+                </div>
+              </div>
+  
+              <!-- Cédula -->
+              <div class="mb-3">
+                <label for="cedula" class="form-label">Cédula</label>
+                <input
+                  type="text"
+                  id="cedula"
+                  formControlName="cedula"
+                  class="form-control"
+                  placeholder="Ingrese su cédula"
+                />
+                <div class="text-danger small" *ngIf="registerForm.get('cedula')?.invalid && registerForm.get('cedula')?.touched">
+                  Este campo es requerido
+                </div>
+              </div>
+  
+              <!-- Rol -->
+              <div class="mb-3">
+                <label for="rol" class="form-label">Rol</label>
+                <select id="rol" formControlName="rol" class="form-select">
+                  <option value="">Seleccione un rol</option>
+                  <option value="EMP">Empleado</option>
+                  <option value="ADMIN">Administrador</option>
+                  <option value="COCINERO">Cocinero</option>
+                </select>
+                <div class="text-danger small" *ngIf="registerForm.get('rol')?.invalid && registerForm.get('rol')?.touched">
+                  Este campo es requerido
+                </div>
+              </div>
+  
+              <!-- Email -->
+              <div class="mb-3">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <input
+                  type="email"
+                  id="email"
+                  formControlName="email"
+                  class="form-control"
+                  placeholder="Ingrese su correo electrónico"
+                />
+                <div class="text-danger small" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                  Correo inválido
+                </div>
+              </div>
+  
+              <!-- Contraseña -->
+              <div class="form-group position-relative">
+                    <label for="password">Contraseña</label>
+                    <input 
+                    id="password" 
+                    [type]="showPassword ? 'text' : 'password'" 
+                    formControlName="password" 
+                    class="form-control" 
+                    placeholder="Ingrese su contraseña"
+                    />
+                    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger small">
+                        <small *ngIf="registerForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</small>
+                        <small *ngIf="registerForm.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres.</small>
+                    </div>
+                    <i 
+                    class="toggle-password-icon fas" 
+                    [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'" 
+                    (click)="togglePasswordVisibility()">
+                    </i>
+              </div>
+              
+              <div class="form-group position-relative">
+                    <label for="confirmPassword">Confirmar Contraseña</label>
+                    <input 
+                    id="confirmPassword" 
+                    [type]="showConfirmPassword ? 'text' : 'password'" 
+                    formControlName="confirmPassword" 
+                    class="form-control" 
+                    placeholder="Confirme su contraseña"/>
+                    <div *ngIf="registerForm.hasError('notMatching') && registerForm.touched" class="text-danger small">
+                        Las contraseñas no coinciden.
+                    </div>
+                    <i 
+                    class="toggle-password-icon fas" 
+                    [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'" 
+                    (click)="toggleConfirmPasswordVisibility()">
+                    </i>
+              </div>
+  
+              <!-- Botón de Enviar -->
+              <div class="d-flex justify-content-center">
+                <button 
+                  type="submit" class="btn btn-primary btn-block btn-custom"> Registrar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <app-modal
+        [showModal]="modal.show"
+        [message]="modal.message"
+        [isError]="modal.isError"
+        [isSuccess]="modal.isSuccess"
+        [autoCloseDuration]="modal.autoCloseDuration ?? 0"
+        (close)="closeModal()"
+      ></app-modal>
+</div>

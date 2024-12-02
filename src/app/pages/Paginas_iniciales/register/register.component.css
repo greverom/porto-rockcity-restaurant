@@ -1,0 +1,41 @@
+.position-relative {
+  position: relative;
+}
+
+.text-danger small{
+  font-size: 0.875rem; 
+  line-height: 1.2;    
+  margin-top: 0.25rem;
+  position: relative; 
+}
+
+.form-group {
+  margin-bottom: 1.5rem; 
+}
+
+.toggle-password-icon {
+  position: absolute;
+  top: 65%; 
+  right: 1rem; 
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #6c757d;
+  z-index: 2; 
+}
+
+.toggle-password-icon:hover {
+  color: #495057;
+}
+
+.btn-custom {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+label {
+  margin-bottom: 0.5rem;
+}
+
+::placeholder{
+  color: #999d9f;
+}

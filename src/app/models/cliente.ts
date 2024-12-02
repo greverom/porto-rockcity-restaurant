@@ -4,8 +4,7 @@ export interface PedidoModel {
     alimentos: AlimentoPedidoModel[];
     estado: PedidoEstado;           
     total: number;                  
-    direccionEntrega: string;       
-    repartidorId?: string;          
+    direccionEntrega: string;                
     tiempoEstimadoEntrega?: Date;   
     fechaCreacion: Date;            
     fechaEntrega?: Date;            

@@ -7,6 +7,8 @@ export interface Register {
   email: string;           
   password: string;        
   confirmPassword: string; 
+  fechaCreacion: string;
+  activo: boolean;
 }
 
 export enum UserRole {
