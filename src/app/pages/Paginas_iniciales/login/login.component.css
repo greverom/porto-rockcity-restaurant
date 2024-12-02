@@ -1,0 +1,69 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    padding: 15px; /* Espaciado en los lados para pantallas pequeñas */
+    background-color: #f8f9fa; /* Color de fondo opcional */
+  }
+  
+  /* Ajustar el tamaño de la tarjeta */
+  .card {
+    max-width: 400px; 
+    width: 100%; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    padding: 20px; /* Espaciado interno */
+    background: #fff; /* Fondo blanco */
+  }
+  
+  /* Título centrado */
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+
+.position-relative {
+    position: relative;
+  }
+  
+  .text-danger small {
+    font-size: 0.875rem;
+    line-height: 1.2;
+    margin-top: 0.25rem;
+    position: relative;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .toggle-password-icon {
+    position: absolute;
+    top: 65%;
+    right: 1rem;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+    z-index: 2;
+  }
+  
+  .toggle-password-icon:hover {
+    color: #495057;
+  }
+  
+  .btn-custom {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  label {
+    margin-bottom: 0.5rem;
+  }
+  
+  ::placeholder {
+    color: #999d9f;
+  }

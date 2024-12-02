@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalDto, modalInitializer } from '../../../components/modal/modal.dto';
 import { ModalComponent } from '../../../components/modal/modal.component';
-import { RegisterService } from '../../../services/register/register.service';
+import { AuthService } from '../../../services/authentication/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +22,7 @@ export class RegisterComponent {
   showConfirmPassword: boolean = false;
   modal: ModalDto = modalInitializer();
 
-  constructor(private fb: FormBuilder, private registerService: RegisterService ) {
+  constructor(private fb: FormBuilder, private authService: AuthService ) {
     this.registerForm = this.fb.group({
       nombres: ['', Validators.required],
       apellidos: ['', Validators.required],
@@ -64,7 +64,7 @@ export class RegisterComponent {
   
     const formData = this.registerForm.value;
   
-    this.registerService.register(formData).then(() => {
+    this.authService.register(formData).then(() => {
       this.modal = {
         ...modalInitializer(),
         show: true,

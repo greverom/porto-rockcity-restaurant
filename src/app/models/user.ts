@@ -9,5 +9,5 @@ export interface User {
     usuario: string;            
     email: string;              
     fechaCreacion: Date;        
-    activo: boolean;            
+    activo: boolean;           
   }
