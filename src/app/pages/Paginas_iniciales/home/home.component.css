@@ -1,0 +1,14 @@
+.home-container {
+    height: 100vh; 
+    background: linear-gradient(to bottom, #2f343b, #3a4353); 
+    color: white; 
+  }
+  
+  h1 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  }
+  
+  p {
+    font-size: 1.25rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  }

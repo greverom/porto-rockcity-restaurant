@@ -18,6 +18,5 @@
   .content {
     flex: 1; /* Ocupa el espacio restante */
     overflow-y: auto; /* Permite scroll vertical para contenido largo */
-    padding: 20px; /* Espaciado interno para el contenido */
     background-color: #f8f9fa; /* Color de fondo */
   }
