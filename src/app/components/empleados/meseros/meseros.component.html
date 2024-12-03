@@ -1,5 +1,5 @@
 <h3>Tabla de Meseros</h3>
-<table class="table table-dark table-hover">
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Nombre</th>
@@ -18,9 +18,39 @@
       <td>{{ empleado.cedula }}</td>
       <td>{{ empleado.usuario }}</td>
       <td>
-        <button class="btn btn-warning btn-sm">Editar</button>
-        <button class="btn btn-danger btn-sm">Eliminar</button>
+        <button class="btn-custom-grey" (click)="openEditModal(empleado.id)">Editar</button>
+        <button class="btn-custom-dark-blue" (click)="openDeleteModal(empleado)">Eliminar</button>
       </td>
     </tr>
   </tbody>
 </table>
+
+<div *ngIf="isModalOpen" class="modal-overlay">
+  <div class="modal-content">
+    <h4>Editar Datos del Mesero</h4>
+    <div class="form-group">
+      <label for="nombres">Nombres</label>
+      <input id="nombres" type="text" class="form-control" [(ngModel)]="editForm.nombres" />
+    </div>
+    <div class="form-group">
+      <label for="apellidos">Apellidos</label>
+      <input id="apellidos" type="text" class="form-control" [(ngModel)]="editForm.apellidos" />
+    </div>
+    <div class="form-group">
+      <label for="usuario">Usuario</label>
+      <input id="usuario" type="text" class="form-control" [(ngModel)]="editForm.usuario" />
+    </div>
+    <div class="modal-actions mt-3">
+      <button class="btn btn-primary" (click)="saveEdit()">Guardar</button>
+      <button class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<app-modal
+  [showModal]="modal.show"
+  [message]="modal.message"
+  [isConfirm]="modal.isConfirm"
+  (confirm)="modal.confirm && modal.confirm()"
+  (close)="modal.close()">
+</app-modal>

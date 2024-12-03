@@ -57,7 +57,7 @@ export class RegisterComponent {
         show: true,
         message: 'Formulario inválido. Por favor, verifica los campos.',
         isError: true,
-        autoCloseDuration: 2500, 
+        autoCloseDuration: 2500,
       };
       return;
     }
@@ -68,19 +68,23 @@ export class RegisterComponent {
       this.modal = {
         ...modalInitializer(),
         show: true,
-        message: 'Registro exitoso. El usuario ha sido creado correctamente.',
+        message: 'Registro exitoso. El usuario ha sido creado correctamente. Cerrando sesión...',
         isSuccess: true,
-        autoCloseDuration: 2500, 
+        autoCloseDuration: 2500,
       };
   
       this.registerForm.reset();
+  
+      setTimeout(() => {
+        this.authService.logout(); 
+      }, 2000);
     }).catch((error) => {
       this.modal = {
         ...modalInitializer(),
         show: true,
         message: `Error al registrar: ${error.message}`,
         isError: true,
-        autoCloseDuration: 2500, 
+        autoCloseDuration: 2500,
       };
     });
   }

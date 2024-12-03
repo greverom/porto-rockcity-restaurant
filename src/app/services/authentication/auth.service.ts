@@ -3,8 +3,9 @@ import { Auth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEma
 import { Database, get, ref, set } from '@angular/fire/database';
 import { Store } from '@ngrx/store';
 import { Register, UserRole } from '../../models/register&login';
-import { setLoggedInStatus, setUserData } from '../../store/user/user.actions';
+import { setLoggedInStatus, setUserData, unsetUserData } from '../../store/user/user.actions';
 import { hideSpinner, showSpinner } from '../../store/spinner/spinner.actions';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -14,7 +15,8 @@ export class AuthService {
   constructor(
     private auth: Auth,
     private db: Database,
-    private store: Store
+    private store: Store,
+    private router: Router
   ) {}
 
   private getRolePath(role: UserRole): string {
@@ -74,8 +76,8 @@ export class AuthService {
       }
   
       await set(userRef, userData);
-  
-      this.store.dispatch(setUserData({ data: userData })); 
+      await this.auth.signOut();
+   
     } catch (error) {
       console.error('Error al registrar el usuario:', error);
       throw error; 
@@ -198,6 +200,17 @@ export class AuthService {
       } catch (error) {
         console.error('Error al restaurar la sesión:', error);
       }
+    });
+  }
+
+  logout(): void {
+    this.store.dispatch(unsetUserData());
+    this.auth.signOut().then(() => {
+      console.log('Sesión cerrada correctamente.');
+      localStorage.removeItem('authToken');
+      this.router.navigate(['/login']);
+    }).catch((error) => {
+      console.error('Error al cerrar sesión:', error);
     });
   }
 }

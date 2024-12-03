@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { MeserosComponent} from '../../../components/empleados/meseros/meseros.component';
+import { CocinerosComponent } from '../../../components/empleados/cocineros/cocineros.component';
 
 @Component({
   selector: 'app-gestion-usuario',
@@ -10,7 +11,8 @@ import { MeserosComponent} from '../../../components/empleados/meseros/meseros.c
       CommonModule,
       RouterOutlet,
       RouterModule,
-      MeserosComponent
+      MeserosComponent,
+      CocinerosComponent
   ],
   templateUrl: './gestion-usuario.component.html',
   styleUrl: './gestion-usuario.component.css'

@@ -7,6 +7,8 @@ import { unsetUserData } from '../../store/user/user.actions';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../modal/modal.component';
 import { ModalDto, modalInitializer } from '../modal/modal.dto';
+import { AuthService } from '../../services/authentication/auth.service';
+
 
 @Component({
   selector: 'app-sidebar',
@@ -24,7 +26,9 @@ export class SidebarComponent implements OnInit {
   userRole$: Observable<string | null>; 
   modal: ModalDto = modalInitializer();
 
-  constructor(private router: Router, private store: Store) {
+  constructor(private router: Router, 
+              private store: Store, 
+              private authService: AuthService) {
     this.userRole$ = this.store.select(selectUserData).pipe(
       map((data) => data?.rol || null),
       distinctUntilChanged() 
@@ -33,7 +37,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.userRole$.subscribe((role) => {
-      console.log('Generando menú para el rol:', role);
+      //console.log('Generando menú para el rol:', role);
       this.generateMenu(role); 
     });
   }
@@ -93,9 +97,6 @@ export class SidebarComponent implements OnInit {
   }
 
   logout(): void {
-    this.store.dispatch(unsetUserData());
-    localStorage.removeItem('authToken');
-    this.router.navigate(['/login']);
-    this.closeLogoutModal();
+    this.authService.logout(); 
   }
 }

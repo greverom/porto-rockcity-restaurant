@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
       this.isLoggedIn$ = this.store.select(selectIsLoggedIn);
   
       this.store.select(selectUserData).subscribe((userData) => {
-        console.log('Datos del usuario logeado desde el store:', userData);
+       // console.log('Datos del usuario logeado desde el store:', userData);
       });
     }
   }
