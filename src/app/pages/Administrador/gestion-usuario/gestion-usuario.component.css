@@ -1,0 +1,25 @@
+.button-container {
+    display: flex;
+    padding: 2rem;
+    justify-content: center; 
+    align-items: center; 
+  }
+
+  .back-button {
+    background-color: #6c757d; 
+    color: white;
+    border: none;
+  }
+  
+  .back-button:hover {
+    background-color: #434241; 
+    color: white;
+  }
+
+  .table-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa; 
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }

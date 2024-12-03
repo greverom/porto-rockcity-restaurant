@@ -9,8 +9,7 @@ export const routes: Routes = [
   // Rutas públicas
   { path: 'home', loadComponent: () => import('./pages/Paginas_iniciales/home/home.component').then(m => m.HomeComponent) },
   { path: 'login', loadComponent: () => import('./pages/Paginas_iniciales/login/login.component').then(m => m.LoginComponent) },
-  { path: 'register', loadComponent: () => import('./pages/Paginas_iniciales/register/register.component').then(m => m.RegisterComponent) },
-
+  
   // Rutas protegidas para Administradores
   {
     path: 'gestion-alimentos',
@@ -22,7 +21,13 @@ export const routes: Routes = [
     path: 'gestion-usuarios',
     loadComponent: () => import('./pages/Administrador/gestion-usuario/gestion-usuario.component').then(m => m.GestionUsuarioComponent),
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['ADMINISTRADORES'] }, 
+    data: { roles: ['ADMINISTRADORES'] },
+    children: [
+      {
+        path: 'register',
+        loadComponent: () => import('./pages/Paginas_iniciales/register/register.component').then(m => m.RegisterComponent),
+      }
+    ]
   },
 
   // Rutas protegidas para Cocineros

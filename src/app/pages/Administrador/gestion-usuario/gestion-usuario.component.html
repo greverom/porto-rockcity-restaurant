@@ -1,1 +1,22 @@
-<p>gestion-usuario works!</p>
+<div class="button-container d-flex justify-content-center align-items-center">
+    <button
+      class="btn btn-secondary back-button"
+      *ngIf="!isOnRegisterRoute"
+      (click)="goToRegister()"
+    >
+      Agregar Usuario
+    </button>
+  
+    <button
+      class="btn btn-secondary back-button"
+      *ngIf="isOnRegisterRoute"
+      (click)="goToGestionUsuarios()"
+    >
+      Volver a Gestión de Usuarios
+    </button>
+  </div>
+<router-outlet></router-outlet>
+
+<div class="table-container mt-4">
+  <app-meseros></app-meseros>
+</div>
