@@ -1,1 +1,37 @@
-<p>mostrar-alimentos works!</p>
+<div class="mostrar-alimentos-container">
+    <!-- Título -->
+    <h1 class="text-center">Menú</h1>
+
+    <div class="buscar-alimento">
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Buscar alimento por nombre" 
+          aria-label="Buscar alimento" />
+    </div>
+  
+    <!-- Select de categoría -->
+    <div class="filtro-categoria mt-4">
+        <label for="categoria" class="form-label">Seleccione una Categoría:</label>
+        <select 
+          id="categoria" 
+          class="form-select" 
+          [(ngModel)]="selectedCategoria" 
+          (change)="onCategoriaChange()">
+          <option value="">Seleccione una categoría</option>
+          <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
+        </select>
+      </div>
+      
+      <div class="filtro-subcategoria mt-4" *ngIf="subcategories.length > 0">
+        <label for="subcategoria" class="form-label">Seleccione una Subcategoría:</label>
+        <select 
+          id="subcategoria" 
+          class="form-select" 
+          [(ngModel)]="selectedSubcategoria" 
+          (change)="onSubcategoriaChange()">
+          <option value="">Seleccione una subcategoría</option>
+          <option *ngFor="let sub of subcategories" [value]="sub">{{ sub }}</option>
+        </select>
+      </div>
+  </div>

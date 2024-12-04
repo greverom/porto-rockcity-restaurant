@@ -4,6 +4,7 @@
         "appspot",
         "boton",
         "categoria",
+        "categorias",
         "cedula",
         "Cocteles",
         "Creacion",
@@ -20,6 +21,7 @@
         "restorant",
         "subcategoria",
         "Subcategoría",
+        "subcategorias",
         "telefono"
     ]
 }
