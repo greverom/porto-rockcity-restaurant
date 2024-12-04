@@ -40,11 +40,27 @@ input:focus, select:focus {
 }
 
 .form-group {
-  margin-bottom: 1.5rem; 
+  position: relative; 
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
-.form-group:last-of-type {
-  margin-bottom: 2.5rem; 
+.form-group label[for="password"],
+.form-group label[for="confirmPassword"] {
+  margin-bottom: 0.5rem; 
+  display: block; 
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center; 
+}
+
+input {
+  width: 100%;
+  padding-right: 2.5rem; 
 }
 
 .text-danger {
@@ -61,20 +77,23 @@ input:focus, select:focus {
 
 .toggle-password-icon {
   position: absolute;
-  top: 50%; 
   right: 1rem; 
-  transform: translateY(-50%);
   cursor: pointer;
   color: #333; 
   z-index: 2; 
+  transition: color 0.3s ease;
 }
 
 .toggle-password-icon:hover {
-  color: #ff8c00; 
+  color: #ff8c00;
+}
+
+.justify-content-center{
+  margin-top: 2rem;
 }
 
 .btn-custom {
-  background: linear-gradient(90deg, #ff8c00, #ff6600); /* Gradiente naranja */
+  background: linear-gradient(90deg, #ff8c00, #ff6600); 
   color: white;
   border: none;
   padding: 10px 20px;
@@ -87,12 +106,12 @@ input:focus, select:focus {
 }
 
 .btn-custom:hover {
-  background: linear-gradient(90deg, #ff6600, #e65c00); /* Gradiente más oscuro */
-  transform: scale(1.05); /* Efecto de aumento */
+  background: linear-gradient(90deg, #ff6600, #e65c00); 
+  transform: scale(1.05); 
   box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
 }
 
 .btn-custom:active {
-  transform: scale(0.95); /* Presión sutil */
+  transform: scale(0.95); 
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }

@@ -1,0 +1,71 @@
+<div class="crud-alimento-container">
+    <button class="btn btn-primary mt-5" (click)="openModal()">Agregar Alimento</button>
+  
+    <!-- Modal -->
+    <div *ngIf="showModal" class="modal-overlay">
+      <div class="modal-content">
+        <h3>Agregar Alimento</h3>
+        <form [formGroup]="alimentoForm" (ngSubmit)="saveAlimento()">
+          <!-- Nombre -->
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" formControlName="nombre" class="form-control" placeholder="Nombre del alimento" />
+          </div>
+  
+          <!-- Descripción -->
+          <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" formControlName="descripcion" class="form-control" placeholder="Descripción"></textarea>
+          </div>
+  
+          <!-- Categoría -->
+          <div class="form-group">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" formControlName="categoria" class="form-control" (change)="onCategoriaChange()">
+              <option value="">Seleccione una categoría</option>
+              <option value="entradas">Entradas</option>
+              <option value="platos-fuertes">Platos Fuertes</option>
+              <option value="postres">Postres</option>
+              <option value="bebidas">Bebidas</option>
+            </select>
+          </div>
+  
+          <!-- Subcategoría (si la categoría es bebidas) -->
+          <div class="form-group" *ngIf="showSubcategories">
+            <label for="subcategoria">Subcategoría</label>
+            <select id="subcategoria" formControlName="subcategoria" class="form-control" (change)="onSubcategoriaChange()">
+              <option value="">Seleccione una subcategoría</option>
+              <option *ngFor="let sub of subcategories" [value]="sub">{{ sub }}</option>
+            </select>
+          </div>
+  
+          <!-- Detalle Subcategoría -->
+          <div class="form-group" *ngIf="detailedSubcategories.length > 0">
+            <label for="detalleSubcategoria">Detalle Subcategoría</label>
+            <select id="detalleSubcategoria" formControlName="detalleSubcategoria" class="form-control">
+              <option value="">Seleccione una opción</option>
+              <option *ngFor="let detail of detailedSubcategories" [value]="detail">{{ detail }}</option>
+            </select>
+          </div>
+  
+          <!-- Precio -->
+          <div class="form-group">
+            <label for="precio">Precio</label>
+            <input id="precio" type="number" formControlName="precio" class="form-control" placeholder="Precio" />
+          </div>
+  
+          <!-- Cantidad Restante -->
+          <div class="form-group">
+            <label for="cantidadRestante">Cantidad Restante</label>
+            <input id="cantidadRestante" type="number" formControlName="cantidadRestante" class="form-control" placeholder="Cantidad Restante" />
+          </div>
+  
+          <!-- Botones -->
+          <div class="modal-buttons">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

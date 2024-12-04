@@ -15,7 +15,21 @@ export const routes: Routes = [
     path: 'gestion-alimentos',
     loadComponent: () => import('./pages/Administrador/gestion-alimentos/gestion-alimentos.component').then(m => m.GestionAlimentosComponent),
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['ADMINISTRADORES'] }, 
+    data: { roles: ['ADMINISTRADORES'] },
+    children: [
+      {
+        path: 'crud',
+        loadComponent: () => import('./components/crud-alimentos/crud-alimentos.component').then(m => m.CrudAlimentoComponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMINISTRADORES'] }, 
+      },
+      {
+        path: 'mostrar-alimentos',
+        loadComponent: () => import('./components/mostrar-alimentos/mostrar-alimentos.component').then(m => m.MostrarAlimentosComponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMINISTRADORES'] }, 
+      }
+    ]
   },
   {
     path: 'gestion-usuarios',

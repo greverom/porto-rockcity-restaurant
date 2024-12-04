@@ -80,42 +80,46 @@
               </div>
   
               <!-- Contraseña -->
-              <div class="form-group position-relative">
-                    <label for="password">Contraseña</label>
-                    <input 
+              <div class="form-group">
+                <label for="password">Contraseña</label>
+                <div class="input-wrapper">
+                  <input 
                     id="password" 
                     [type]="showPassword ? 'text' : 'password'" 
                     formControlName="password" 
                     class="form-control" 
                     placeholder="Ingrese su contraseña"
-                    />
-                    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger small">
-                        <small *ngIf="registerForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</small>
-                        <small *ngIf="registerForm.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres.</small>
-                    </div>
-                    <i 
+                  />
+                  <i 
                     class="toggle-password-icon fas" 
                     [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'" 
                     (click)="togglePasswordVisibility()">
-                    </i>
+                  </i>
+                </div>
+                <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger">
+                  <small *ngIf="registerForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</small>
+                  <small *ngIf="registerForm.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres.</small>
+                </div>
               </div>
               
-              <div class="form-group position-relative">
-                    <label for="confirmPassword">Confirmar Contraseña</label>
-                    <input 
+              <div class="form-group">
+                <label for="confirmPassword">Confirmar Contraseña</label>
+                <div class="input-wrapper">
+                  <input 
                     id="confirmPassword" 
                     [type]="showConfirmPassword ? 'text' : 'password'" 
                     formControlName="confirmPassword" 
                     class="form-control" 
                     placeholder="Confirme su contraseña"/>
-                    <div *ngIf="registerForm.hasError('notMatching') && registerForm.touched" class="text-danger small">
-                        Las contraseñas no coinciden.
-                    </div>
-                    <i 
+                  <i 
                     class="toggle-password-icon fas" 
                     [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'" 
                     (click)="toggleConfirmPasswordVisibility()">
-                    </i>
+                  </i>
+                </div>
+                <div *ngIf="registerForm.hasError('notMatching') && registerForm.touched" class="text-danger">
+                  <small>Las contraseñas no coinciden.</small>
+                </div>
               </div>
   
               <!-- Botón de Enviar -->
