@@ -2,22 +2,32 @@
     <button
       class="btn btn-secondary back-button"
       *ngIf="!isOnRegisterRoute"
-      (click)="goToRegister()"
-    >
+      (click)="goToRegister()">
       Agregar Usuario
     </button>
   
     <button
       class="btn btn-secondary back-button"
       *ngIf="isOnRegisterRoute"
-      (click)="goToGestionUsuarios()"
-    >
+      (click)="goToGestionUsuarios()">
       Volver a Gestión de Usuarios
     </button>
+</div>
+<div class="table-container mt-4" *ngIf="!isOnRegisterRoute">
+  <h3 class="text-center">Gestión de Empleados</h3>
+
+  <div class="d-flex justify-content-center mt-3">
+    <button
+      class="btn btn-toggle"
+      (click)="toggleComponent()">
+      Mostrar {{ showMeseros ? 'Cocineros' : 'Meseros' }}
+    </button>
   </div>
-  <div class="table-container mt-4">
-    <h3 class="text-center">Gestión de Empleados</h3>
-    <app-meseros></app-meseros>
-    <app-cocineros></app-cocineros>
+
+  <div class="mt-4">
+    <app-meseros *ngIf="showMeseros"></app-meseros>
+    <app-cocineros *ngIf="!showMeseros"></app-cocineros>
   </div>
+</div>
+
 <router-outlet></router-outlet>

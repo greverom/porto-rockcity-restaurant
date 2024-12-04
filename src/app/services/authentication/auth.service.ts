@@ -208,7 +208,7 @@ export class AuthService {
     this.auth.signOut().then(() => {
       console.log('Sesión cerrada correctamente.');
       localStorage.removeItem('authToken');
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
     }).catch((error) => {
       console.error('Error al cerrar sesión:', error);
     });

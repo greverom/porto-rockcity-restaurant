@@ -1,41 +1,98 @@
-.position-relative {
-  position: relative;
+.card {
+  background: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
+  backdrop-filter: blur(15px); /* Efecto de vidrio */
+  -webkit-backdrop-filter: blur(15px); /* Compatibilidad con Safari */
+  border-radius: 15px; /* Bordes redondeados */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde translúcido */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Sombra flotante */
+  padding: 20px;
 }
 
-.text-danger small{
-  font-size: 0.875rem; 
-  line-height: 1.2;    
-  margin-top: 0.25rem;
-  position: relative; 
+.card-body {
+  color: white; /* Texto en blanco para contraste */
+}
+
+.card-title {
+  font-size: 1.75rem; /* Ajuste del tamaño del título */
+  color: #f8f9fa; /* Blanco puro */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra sutil para destacar */
+}
+
+input, select {
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo claro */
+  border: 1px solid rgba(0, 0, 0, 0.2); /* Borde oscuro sutil */
+  color: #333; /* Texto oscuro */
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input::placeholder, select::placeholder {
+  color: #888; 
+}
+
+input:focus, select:focus {
+  background-color: rgba(255, 255, 255, 1); 
+  border-color: #ff8c00; 
+  box-shadow: 0 0 10px rgba(255, 140, 0, 0.5); 
+  outline: none;
 }
 
 .form-group {
   margin-bottom: 1.5rem; 
 }
 
+.form-group:last-of-type {
+  margin-bottom: 2.5rem; 
+}
+
+.text-danger {
+  margin-top: 0rem; 
+  color: #ff8c00 !important; 
+  font-size: 14px; 
+  font-weight: bold;
+}
+
+.text-danger small {
+  font-size: inherit; 
+  font-weight: inherit; 
+}
+
 .toggle-password-icon {
   position: absolute;
-  top: 65%; 
+  top: 50%; 
   right: 1rem; 
   transform: translateY(-50%);
   cursor: pointer;
-  color: #6c757d;
+  color: #333; 
   z-index: 2; 
 }
 
 .toggle-password-icon:hover {
-  color: #495057;
+  color: #ff8c00; 
 }
 
 .btn-custom {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  background: linear-gradient(90deg, #ff8c00, #ff6600); /* Gradiente naranja */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.4s ease, box-shadow 0.3s ease;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
 }
 
-label {
-  margin-bottom: 0.5rem;
+.btn-custom:hover {
+  background: linear-gradient(90deg, #ff6600, #e65c00); /* Gradiente más oscuro */
+  transform: scale(1.05); /* Efecto de aumento */
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
 }
 
-::placeholder{
-  color: #999d9f;
+.btn-custom:active {
+  transform: scale(0.95); /* Presión sutil */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }

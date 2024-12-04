@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pagina-error',
@@ -8,5 +9,9 @@ import { Component } from '@angular/core';
   styleUrl: './pagina-error.component.css'
 })
 export class PaginaErrorComponent {
+  constructor(private router: Router) {}
 
+  navigateHome(): void {
+    this.router.navigate(['/home']);
+  }
 }

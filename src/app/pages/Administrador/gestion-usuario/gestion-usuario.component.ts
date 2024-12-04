@@ -19,6 +19,7 @@ import { CocinerosComponent } from '../../../components/empleados/cocineros/coci
 })
 export class GestionUsuarioComponent implements OnInit {
   isOnRegisterRoute: boolean = false;
+  showMeseros: boolean = true;
 
   constructor(private router: Router) {}
 
@@ -26,6 +27,10 @@ export class GestionUsuarioComponent implements OnInit {
     this.router.events.subscribe(() => {
       this.isOnRegisterRoute = this.router.url.includes('/gestion-usuarios/register');
     });
+  }
+
+  toggleComponent(): void {
+    this.showMeseros = !this.showMeseros;
   }
 
   goToRegister(): void {

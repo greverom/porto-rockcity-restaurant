@@ -4,25 +4,34 @@
     align-items: center;
     height: 100vh;
     padding: 15px;
-    background-color: #f8f9fa;
+    background: linear-gradient(to bottom, #2f343b, #3a4353);
   }
   
   /* Ajustar el tamaño de la tarjeta */
   .card {
     max-width: 400px; 
     width: 100%; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    border-radius: 12px;
     padding: 20px; 
-    background: #fff; 
+    backdrop-filter: blur(15px); 
+    background: rgba(255, 255, 255, 0.2); 
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    color: #fff; 
+
+  }
+  
+  /* Sombra sutil en hover */
+  .card:hover {
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
   }
   
   /* Título centrado */
   .card-title {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
     margin-bottom: 40px !important;
-    color: #333;
+    color: #e0e0e0;
     text-align: center;
   }
 
@@ -30,11 +39,16 @@
     position: relative;
   }
   
+  .text-danger {
+    margin-top: 0.2rem; 
+    color: #ff8c00 !important; 
+    font-size: 14px; 
+    font-weight: bold;
+  }
+  
   .text-danger small {
-    font-size: 0.875rem;
-    line-height: 1.2;
-    margin-top: 0.25rem;
-    position: relative;
+    font-size: inherit; 
+    font-weight: inherit; 
   }
   
   .form-group {
@@ -66,4 +80,22 @@
   
   ::placeholder {
     color: #999d9f;
+  }
+
+  .card button {
+    background: linear-gradient(to right, #ff7e5f, #feb47b); 
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+  }
+  
+  .card button:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 6px 20px rgba(255, 126, 95, 0.5); 
   }
