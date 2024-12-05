@@ -1,34 +1,97 @@
-<div class="sidebar">
-    <ul class="menu-list">
-      <!-- Inicio -->
-      <li>
-        <a routerLink="/home" routerLinkActive="active">Inicio</a>
-      </li>
-  
-      <!-- Gestión de Usuarios-->
-      <ng-container>
-        <li *ngFor="let menu of userMenu" class="menu-item">
-          <a [routerLink]="menu.path" routerLinkActive="active">{{ menu.label }}</a>
-        </li>
-      </ng-container>
-  
-      <!-- Configuración -->
-      <li>
-        <a routerLink="/perfil-usuario" routerLinkActive="active">Configuración</a>
-      </li>
-    </ul>
-  
-    <!-- Cerrar sesión -->
-    <div class="logout-container">
-      <button (click)="openLogoutModal()">Cerrar sesión</button>
-    </div>
-  </div>
+<div class="sidebar" [class.closed]="!isSidebarOpen">
+  <!-- Botón para alternar el estado del sidebar -->
+  <button class="toggle-button" (click)="toggleSidebar()">
+    <i class="fas" [ngClass]="isSidebarOpen ? 'fa-angle-left' : 'fa-angle-right'"></i>
+  </button>
 
-  <app-modal
+  <ul class="menu-list">
+    <!-- Inicio (visible para todos) -->
+    <li *ngIf="isVisibleForAll()">
+      <a routerLink="/home" routerLinkActive="active">
+        <i class="fas fa-home"></i>
+        <span *ngIf="isSidebarOpen">Inicio</span>
+      </a>
+    </li>
+
+    <!-- Gestión de Alimentos (solo para administradores) -->
+    <li *ngIf="isVisibleForAdmin()">
+      <a routerLink="/gestion-alimentos" routerLinkActive="active">
+        <i class="fas fa-utensils"></i>
+        <span *ngIf="isSidebarOpen">Gestión de Alimentos</span>
+      </a>
+    </li>
+
+    <!-- Gestión de Usuarios (solo para administradores) -->
+    <li *ngIf="isVisibleForAdmin()">
+      <a routerLink="/gestion-usuarios" routerLinkActive="active">
+        <i class="fas fa-users"></i>
+        <span *ngIf="isSidebarOpen">Gestión de Usuarios</span>
+      </a>
+    </li>
+
+    <!-- Facturación (solo para empleados) -->
+    <li *ngIf="isVisibleForEmployee()">
+      <a routerLink="/facturacion" routerLinkActive="active">
+        <i class="fas fa-file-invoice-dollar"></i>
+        <span *ngIf="isSidebarOpen">Facturación</span>
+      </a>
+    </li>
+
+    <!-- Gestión de Mesas (solo para empleados) -->
+    <li *ngIf="isVisibleForEmployee()">
+      <a routerLink="/gestion-mesas" routerLinkActive="active">
+        <i class="fas fa-chair"></i>
+        <span *ngIf="isSidebarOpen">Gestión de Mesas</span>
+      </a>
+    </li>
+
+    <!-- Gestión de Pedidos (solo para empleados) -->
+    <li *ngIf="isVisibleForEmployee()">
+      <a routerLink="/gestion-pedidos" routerLinkActive="active">
+        <i class="fas fa-shopping-cart"></i>
+        <span *ngIf="isSidebarOpen">Gestión de Pedidos</span>
+      </a>
+    </li>
+
+    <!-- Reservas (solo para empleados) -->
+    <li *ngIf="isVisibleForEmployee()">
+      <a routerLink="/reservas" routerLinkActive="active">
+        <i class="fas fa-calendar-check"></i>
+        <span *ngIf="isSidebarOpen">Reservas</span>
+      </a>
+    </li>
+
+    <!-- Pedidos de Cocina (solo para cocineros) -->
+    <li *ngIf="isVisibleForCook()">
+      <a routerLink="/pedidos-cocina" routerLinkActive="active">
+        <i class="fas fa-utensil-spoon"></i>
+        <span *ngIf="isSidebarOpen">Pedidos de Cocina</span>
+      </a>
+    </li>
+
+    <!-- Configuración (visible para todos los roles) -->
+    <li *ngIf="isVisibleForAll()">
+      <a routerLink="/perfil-usuario" routerLinkActive="active">
+        <i class="fas fa-cog"></i>
+        <span *ngIf="isSidebarOpen">Configuración</span>
+      </a>
+    </li>
+  </ul>
+
+  <!-- Cerrar sesión (visible para todos) -->
+  <div class="logout-container" *ngIf="isVisibleForAll()">
+    <button (click)="openLogoutModal()">
+      <i class="fas fa-sign-out-alt"></i>
+      <span *ngIf="isSidebarOpen">Cerrar sesión</span>
+    </button>
+  </div>
+</div>
+
+<app-modal
   [showModal]="modal.show"
   [message]="modal.message"
   [isConfirm]="modal.isConfirm"
   (confirm)="logout()"
   (cancel)="closeLogoutModal()"
   (close)="closeLogoutModal()">
-</app-modal> 
+</app-modal>

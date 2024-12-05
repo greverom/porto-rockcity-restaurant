@@ -10,8 +10,29 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between; 
-  padding: 15px;
+  padding: 20px 8px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: width 0.4s ease, padding 0.4s ease;
+}
+
+.sidebar.closed {
+  width: 75px; 
+  padding: 21px 8px; 
+}
+
+/* Estilo del botón para alternar el estado del sidebar */
+.toggle-button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 17px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  transition: transform 0.3s ease; 
+}
+
+.toggle-button:hover {
+  transform: scale(1.1); 
 }
 
 .menu-list {
@@ -27,11 +48,28 @@
 .menu-list li a {
   color: #fff;
   text-decoration: none;
-  font-size: 16px;
-  display: block;
-  padding: 10px;
+  display: flex; 
+  align-items: center;
+  padding: 14px 20px;
   border-radius: 4px;
   transition: background-color 0.3s ease;
+}
+
+.menu-list li a span {
+  white-space: nowrap; 
+  overflow: hidden; 
+  font-size: 14px;
+  text-overflow: ellipsis; 
+  opacity: 0; 
+  visibility: hidden; 
+  margin-left: 20px;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+/* Cuando el sidebar está abierto, el texto aparece */
+.sidebar:not(.closed) .menu-list li a span {
+  opacity: 1;
+  visibility: visible;
 }
 
 .menu-list li a:hover {
@@ -43,23 +81,50 @@
   font-weight: bold;
 }
 
+.menu-list li a i {
+  font-size: 18px;
+}
+
+/* Contenedor del botón de cerrar sesión */
 .logout-container {
   text-align: left;
-  margin-top: auto; 
+  margin-top: auto;
 }
 
 .logout-container button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  transition: justify-content 0.4s ease;
   background: transparent;
   border: none;
   color: #ff6b6b;
-  font-size: 16px;
   cursor: pointer;
-  padding: 10px;
+  padding: 10px 22px;
   border-radius: 4px;
-  transition: color 0.2s, background-color 0.3s ease;
+  transition: color 0.2s ease, background-color 0.3s ease;
+  max-width: 100%; 
+  overflow: hidden; 
 }
 
-.logout-container button:hover {
-  color: #ff3b3b;
-  background-color: #495057;
+/* Ícono dentro del botón */
+.logout-container button i {
+  font-size: 18px;
+}
+
+/* Texto del botón de logout */
+.logout-container button span {
+  font-size: 14px;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  opacity: 0; 
+  margin-left: 20px;
+  visibility: hidden; 
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.sidebar:not(.closed) .logout-container button span {
+  opacity: 1; 
+  visibility: visible; 
 }

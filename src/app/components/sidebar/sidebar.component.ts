@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { distinctUntilChanged, map, Observable } from 'rxjs';
 import { selectUserData } from '../../store/user/user.selectors';
-import { unsetUserData } from '../../store/user/user.actions';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../modal/modal.component';
 import { ModalDto, modalInitializer } from '../modal/modal.dto';
@@ -21,10 +20,11 @@ import { AuthService } from '../../services/authentication/auth.service';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent implements OnInit {
-  userMenu: { label: string; path: string }[] = []; 
+export class SidebarComponent implements OnInit { 
   userRole$: Observable<string | null>; 
   modal: ModalDto = modalInitializer();
+  currentRole: string | null = null;
+  isSidebarOpen = false;
 
   constructor(private router: Router, 
               private store: Store, 
@@ -37,45 +37,32 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.userRole$.subscribe((role) => {
-      //console.log('Generando menú para el rol:', role);
-      this.generateMenu(role); 
+      this.currentRole = role?.toUpperCase() || null; 
     });
   }
 
-  generateMenu(role: string | null): void {
-    if (!role) {
-      this.userMenu = []; 
-      return;
-    }
+  @HostBinding('class.closed') get isClosed() {
+    return !this.isSidebarOpen;
+  }
 
-    const normalizedRole = role.toUpperCase();
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
 
-    this.userMenu = [];
+  isVisibleForAll(): boolean {
+    return true; 
+  }
 
-    switch (normalizedRole) {
-      case 'ADMINISTRADORES':
-        this.userMenu = [
-          { label: 'Gestión de Alimentos', path: '/gestion-alimentos' },
-          { label: 'Gestión de Usuarios', path: '/gestion-usuarios' },
-        ];
-        break;
+  isVisibleForAdmin(): boolean {
+    return this.currentRole === 'ADMINISTRADORES';
+  }
 
-      case 'EMPLEADOS':
-        this.userMenu = [
-          { label: 'Facturación', path: '/facturacion' },
-          { label: 'Gestión de Mesas', path: '/gestion-mesas' },
-          { label: 'Gestión de Pedidos', path: '/gestion-pedidos' },
-          { label: 'Reservas', path: '/reservas' },
-        ];
-        break;
+  isVisibleForEmployee(): boolean {
+    return this.currentRole === 'EMPLEADOS';
+  }
 
-      case 'COCINEROS':
-        this.userMenu = [{ label: 'Pedidos Cocina', path: '/pedidos-cocina' }];
-        break;
-
-      default:
-        this.userMenu = []; 
-    }
+  isVisibleForCook(): boolean {
+    return this.currentRole === 'COCINEROS';
   }
 
   openLogoutModal(): void {

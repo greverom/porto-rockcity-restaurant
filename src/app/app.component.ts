@@ -23,6 +23,8 @@ import { AuthService } from './services/authentication/auth.service';
 export class AppComponent implements OnInit {
   isLoggedIn$: Observable<boolean> = new Observable();
   userData$: Observable<any> = of(null);
+  isSidebarOpen = true;
+
   constructor(private store: Store, @Inject(PLATFORM_ID) private platformId: Object,  private authService: AuthService) {}
 
   ngOnInit() {
@@ -39,6 +41,10 @@ export class AppComponent implements OnInit {
        // console.log('Datos del usuario logeado desde el store:', userData);
       });
     }
+  }
+
+  onSidebarToggle(isOpen: boolean): void {
+    this.isSidebarOpen = isOpen;
   }
 
 }
