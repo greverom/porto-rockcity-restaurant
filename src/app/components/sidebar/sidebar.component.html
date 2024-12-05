@@ -1,5 +1,9 @@
 <div class="sidebar" [class.closed]="!isSidebarOpen" (mouseover)="openSidebar()" (mouseleave)="closeSidebar()">
 
+  <div class="sidebar-image">
+    <img src="assets/guitar-sidebar.png" alt="Guitar Logo">
+  </div>
+
   <ul class="menu-list">
     <!-- Inicio (visible para todos) -->
     <li *ngIf="isVisibleForAll()">

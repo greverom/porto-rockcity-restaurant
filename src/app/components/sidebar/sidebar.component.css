@@ -20,7 +20,21 @@
   padding: 21px 8px; 
 }
 
-/* Estilo del botón para alternar el estado del sidebar */
+.sidebar-image {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  margin-bottom: 35px; 
+  transition: width 0.4s ease, height 0.4s ease; 
+}
+
+.sidebar-image img {
+  width: 50px; 
+  height: auto;
+  max-width: 100%; 
+  transition: width 0.4s ease; 
+}
+
 .toggle-button {
   background: none;
   border: none;
