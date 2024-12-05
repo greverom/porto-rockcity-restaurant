@@ -1,21 +1,20 @@
 <div class="gestion-alimentos-container">
-  <h1>Gestión de Alimentos</h1>
+  <h1 class="text-center">Gestión de Alimentos</h1>
 
-  <div class="d-flex justify-content-center mt-3">
-    <button
-      class="btn btn-primary"
-      (click)="toggleChildRoute()">
-      {{ currentRoute.includes('/crud') ? 'Mostrar Alimentos' : 'Administrar Alimentos' }}
-    </button>
+ <div class="d-flex justify-content-center align-items-center">
+  <button class="custom-btn me-2" (click)="toggleChildRoute()">
+    {{ currentRoute.includes('/crud') ? 'Mostrar Alimentos' : 'Administrar Alimentos' }}
+  </button>
+  <button
+    class="custom-btn"
+    *ngIf="currentRoute.includes('/crud') || currentRoute.includes('/mostrar-alimentos')"
+    (click)="volverPaginaPrincipal()">
+    Volver a Página Principal
+  </button>
+</div>
+
+  <!-- Contenedor con animación -->
+  <div class="animated-container animate__animated" [ngClass]="animationClass">
+    <router-outlet></router-outlet>
   </div>
-
-  <div class="d-flex justify-content-center mt-4" *ngIf="currentRoute.includes('/crud') || currentRoute.includes('/mostrar-alimentos')">
-    <button
-      class="btn btn-dark"
-      (click)="volverPaginaPrincipal()">
-      Volver a Página Principal
-    </button>
-  </div>
-
-  <router-outlet></router-outlet>
 </div>

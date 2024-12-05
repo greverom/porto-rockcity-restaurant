@@ -14,11 +14,19 @@ import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/rou
   styleUrl: './gestion-alimentos.component.css'
 })
 export class GestionAlimentosComponent {
-  currentRoute: string = ''; 
+  currentRoute: string = '';
+  animationClass: string = ''; 
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     this.router.events.subscribe(() => {
       this.currentRoute = this.router.url;
+
+      const childRoute = this.activatedRoute.firstChild;
+      if (childRoute && childRoute.snapshot.data['animation']) {
+        this.animationClass = childRoute.snapshot.data['animation'];
+      } else {
+        this.animationClass = ''; 
+      }
     });
   }
 

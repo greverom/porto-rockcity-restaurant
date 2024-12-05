@@ -21,13 +21,13 @@ export const routes: Routes = [
         path: 'crud',
         loadComponent: () => import('./components/crud-alimentos/crud-alimentos.component').then(m => m.CrudAlimentoComponent),
         canActivate: [authGuard, roleGuard],
-        data: { roles: ['ADMINISTRADORES'] }, 
+        data: { roles: ['ADMINISTRADORES'], animation: 'animate__fadeInRight' }, 
       },
       {
         path: 'mostrar-alimentos',
         loadComponent: () => import('./components/mostrar-alimentos/mostrar-alimentos.component').then(m => m.MostrarAlimentosComponent),
         canActivate: [authGuard, roleGuard],
-        data: { roles: ['ADMINISTRADORES'] }, 
+        data: { roles: ['ADMINISTRADORES'], animation: 'animate__fadeInLeft' }, 
       }
     ]
   },

@@ -1,5 +1,5 @@
 .gestion-alimentos-container {
-  padding: 20px;
+  padding: 30px;
   text-align: center;
   height: 100vh;
   background-color: #f5f5f5;
@@ -13,43 +13,47 @@
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.btn-primary {
-  background: linear-gradient(90deg, #ff8c00, #ff6600); 
-  color: white;
+.botones-container {
+  margin-bottom: 2rem; 
+}
+
+.custom-btn {
+  color: #333; /* Texto oscuro */
+  border: 2px solid #ff9800; /* Mismo color del fondo */
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 8px;
-  border: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
+  text-align: center;
 }
 
-.btn-primary:hover {
-  transform: scale(1.05); 
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+.custom-btn:hover {
+  background-color: transparent; /* Fondo transparente en hover */
+  color: #ff9800; /* Texto naranja */
+  border: 2px solid #ff9800; /* Resalta el borde */
 }
 
-.btn-dark {
-  background-color: #343a40; 
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 8px;
-  border: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.btn-dark:hover {
-  background-color: #495057; 
-  transform: scale(1.05); 
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+.d-flex {
+  gap: 1rem; /* Espaciado entre botones */
 }
 
 /* Margen superior para el router-outlet */
 .gestion-alimentos-container router-outlet {
   display: block; 
-  border-top: 3px solid #a2998d; 
   margin-top: 20px; 
   padding-top: 15px; 
+}
+
+.animated-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; 
+}
+
+.animate__fadeInRight,
+.animate__fadeInLeft {
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
 }
