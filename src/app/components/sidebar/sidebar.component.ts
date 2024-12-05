@@ -45,8 +45,12 @@ export class SidebarComponent implements OnInit {
     return !this.isSidebarOpen;
   }
 
-  toggleSidebar(): void {
-    this.isSidebarOpen = !this.isSidebarOpen;
+  openSidebar(): void {
+    this.isSidebarOpen = true; 
+  }
+
+  closeSidebar(): void {
+    this.isSidebarOpen = false; 
   }
 
   isVisibleForAll(): boolean {

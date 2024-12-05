@@ -1,8 +1,4 @@
-<div class="sidebar" [class.closed]="!isSidebarOpen">
-  <!-- Botón para alternar el estado del sidebar -->
-  <button class="toggle-button" (click)="toggleSidebar()">
-    <i class="fas" [ngClass]="isSidebarOpen ? 'fa-angle-left' : 'fa-angle-right'"></i>
-  </button>
+<div class="sidebar" [class.closed]="!isSidebarOpen" (mouseover)="openSidebar()" (mouseleave)="closeSidebar()">
 
   <ul class="menu-list">
     <!-- Inicio (visible para todos) -->
