@@ -27,7 +27,6 @@ export class AlimentosService {
   // Obtener alimentos de una categoría específica
   async obtenerAlimentosPorCategoria(categoria: string, subcategoria?: string): Promise<AlimentoModel[]> {
   try {
-    // Si hay subcategoría, buscar en esa ruta específica
     if (categoria === 'bebidas' && subcategoria) {
       const subcategoriaRef = ref(this.db, `alimentos/${categoria}/${subcategoria}`);
       const snapshot = await get(subcategoriaRef);
@@ -109,20 +108,32 @@ export class AlimentosService {
             const item = value as Record<string, any>;
   
             if (item['nombre'] && typeof item['nombre'] === 'string' && item['nombre'].toLowerCase().includes(query.toLowerCase())) {
-              resultados.push(item as AlimentoModel); // Convertimos a `AlimentoModel`.
+              resultados.push(item as AlimentoModel); 
             } else {
-              procesarNodo(item); // Llamada recursiva si no es un alimento.
+              procesarNodo(item); 
             }
           }
         });
       }
     };
   
-    procesarNodo(alimentos); // Inicia la búsqueda recursiva.
+    procesarNodo(alimentos); 
   
     return resultados;
   }
 
+  async obtenerAlimentoPorId(categoria: string, id: string): Promise<AlimentoModel | null> {
+    const alimentoRef = ref(this.db, `alimentos/${categoria}/${id}`);
+    const snapshot = await get(alimentoRef);
+  
+    if (snapshot.exists()) {
+      const alimentoData = snapshot.val();
+      return { id, ...alimentoData } as AlimentoModel;
+    } else {
+      console.error(`No se encontró el alimento con ID: ${id} en la categoría: ${categoria}`);
+      return null;
+    }
+  }
 
   // Editar un alimento
   async editarAlimento(alimento: AlimentoModel): Promise<void> {

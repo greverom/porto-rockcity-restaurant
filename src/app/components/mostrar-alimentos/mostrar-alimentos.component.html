@@ -4,13 +4,22 @@
     <h1 class="text-center">Menú</h1>
 
     <!-- Input de busqueda -->
-    <div class="buscar-alimento">
+    <div class="buscar-alimento position-relative">
       <input 
         type="text" 
-        class="form-control" 
+        class="form-control search-input" 
         placeholder="Buscar alimento por nombre" 
         aria-label="Buscar alimento"
-        (input)="onSearchInput($event)" />
+        (input)="onSearchInput($event)" 
+      />
+      <svg 
+        class="search-icon" 
+        xmlns="http://www.w3.org/2000/svg" 
+        height="24px" 
+        viewBox="0 -960 960 960" 
+        width="24px" >
+        <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/>
+      </svg>
     </div>
   
     <!-- Select de categoría -->
@@ -40,7 +49,7 @@
 
        <!-- Tarjeta de alimentos -->
       <div class="alimentos-grid mt-5"  *ngIf="alimentos.length > 0">
-        <div *ngFor="let alimento of alimentos" class="alimento-card">
+        <div *ngFor="let alimento of alimentos" class="alimento-card" (click)="seleccionarAlimento(alimento)">
           <div class="alimento-details">
             <h5>{{ alimento.nombre }}</h5>
             <p>{{ alimento.descripcion }}</p>
@@ -53,4 +62,72 @@
       <div *ngIf="alimentos.length < 1 && searchQuery" class="text-center mt-5">
         <p class="text-muted">No se encontraron alimentos para "<strong>{{ searchQuery }}</strong>".</p>
       </div>
+  </div>
+
+  <div *ngIf="isModalOpen" class="modal-overlay">
+    <div class="modal-content">
+      <h4>Editar Alimento</h4>
+      <form>
+        <!-- Nombre -->
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input 
+            id="nombre" 
+            type="text" 
+            class="form-control" 
+            [(ngModel)]="selectedAlimento!.nombre" 
+            name="nombre" />
+        </div>
+  
+        <!-- Descripción -->
+        <div class="form-group">
+          <label for="descripcion">Descripción</label>
+          <textarea 
+            id="descripcion" 
+            class="form-control" 
+            [(ngModel)]="selectedAlimento!.descripcion" 
+            name="descripcion"></textarea>
+        </div>
+  
+        <!-- Precio -->
+        <div class="form-group">
+          <label for="precio">Precio</label>
+          <input 
+            id="precio" 
+            type="number" 
+            class="form-control" 
+            [(ngModel)]="selectedAlimento!.precio" 
+            name="precio" />
+        </div>
+  
+        <!-- Cantidad -->
+        <div class="form-group">
+          <label for="cantidad">Cantidad Restante</label>
+          <input 
+            id="cantidad" 
+            type="number" 
+            class="form-control" 
+            [(ngModel)]="selectedAlimento!.cantidadRestante" 
+            name="cantidad" />
+        </div>
+        <div class="form-group">
+          <label for="activo">Disponible</label>
+          <label class="switch">
+            <input
+              id="activo"
+              type="checkbox"
+              [(ngModel)]="selectedAlimento!.activo"
+              name="activo"
+            />
+            <span class="slider round"></span>
+          </label>
+        </div>
+  
+        <!-- Botones -->
+        <div class="modal-actions mt-3 d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="guardarCambios()">Guardar</button>
+        </div>
+      </form>
+    </div>
   </div>

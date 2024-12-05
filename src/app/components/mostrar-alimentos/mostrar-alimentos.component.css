@@ -1,6 +1,6 @@
 .mostrar-alimentos-container {
     padding: 20px;
-    background: #fff;
+    background: transparent;
     text-align: center;
   }
   
@@ -14,7 +14,7 @@
   .buscar-alimento {
     margin-bottom: 20px; 
     display: flex;
-    justify-content: center; 
+    justify-content: right; 
   }
   
   .buscar-alimento .form-control {
@@ -31,22 +31,32 @@
     box-shadow: 0 0 8px rgba(255, 102, 0, 0.5);
     outline: none;
   }
-  
-  .filtro-categoria {
-    margin-top: 20px;
+
+  .search-icon {
+    position: absolute;
+    right: 10px; 
+    top: 50%; 
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: fill 0.3s ease;
   }
   
-  .form-label {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #333;
+  .filtro-categoria label,
+  .filtro-subcategoria label {
+    font-weight: normal; 
+    text-align: left; 
+    margin-bottom: 8px;
+    display: block; 
   }
   
-  .form-select {
+  .filtro-categoria select,
+  .filtro-subcategoria select {
     width: 300px;
-    padding: 10px;
-    border-radius: 8px;
-    margin: 0 auto;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: left; 
   }
 
   .alimentos-grid {
@@ -91,6 +101,52 @@
     font-weight: bold;
     color: #333; 
   }
+
+  /* Estilo del interruptor */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4caf50; 
+}
+
+input:checked + .slider:before {
+  transform: translateX(14px); 
+}
   
   .alimento-card .precio {
     font-weight: bold;
@@ -99,4 +155,107 @@
   
   .alimento-card .cantidad {
     color: #007bff; 
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: rgba(255, 255, 255, 0.9); 
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    max-width: 90%;
+  }
+  
+  h4 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .modal-content label {
+    display: block; 
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+  
+  .modal-content input,
+  .modal-content textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: left; 
+  }
+  
+  textarea {
+    resize: none; 
+  }
+  
+  input[type="number"] {
+    -moz-appearance: textfield; 
+    -webkit-appearance: none;
+    appearance: none; 
+    margin: 0; 
+  }
+  
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px; 
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  button:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  button[type="button"].btn-primary {
+    background: linear-gradient(90deg, #ff8c00, #ff6600); 
+    color: white;
+  }
+  
+  button[type="button"].btn-primary:hover {
+    background: linear-gradient(90deg, #ff6600, #e65c00); 
+  }
+  
+  button[type="button"].btn-secondary {
+    background: linear-gradient(90deg, #4c4c4c, #2c2c2c);
+    color: white;
+  }
+  
+  button[type="button"].btn-secondary:hover {
+    background: linear-gradient(90deg, #2c2c2c, #1c1c1c); 
   }

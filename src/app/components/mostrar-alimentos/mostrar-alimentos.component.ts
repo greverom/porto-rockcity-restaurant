@@ -25,7 +25,10 @@ export class MostrarAlimentosComponent{
 
   selectedCategoria: string = '';
   selectedSubcategoria: string = '';
-  subcategories: string[] = []; 
+  subcategories: string[] = [];
+  
+  isModalOpen: boolean = false;
+  selectedAlimento: AlimentoModel | null = null;
 
   constructor(private alimentosService: AlimentosService) {}
 
@@ -41,7 +44,7 @@ export class MostrarAlimentosComponent{
         console.error('Error al buscar alimentos:', error);
       }
     } else {
-      this.alimentos = []; // Limpia los resultados si el input está vacío.
+      this.alimentos = []; 
     }
   }
 
@@ -104,5 +107,49 @@ export class MostrarAlimentosComponent{
     } catch (error) {
       console.error('Error al obtener alimentos:', error);
     }
+  }
+
+  async toggleActivo(alimento: AlimentoModel): Promise<void> {
+    const nuevoEstado = !alimento.activo;
+  
+    try {
+      await this.alimentosService.cambiarDisponibilidad(alimento.categoria, alimento.id, nuevoEstado);
+      alimento.activo = nuevoEstado;
+    } catch (error) {
+      console.error('Error al cambiar el estado de disponibilidad del alimento:', error);
+    }
+  }
+  
+  async seleccionarAlimento(alimento: AlimentoModel): Promise<void> {
+    try {
+      this.selectedAlimento = await this.alimentosService.obtenerAlimentoPorId(alimento.categoria, alimento.id);
+      if (this.selectedAlimento) {
+        this.isModalOpen = true; 
+      }
+    } catch (error) {
+      console.error('Error al obtener los datos del alimento:', error);
+    }
+  }
+
+  async guardarCambios(): Promise<void> {
+    if (this.selectedAlimento) {
+      try {
+        await this.alimentosService.editarAlimento(this.selectedAlimento);
+        //console.log('Alimento actualizado correctamente.');
+        const index = this.alimentos.findIndex((al) => al.id === this.selectedAlimento?.id);
+          if (index !== -1) {
+            this.alimentos[index] = { ...this.selectedAlimento }; 
+          }
+        this.isModalOpen = false; 
+        this.selectedAlimento = null; 
+      } catch (error) {
+        console.error('Error al actualizar el alimento:', error);
+      }
+    }
+  }
+
+  cerrarModal(): void {
+    this.isModalOpen = false;
+    this.selectedAlimento = null;
   }
 }
