@@ -1,13 +1,16 @@
 <div class="mostrar-alimentos-container">
+
     <!-- Título -->
     <h1 class="text-center">Menú</h1>
 
+    <!-- Input de busqueda -->
     <div class="buscar-alimento">
-        <input 
-          type="text" 
-          class="form-control" 
-          placeholder="Buscar alimento por nombre" 
-          aria-label="Buscar alimento" />
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Buscar alimento por nombre" 
+        aria-label="Buscar alimento"
+        (input)="onSearchInput($event)" />
     </div>
   
     <!-- Select de categoría -->
@@ -24,14 +27,30 @@
       </div>
       
       <div class="filtro-subcategoria mt-4" *ngIf="subcategories.length > 0">
-        <label for="subcategoria" class="form-label">Seleccione una Subcategoría:</label>
+        <label for="subcategoria" class="form-label">Seleccione tipo de bebida:</label>
         <select 
           id="subcategoria" 
           class="form-select" 
           [(ngModel)]="selectedSubcategoria" 
           (change)="onSubcategoriaChange()">
-          <option value="">Seleccione una subcategoría</option>
+          <option value="">Seleccione un tipo de bebida</option>
           <option *ngFor="let sub of subcategories" [value]="sub">{{ sub }}</option>
         </select>
+      </div>
+
+       <!-- Tarjeta de alimentos -->
+      <div class="alimentos-grid mt-5"  *ngIf="alimentos.length > 0">
+        <div *ngFor="let alimento of alimentos" class="alimento-card">
+          <div class="alimento-details">
+            <h5>{{ alimento.nombre }}</h5>
+            <p>{{ alimento.descripcion }}</p>
+            <p><strong>Precio:</strong> ${{ alimento.precio.toFixed(2) }}</p>
+            <p><strong>Disponible:</strong> {{ alimento.activo ? 'Sí' : 'No' }}</p>
+            <p><strong>Cantidad Restante:</strong> {{ alimento.cantidadRestante }}</p>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="alimentos.length < 1 && searchQuery" class="text-center mt-5">
+        <p class="text-muted">No se encontraron alimentos para "<strong>{{ searchQuery }}</strong>".</p>
       </div>
   </div>

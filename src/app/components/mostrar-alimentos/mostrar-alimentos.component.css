@@ -48,3 +48,55 @@
     border-radius: 8px;
     margin: 0 auto;
   }
+
+  .alimentos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .alimento-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid rgb(209, 209, 209);
+    background: rgba(255, 255, 255, 0.9); 
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: left; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 0.85rem; 
+  }
+  
+  .alimento-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+  }
+  
+  .alimento-card h5 {
+    font-size: 1rem; 
+    margin-bottom: 8px;
+    color: #333; 
+  }
+  
+  .alimento-card p {
+    font-size: 0.85rem; 
+    margin-bottom: 5px;
+    color: #555; 
+  }
+  
+  .alimento-card p strong {
+    font-weight: bold;
+    color: #333; 
+  }
+  
+  .alimento-card .precio {
+    font-weight: bold;
+    color: #ff8c00; 
+  }
+  
+  .alimento-card .cantidad {
+    color: #007bff; 
+  }

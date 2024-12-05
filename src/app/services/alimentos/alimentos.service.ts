@@ -25,20 +25,48 @@ export class AlimentosService {
   }
 
   // Obtener alimentos de una categoría específica
-  async obtenerAlimentosPorCategoria(categoria: string): Promise<AlimentoModel[]> {
+  async obtenerAlimentosPorCategoria(categoria: string, subcategoria?: string): Promise<AlimentoModel[]> {
+  try {
+    // Si hay subcategoría, buscar en esa ruta específica
+    if (categoria === 'bebidas' && subcategoria) {
+      const subcategoriaRef = ref(this.db, `alimentos/${categoria}/${subcategoria}`);
+      const snapshot = await get(subcategoriaRef);
+      if (!snapshot.exists()) {
+        return [];
+      }
+
+      const alimentos = snapshot.val();
+      return Object.keys(alimentos).map((id) => ({
+        ...alimentos[id],
+        id, 
+      }));
+    }
+
     const categoriaRef = ref(this.db, `alimentos/${categoria}`);
     const snapshot = await get(categoriaRef);
-  
     if (!snapshot.exists()) {
       return [];
     }
-  
+
     const alimentos = snapshot.val();
-    return Object.keys(alimentos).map((id) => ({
-      ...alimentos[id],
-      id, 
-    }));
+    if (categoria === 'bebidas') {
+      return Object.keys(alimentos).flatMap((key) =>
+        Object.keys(alimentos[key]).map((id) => ({
+          ...alimentos[key][id],
+          id,
+        }))
+      );
+    } else {
+      return Object.keys(alimentos).map((id) => ({
+        ...alimentos[id],
+        id,
+      }));
+    }
+  } catch (error) {
+    console.error('Error al obtener alimentos:', error);
+    return [];
   }
+}
 
   // Obtener todos los alimentos
   async obtenerAlimentos(): Promise<AlimentoModel[]> {
@@ -58,6 +86,43 @@ export class AlimentosService {
     }
     return alimentosArray;
   }
+
+  async buscarAlimentosPorNombre(query: string): Promise<AlimentoModel[]> {
+    if (!query.trim()) {
+      return []; 
+    }
+  
+    const alimentosRef = ref(this.db, 'alimentos');
+    const snapshot = await get(alimentosRef);
+  
+    if (!snapshot.exists()) {
+      return []; 
+    }
+  
+    const alimentos = snapshot.val();
+    const resultados: AlimentoModel[] = [];
+  
+    const procesarNodo = (nodo: any): void => {
+      if (typeof nodo === 'object' && nodo !== null) {
+        Object.entries(nodo).forEach(([key, value]) => {
+          if (typeof value === 'object' && value !== null) {
+            const item = value as Record<string, any>;
+  
+            if (item['nombre'] && typeof item['nombre'] === 'string' && item['nombre'].toLowerCase().includes(query.toLowerCase())) {
+              resultados.push(item as AlimentoModel); // Convertimos a `AlimentoModel`.
+            } else {
+              procesarNodo(item); // Llamada recursiva si no es un alimento.
+            }
+          }
+        });
+      }
+    };
+  
+    procesarNodo(alimentos); // Inicia la búsqueda recursiva.
+  
+    return resultados;
+  }
+
 
   // Editar un alimento
   async editarAlimento(alimento: AlimentoModel): Promise<void> {
