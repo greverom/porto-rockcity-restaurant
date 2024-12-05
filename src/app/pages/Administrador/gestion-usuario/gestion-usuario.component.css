@@ -1,19 +1,22 @@
 :host {
   display: block;
-  min-height: 100vh; /* Asegura que el fondo cubra toda la altura */
-  background: linear-gradient(to bottom, #2f343b, #3a4353); /* Gradiente del home */
-  color: white; /* Texto en color blanco para visibilidad */
-  padding: 20px; /* Espaciado alrededor del contenido */
+  min-height: 100vh; 
+  background: linear-gradient(to bottom, #f1f1f1, #dfe1e2); 
+  color: white; 
+  padding: 20px; 
 }
 
 .table-container {
-  background: rgba(255, 255, 255, 0.15) !important; /* Fondo translúcido */
-  border-radius: 12px; /* Bordes más redondeados */
+  background: rgba(192, 192, 192, 0) !important; 
+  border-radius: 12px; 
   padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); /* Sombra */
-  backdrop-filter: blur(10px); /* Efecto de vidrio */
-  -webkit-backdrop-filter: blur(10px); /* Compatibilidad con Safari */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Borde translúcido */
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px); 
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.table-container h3{
+  color: #333;
 }
 
 .button-container {
