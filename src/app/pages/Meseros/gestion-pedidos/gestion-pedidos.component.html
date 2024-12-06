@@ -1,1 +1,19 @@
-<p>gestion-pedidos works!</p>
+<div class="mesas-container">
+    <div *ngFor="let mesa of mesas" class="mesa-card" (click)="openAsignarModal(mesa.id)" [class.reserved]="mesa.estado === 'RESERVADA'" [class.occupied]="mesa.estado === 'OCUPADA'" [class.selected]="mesa.id === selectedMesa?.id">
+      <h3>Mesa {{ mesa.numero }}</h3>
+      <p><strong>Estado:</strong> {{ mesa.estado }}</p>
+      <p><strong>Capacidad:</strong> {{ mesa.capacidad }}</p>
+      <p><strong>Total:</strong> ${{ mesa.total }}</p>
+    </div>
+</div>
+
+<div *ngIf="showAsignarModal" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Asignar Mesa {{ selectedMesa?.numero }}</h3>
+      <p><strong>Capacidad:</strong> {{ selectedMesa?.capacidad }}</p>
+      <p><strong>Estado:</strong> {{ selectedMesa?.estado }}</p>
+  
+      <button class="confirm-button" (click)="onAsignarMesa()">Asignar Mesa</button>
+      <button class="cancel-button" (click)="closeAsignarModal()">Cancelar</button>
+    </div>
+  </div>

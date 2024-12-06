@@ -6,7 +6,7 @@ import { MesaService } from '../../../services/mesas/mesa.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalDto, modalInitializer } from '../../../components/modal/modal.dto';
 import { ModalComponent } from '../../../components/modal/modal.component';
-import { selectIsAdmin, selectUserData } from '../../../store/user/user.selectors';
+import { selectUserData } from '../../../store/user/user.selectors';
 import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
 
