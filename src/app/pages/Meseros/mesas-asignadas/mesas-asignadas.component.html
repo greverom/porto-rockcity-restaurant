@@ -1,0 +1,14 @@
+<div class="mesas-container">
+    <div *ngFor="let mesa of mesasAsignadas" class="mesa-card" (click)="selectMesa(mesa.id)"
+    [class.selected]="mesa.id === selectedMesa?.id">
+      <h3>Mesa {{ mesa.numero }}</h3>
+      <p><strong>Capacidad:</strong> {{ mesa.capacidad }}</p>
+      <p><strong>Total:</strong> ${{ mesa.total }}</p>
+    </div>
+</div>
+
+<div class="selected-mesa" *ngIf="selectedMesa">
+    <h2>Detalles de la Mesa</h2>
+    <p><strong>Número:</strong> {{ selectedMesa.numero }}</p>
+    <p><strong>Total:</strong> ${{ selectedMesa.total }}</p>
+</div>

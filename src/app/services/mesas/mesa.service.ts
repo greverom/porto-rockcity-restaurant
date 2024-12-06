@@ -139,4 +139,19 @@ async getReservaById(reservaId: string): Promise<ReservaModel | null> {
       return null;
     }
   }
+  
+//Obtener mesas por id del mesero
+async getMesasPorMeseroId(meseroId: string): Promise<MesaModel[]> {
+  try {
+    const snapshot = await get(ref(this.db, 'mesas'));
+    if (snapshot.exists()) {
+      const mesas = Object.values(snapshot.val()) as MesaModel[];
+      return mesas.filter((mesa) => mesa.meseroId === meseroId && mesa.estado === MesaEstado.OCUPADA);
+    }
+    return [];
+  } catch (error) {
+    console.error('Error al obtener las mesas asignadas:', error);
+    throw new Error('No se pudieron cargar las mesas asignadas.');
+  }
+}
 }

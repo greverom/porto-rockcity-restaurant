@@ -76,6 +76,10 @@ export const routes: Routes = [
     data: { roles: ['EMPLEADOS'] },
   },
   {
+    path: 'mesas-asignadas',
+    loadComponent: () => import('./pages/Meseros/mesas-asignadas/mesas-asignadas.component').then(m => m.MesasAsignadasComponent),
+  },
+  {
     path: 'reservas',
     loadComponent: () => import('./pages/Meseros/reservas/reservas.component').then(m => m.ReservasComponent),
     canActivate: [authGuard, roleGuard],

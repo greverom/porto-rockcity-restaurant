@@ -4,12 +4,14 @@ import { MesaService } from '../../../services/mesas/mesa.service';
 import { CommonModule } from '@angular/common';
 import { selectUserData } from '../../../store/user/user.selectors';
 import { Store } from '@ngrx/store';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-gestion-pedidos',
   standalone: true,
   imports: [
-      CommonModule
+      CommonModule,
+      FormsModule
   ],
   templateUrl: './gestion-pedidos.component.html',
   styleUrl: './gestion-pedidos.component.css'
@@ -72,16 +74,25 @@ export class GestionPedidosComponent implements OnInit {
       console.error('Faltan datos para asignar la mesa.');
       return;
     }
-
+  
     try {
+      const nuevaCapacidad = this.selectedMesa.capacidad;
+  
+      if (!nuevaCapacidad || nuevaCapacidad < 1) {
+        console.error('La capacidad debe ser un número válido y mayor a 0.');
+        return;
+      }
+  
       await this.mesaService.updateMesa(this.selectedMesa.id, {
         estado: MesaEstado.OCUPADA,
-        meseroId: this.meseroId,    
+        meseroId: this.meseroId,
+        capacidad: nuevaCapacidad, 
       });
-
+  
       this.selectedMesa.estado = MesaEstado.OCUPADA;
       this.selectedMesa.meseroId = this.meseroId;
-
+      this.selectedMesa.capacidad = nuevaCapacidad; 
+  
       this.showAsignarModal = false;
       await this.loadMesas(); 
       console.log('Datos de la mesa asignada:', this.selectedMesa);

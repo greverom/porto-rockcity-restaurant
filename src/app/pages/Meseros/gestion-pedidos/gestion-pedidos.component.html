@@ -8,12 +8,23 @@
 </div>
 
 <div *ngIf="showAsignarModal" class="modal-overlay">
-    <div class="modal-content">
-      <h3>Asignar Mesa {{ selectedMesa?.numero }}</h3>
-      <p><strong>Capacidad:</strong> {{ selectedMesa?.capacidad }}</p>
-      <p><strong>Estado:</strong> {{ selectedMesa?.estado }}</p>
-  
+  <div class="modal-content">
+    <h3>Asignar Mesa {{ selectedMesa?.numero }}</h3>
+
+    <div class="form-group">
+      <label for="capacidad">Cantidad de Clientes</label>
+      <input
+        id="capacidad"
+        type="number"
+        [(ngModel)]="selectedMesa!.capacidad"
+        placeholder="Ingrese la cantidad de clientes"
+        min="1"
+        required/>
+    </div>
+
+    <div class="button-container">
       <button class="confirm-button" (click)="onAsignarMesa()">Asignar Mesa</button>
       <button class="cancel-button" (click)="closeAsignarModal()">Cancelar</button>
     </div>
   </div>
+</div>

@@ -1,0 +1,39 @@
+.mesas-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.mesa-card {
+  width: 300px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.mesa-card:hover {
+  transform: scale(1.05);
+  background-color: #f1f1f1;
+}
+
+.mesa-card.selected {
+  border: 2px solid #007bff;
+  background-color: #e7f3ff;
+}
+
+.selected-mesa {
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #e7e9eb;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
