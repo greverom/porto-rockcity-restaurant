@@ -4,6 +4,7 @@ import { MesaService } from '../../../services/mesas/mesa.service';
 import { CommonModule } from '@angular/common';
 import { ModalDto, modalInitializer } from '../../../components/modal/modal.dto';
 import { ModalComponent } from '../../../components/modal/modal.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-crud-mesas',
@@ -11,7 +12,8 @@ import { ModalComponent } from '../../../components/modal/modal.component';
   imports: [
       CommonModule,
       ReactiveFormsModule,
-      ModalComponent
+      ModalComponent,
+      RouterModule
   ],
   templateUrl: './crud-mesas.component.html',
   styleUrl: './crud-mesas.component.css'

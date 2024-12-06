@@ -3,10 +3,8 @@ import { authGuard } from './guards/auth.guard';
 import { roleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
-  // Ruta por defecto
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
 
-  // Rutas públicas
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadComponent: () => import('./pages/Paginas_iniciales/home/home.component').then(m => m.HomeComponent) },
   { path: 'login', loadComponent: () => import('./pages/Paginas_iniciales/login/login.component').then(m => m.LoginComponent) },
   
