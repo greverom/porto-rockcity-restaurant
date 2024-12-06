@@ -1,0 +1,42 @@
+<div class="form-container">
+    <h2>Crear Mesa</h2>
+    <form [formGroup]="mesaForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="numero">Número de la Mesa</label>
+        <input
+          id="numero"
+          type="number"
+          formControlName="numero"
+          placeholder="Ingrese el número de la mesa"
+          required
+        />
+        <div *ngIf="mesaForm.get('numero')?.invalid && mesaForm.get('numero')?.touched" class="error">
+          El número de la mesa es obligatorio.
+        </div>
+      </div>
+  
+      <!-- Capacidad -->
+      <div class="form-group">
+        <label for="capacidad">Capacidad</label>
+        <input
+          id="capacidad"
+          type="number"
+          formControlName="capacidad"
+          placeholder="Capacidad de la mesa (opcional)"
+        />
+      </div>
+  
+      <!-- Botón de envío -->
+      <button type="submit" class="submit-button" [disabled]="mesaForm.invalid">
+        Crear Mesa
+      </button>
+    </form>
+  </div>
+
+  <app-modal
+  [showModal]="modal.show"
+  [message]="modal.message"
+  [isError]="modal.isError"
+  [isSuccess]="modal.isSuccess"
+  (close)="modal.close()">
+</app-modal>

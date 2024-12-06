@@ -38,7 +38,7 @@
     </li>
 
     <!-- Gestión de Mesas (solo para empleados) -->
-    <li *ngIf="isVisibleForEmployee()">
+    <li *ngIf="isVisibleForAdmin() || isVisibleForEmployee()">
       <a routerLink="/gestion-mesas" routerLinkActive="active">
         <i class="fas fa-chair"></i>
         <span *ngIf="isSidebarOpen">Gestión de Mesas</span>

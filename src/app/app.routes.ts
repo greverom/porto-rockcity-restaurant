@@ -32,6 +32,12 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'crud-mesas',
+    loadComponent: () => import('./pages/Administrador/crud-mesas/crud-mesas.component').then(m => m.CrudMesasComponent),
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMINISTRADORES'], animation: 'animate__fadeInLeft' }, 
+  },
+  {
     path: 'gestion-usuarios',
     loadComponent: () => import('./pages/Administrador/gestion-usuario/gestion-usuario.component').then(m => m.GestionUsuarioComponent),
     canActivate: [authGuard, roleGuard],
@@ -63,7 +69,7 @@ export const routes: Routes = [
     path: 'gestion-mesas',
     loadComponent: () => import('./pages/Meseros/gestion-mesas/gestion-mesas.component').then(m => m.GestionMesasComponent),
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['EMPLEADOS'] }, 
+    data: { roles: ['EMPLEADOS', 'ADMINISTRADORES'] }, 
   },
   {
     path: 'gestion-pedidos',

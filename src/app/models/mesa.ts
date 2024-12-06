@@ -8,6 +8,7 @@ export interface MesaModel {
     total: number;                 
     fechaUltimaActualizacion: Date;
     reservaId?: string;  
+    meseroId?: string;
   }
   
   export enum MesaEstado {
