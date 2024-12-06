@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Database, ref, set, update, remove, push, get } from '@angular/fire/database';
+import { Database, ref, set, update, remove, push, get, DatabaseReference } from '@angular/fire/database';
 import { MesaEstado, MesaModel, ReservaModel } from '../../models/mesa';
 
 
@@ -22,6 +22,8 @@ export class MesaService {
       pagos: [],
       total: 0,
       fechaUltimaActualizacion: new Date(),
+      reservaId: undefined,
+      meseroId: undefined,
     };
 
     await set(newMesaRef, mesaData);
@@ -62,17 +64,30 @@ export class MesaService {
   }
 
     // Crear una nueva reserva
-    async createReserva(reserva: Omit<ReservaModel, 'id' | 'fechaCreacion'>): Promise<void> {
+    async createReserva(reserva: Omit<ReservaModel, 'id' | 'fechaCreacion'>): Promise<DatabaseReference> {
       const reservaRef = ref(this.db, 'reservas');
-      const newReservaRef = push(reservaRef); 
+      const newReservaRef = push(reservaRef);
   
       const reservaData: ReservaModel = {
-        ...reserva,
-        id: newReservaRef.key || '', 
-        fechaCreacion: new Date(),  
+          ...reserva,
+          id: newReservaRef.key || '', 
+          fechaCreacion: new Date(),
       };
   
-      await set(newReservaRef, reservaData); 
+      await set(newReservaRef, reservaData);
+      return newReservaRef; 
+  }
+
+    //Eliminar reserva de mesa
+    async deleteReserva(reservaId: string): Promise<void> {
+      try {
+        const reservaRef = ref(this.db, `reservas/${reservaId}`);
+        await remove(reservaRef);
+        //console.log('Reserva eliminada exitosamente.');
+      } catch (error) {
+        console.error('Error al eliminar la reserva:', error);
+        throw new Error('No se pudo eliminar la reserva.');
+      }
     }
 
   // Eliminar una mesa

@@ -7,7 +7,7 @@ export interface MesaModel {
     pagos: PagoMesaModel[];        
     total: number;                 
     fechaUltimaActualizacion: Date;
-    reservaId?: string;  
+    reservaId?: string | null;  
     meseroId?: string;
   }
   

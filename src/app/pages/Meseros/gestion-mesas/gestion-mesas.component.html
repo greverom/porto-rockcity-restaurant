@@ -25,6 +25,9 @@
   <p><strong>Total:</strong> ${{ selectedMesa.total }}</p>
   <p><strong>Última Actualización:</strong> {{ selectedMesa.fechaUltimaActualizacion | date }}</p>
   <button class="reserve-button" (click)="openReservaModal()" [disabled]="selectedMesa.estado === 'RESERVADA'">Reservar Mesa</button>
+  <button class="delete-button" *ngIf="selectedMesa.estado === 'RESERVADA' && selectedMesa.reservaId"  (click)="onEliminarReserva()">
+    Eliminar Reserva
+  </button>
 </div>
 
 

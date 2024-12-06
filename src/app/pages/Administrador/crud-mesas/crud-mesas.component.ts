@@ -43,6 +43,8 @@ export class CrudMesasComponent implements OnInit {
       pagos: [],
       total: 0,
       fechaUltimaActualizacion: new Date(),
+      reservaId: undefined, 
+      meseroId: undefined,
     };
 
     try {
