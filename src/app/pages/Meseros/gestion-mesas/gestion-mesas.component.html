@@ -1,4 +1,4 @@
-<div class="button-container">
+<div class="button-container" *ngIf="isAdmin$ | async">
     <button class="gradient-button" routerLink="/crud-mesas">
       <i class="fas fa-plus"></i> Agregar Mesa
     </button>
@@ -23,11 +23,34 @@
   <p><strong>Capacidad:</strong> {{ selectedMesa.capacidad }}</p>
   <p><strong>Estado:</strong> {{ selectedMesa.estado }}</p>
   <p><strong>Total:</strong> ${{ selectedMesa.total }}</p>
-  <p><strong>Última Actualización:</strong> {{ selectedMesa.fechaUltimaActualizacion | date }}</p>
-  <button class="reserve-button" (click)="openReservaModal()" [disabled]="selectedMesa.estado === 'RESERVADA'">Reservar Mesa</button>
-  <button class="delete-button" *ngIf="selectedMesa.estado === 'RESERVADA' && selectedMesa.reservaId"  (click)="onEliminarReserva()">
-    Eliminar Reserva
-  </button>
+
+  <!-- Línea divisora -->
+  <hr class="divider" />
+
+  <div *ngIf="selectedReserva">
+    <h3>Datos de la Reserva</h3>
+    <p><strong>Nombre del Cliente:</strong> {{ selectedReserva.clienteNombre }}</p>
+    <p><strong>Fecha de Reserva:</strong> {{ selectedReserva.fechaReserva | date }}</p>
+    <p><strong>Mesero:</strong> {{ selectedReserva.meseroNombre || 'No asignado' }}</p>
+    <p><strong>Número de Personas:</strong> {{ selectedReserva.numeroPersonas }}</p>
+  </div>
+
+  <!-- Botones -->
+  <button
+  class="reserve-button"
+  (click)="openReservaModal()"
+  [disabled]="selectedMesa.estado === 'RESERVADA'"
+  *ngIf="isAdmin$ | async"
+>
+  Reservar Mesa
+</button>
+<button
+  class="delete-button"
+  *ngIf="(isAdmin$ | async) && selectedMesa.estado === 'RESERVADA' && selectedMesa.reservaId" 
+  (click)="onEliminarReserva()"
+>
+  Eliminar Reserva
+</button>
 </div>
 
 

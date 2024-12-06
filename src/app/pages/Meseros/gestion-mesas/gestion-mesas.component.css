@@ -83,6 +83,12 @@
     border-radius: 4px;
   }
 
+  .divider {
+    border: none;
+    border-top: 2px solid #ccc; 
+    margin: 15px 0; 
+  }
+
   .selected-mesa .reserve-button {
     display: block;
     margin: 10px 0;

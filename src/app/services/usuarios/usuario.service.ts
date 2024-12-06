@@ -58,7 +58,7 @@ export class UsuarioService {
     const userRef = ref(this.db, `usuarios/${role}/${id}`);
     return update(userRef, updatedData)
       .then(() => {
-        console.log(`Usuario con ID ${id} actualizado correctamente.`);
+        //console.log(`Usuario con ID ${id} actualizado correctamente.`);
       })
       .catch((error) => {
         console.error(`Error al actualizar el usuario: ${error}`);
@@ -70,7 +70,7 @@ export class UsuarioService {
     const userRef = ref(this.db, `usuarios/${role}/${id}`);
     return remove(userRef)
       .then(() => {
-        console.log(`Usuario con ID ${id} eliminado correctamente.`);
+        //console.log(`Usuario con ID ${id} eliminado correctamente.`);
       })
       .catch((error) => {
         console.error(`Error al eliminar el usuario: ${error}`);

@@ -44,9 +44,10 @@ export interface MesaModel {
     mesaId: string;           
     clienteNombre: string;    
     numeroPersonas: number;   
-    fechaReserva: Date;       
+    fechaReserva: string | Date | null;   
+    meseroNombre?: string;  
     estado: ReservaEstado;    
-    fechaCreacion: Date;      
+    fechaCreacion: string | Date | null;      
   }
   
   export enum ReservaEstado {

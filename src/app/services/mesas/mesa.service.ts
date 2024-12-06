@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Database, ref, set, update, remove, push, get, DatabaseReference } from '@angular/fire/database';
 import { MesaEstado, MesaModel, ReservaModel } from '../../models/mesa';
+import { from, map, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -67,16 +68,41 @@ export class MesaService {
     async createReserva(reserva: Omit<ReservaModel, 'id' | 'fechaCreacion'>): Promise<DatabaseReference> {
       const reservaRef = ref(this.db, 'reservas');
       const newReservaRef = push(reservaRef);
-  
+    
       const reservaData: ReservaModel = {
-          ...reserva,
-          id: newReservaRef.key || '', 
-          fechaCreacion: new Date(),
+        ...reserva,
+        id: newReservaRef.key || '',
+        fechaReserva: (reserva.fechaReserva as Date).toISOString(), // Convertir Date a string
+        fechaCreacion: new Date().toISOString(), // Convertir a string
       };
-  
+    
       await set(newReservaRef, reservaData);
-      return newReservaRef; 
+      return newReservaRef;
+    }
+
+ // Obtener una reserva por su ID
+async getReservaById(reservaId: string): Promise<ReservaModel | null> {
+  try {
+    const reservaRef = ref(this.db, `reservas/${reservaId}`);
+    const snapshot = await get(reservaRef);
+
+    if (snapshot.exists()) {
+      const reserva = snapshot.val() as ReservaModel;
+
+      // Convertir las fechas de string a Date si existen
+      return {
+        ...reserva,
+        fechaReserva: reserva.fechaReserva ? new Date(reserva.fechaReserva as string) : null,
+        fechaCreacion: reserva.fechaCreacion ? new Date(reserva.fechaCreacion as string) : null,
+      };
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error al obtener la reserva:', error);
+    return null;
   }
+}
 
     //Eliminar reserva de mesa
     async deleteReserva(reservaId: string): Promise<void> {
@@ -94,5 +120,24 @@ export class MesaService {
   async deleteMesa(id: string): Promise<void> {
     const mesaRef = ref(this.db, `mesas/${id}`);
     await remove(mesaRef);
+  }
+
+  //obtener empleado por su id
+  async getEmpleadoById(id: string): Promise<{ nombres: string; apellidos: string } | null> {
+    try {
+      const empleadoRef = ref(this.db, `usuarios/empleados/${id}`);
+      const snapshot = await get(empleadoRef);
+      if (snapshot.exists()) {
+        const empleado = snapshot.val();
+        return {
+          nombres: empleado.nombres,
+          apellidos: empleado.apellidos,
+        };
+      }
+      return null;
+    } catch (error) {
+      console.error('Error al obtener los datos del empleado:', error);
+      return null;
+    }
   }
 }

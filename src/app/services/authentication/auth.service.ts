@@ -143,16 +143,16 @@ export class AuthService {
   }
 
   async restoreSession(): Promise<void> {
-    const token = localStorage.getItem('authToken'); // Obtén el token desde el localStorage
+    const token = localStorage.getItem('authToken'); 
   
     if (!token) {
-      console.warn('No hay token en el localStorage.');
+      //console.warn('No hay token en el localStorage.');
       return;
     }
   
     onAuthStateChanged(this.auth, async (user) => {
       if (!user) {
-        console.warn('El usuario no está autenticado en Firebase.');
+        //console.warn('El usuario no está autenticado en Firebase.');
         return;
       }
   
@@ -162,7 +162,7 @@ export class AuthService {
         const snapshot = await get(usersRef);
   
         if (!snapshot.exists()) {
-          console.error('No se encontraron datos de usuario en la base de datos.');
+          //console.error('No se encontraron datos de usuario en la base de datos.');
           return;
         }
   
@@ -206,7 +206,7 @@ export class AuthService {
   logout(): void {
     this.store.dispatch(unsetUserData());
     this.auth.signOut().then(() => {
-      console.log('Sesión cerrada correctamente.');
+      //console.log('Sesión cerrada correctamente.');
       localStorage.removeItem('authToken');
       this.router.navigate(['/home']);
     }).catch((error) => {

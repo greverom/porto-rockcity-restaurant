@@ -12,9 +12,9 @@ export interface Register {
 }
 
 export enum UserRole {
-  empleado = 'EMP',          
-  administrador = 'ADMIN',      
-  cocinero = 'COCINERO'  
+  empleado = 'EMPLEADOS',
+  administrador = 'ADMINISTRADORES',
+  cocinero = 'COCINEROS'
 }
 
 
