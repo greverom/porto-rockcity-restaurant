@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AlimentoMesaModel, MesaModel } from '../../../models/mesa';
 import { MesaService } from '../../../services/mesas/mesa.service';
 import { Store } from '@ngrx/store';
@@ -28,7 +28,8 @@ export class MesasAsignadasComponent implements OnInit {
 
   constructor(
     private mesaService: MesaService,
-    private store: Store
+    private store: Store,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
@@ -97,7 +98,7 @@ export class MesasAsignadasComponent implements OnInit {
   }
   
   seleccionarAlimento(alimento: AlimentoMesaModel): void {
-    console.log('Alimento seleccionado:', alimento); 
+    //console.log('Alimento seleccionado:', alimento); 
     this.selectedAlimento = alimento; 
     this.alimentoSeleccionado = alimento.nombre; 
     this.alimentosFiltrados = []; 
@@ -130,13 +131,48 @@ export class MesasAsignadasComponent implements OnInit {
         alimentos: this.selectedMesa.alimentos,
         total: this.selectedMesa.total,
       });
+
+      const mesaIndex = this.mesasAsignadas.findIndex((mesa) => mesa.id === this.selectedMesa!.id);
+       if (mesaIndex !== -1) {
+      this.mesasAsignadas[mesaIndex].total = this.selectedMesa.total;
+    }
   
       //console.log('Alimento agregado correctamente:', nuevoAlimento);
       this.selectedAlimento = null;
       this.alimentoSeleccionado = '';
       this.alimentosFiltrados = [];
+
+      this.cdr.detectChanges();
     } catch (error) {
       console.error('Error al agregar el alimento:', error);
+    }
+  }
+
+  async onEliminarAlimento(index: number): Promise<void> {
+    if (!this.selectedMesa) {
+      console.error('No hay mesa seleccionada.');
+      return;
+    }
+  
+    try {
+      const alimentoEliminado = this.selectedMesa.alimentos.splice(index, 1)[0];
+  
+      this.selectedMesa.total -= alimentoEliminado.subtotal;
+  
+      await this.mesaService.updateMesa(this.selectedMesa.id, {
+        alimentos: this.selectedMesa.alimentos,
+        total: this.selectedMesa.total,
+      });
+
+      const mesaIndex = this.mesasAsignadas.findIndex((mesa) => mesa.id === this.selectedMesa!.id);
+      if (mesaIndex !== -1) {
+        this.mesasAsignadas[mesaIndex].total = this.selectedMesa.total;
+      }
+
+      this.cdr.detectChanges();
+      //console.log('Alimento eliminado correctamente:', alimentoEliminado);
+    } catch (error) {
+      console.error('Error al eliminar el alimento:', error);
     }
   }
 }

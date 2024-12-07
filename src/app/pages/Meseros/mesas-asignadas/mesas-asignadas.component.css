@@ -88,9 +88,43 @@
   border-bottom: 1px solid #ddd;
 }
 
+.alimento-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  padding: 5px 0;
+}
+
+.alimento-item span {
+  flex-grow: 1; 
+}
+
+.delete-button {
+  background-color: #dc3545; 
+  color: #fff;
+  border: none;
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+.delete-button i {
+  font-size: 16px;
+}
+
 .confirm-button,
 .cancel-button {
-  width: 100px; /* Asegura que los botones tengan el mismo ancho */
+  width: 100px; 
   padding: 10px 15px;
   font-size: 14px;
   font-weight: bold;
@@ -101,7 +135,6 @@
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-/* Botón Confirmar */
 .confirm-button {
   background: linear-gradient(45deg, #fcb045, #fd1d1d);
   color: #fff;
@@ -112,7 +145,6 @@
   background: linear-gradient(45deg, #fd1d1d, #fcb045);
 }
 
-/* Botón Cancelar */
 .cancel-button {
   background: linear-gradient(45deg, #6c757d, #343a40);
   color: #fff;
@@ -124,11 +156,10 @@
   background: linear-gradient(45deg, #343a40, #6c757d);
 }
 
-/* Contenedor de botones */
 .button-container {
   display: flex;
-  justify-content: center; /* Centra los botones horizontalmente */
-  align-items: center; /* Alinea los botones verticalmente */
-  gap: 15px; /* Espaciado entre botones */
-  margin-top: 20px; /* Espaciado superior */
+  justify-content: center; 
+  align-items: center; 
+  gap: 15px; 
+  margin-top: 20px; 
 }
