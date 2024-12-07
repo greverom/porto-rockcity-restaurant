@@ -61,7 +61,20 @@ export class GestionMesasComponent {
   async loadMesas() {
     try {
       const mesas = await this.mesaService.getMesas();
-      this.mesas = mesas.sort((a, b) => a.numero - b.numero); 
+      this.mesas = mesas.sort((a, b) => a.numero - b.numero);
+
+      for (const mesa of this.mesas) {
+        if (mesa.meseroId) {
+          const mesero = await this.mesaService.getEmpleadoById(mesa.meseroId);
+          if (mesero) {
+            mesa.meseroId = `${mesero.nombres} ${mesero.apellidos}`; // Reutilizamos el campo para el nombre completo
+          } else {
+            mesa.meseroId = 'Desconocido';
+          }
+        } else {
+          mesa.meseroId = 'No asignado';
+        }
+      }
     } catch (error) {
       console.error('Error al cargar las mesas:', error);
     }

@@ -7,6 +7,12 @@
     </div>
 </div>
 
+<div class="button-container-mesas" *ngIf="mesasAsignadasCount > 0">
+  <button class="gradient-button" routerLink="/mesas-asignadas">
+    Mis mesas asignadas ({{ mesasAsignadasCount }})
+  </button>
+</div>
+
 <div *ngIf="showAsignarModal" class="modal-overlay">
   <div class="modal-content">
     <h3>Asignar Mesa {{ selectedMesa?.numero }}</h3>

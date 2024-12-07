@@ -5,13 +5,15 @@ import { CommonModule } from '@angular/common';
 import { selectUserData } from '../../../store/user/user.selectors';
 import { Store } from '@ngrx/store';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-pedidos',
   standalone: true,
   imports: [
       CommonModule,
-      FormsModule
+      FormsModule,
+      RouterModule
   ],
   templateUrl: './gestion-pedidos.component.html',
   styleUrl: './gestion-pedidos.component.css'
@@ -21,6 +23,7 @@ export class GestionPedidosComponent implements OnInit {
   meseroId: string | null = null;
   selectedMesa: MesaModel | null = null;
   showAsignarModal = false;
+  mesasAsignadasCount: number = 0;
 
   constructor(private mesaService: MesaService,
               private store: Store
@@ -32,6 +35,7 @@ export class GestionPedidosComponent implements OnInit {
     this.store.select(selectUserData).subscribe((userData) => {
       if (userData?.id) {
         this.meseroId = userData.id;
+        this.calculateMesasAsignadas();
         //console.log('Mesero ID:', this.meseroId); 
       }
     });
@@ -41,6 +45,7 @@ export class GestionPedidosComponent implements OnInit {
     try {
       const mesas = await this.mesaService.getMesas();
       this.mesas = mesas.sort((a, b) => a.numero - b.numero); 
+      this.calculateMesasAsignadas();
     } catch (error) {
       console.error('Error al cargar las mesas:', error);
     }
@@ -92,6 +97,7 @@ export class GestionPedidosComponent implements OnInit {
       this.selectedMesa.estado = MesaEstado.OCUPADA;
       this.selectedMesa.meseroId = this.meseroId;
       this.selectedMesa.capacidad = nuevaCapacidad; 
+      const mesaIndex = this.mesas.findIndex((mesa) => mesa.id === this.selectedMesa!.id);
   
       this.showAsignarModal = false;
       await this.loadMesas(); 
@@ -99,6 +105,14 @@ export class GestionPedidosComponent implements OnInit {
       console.log('Mesa asignada correctamente.');
     } catch (error) {
       console.error('Error al asignar la mesa:', error);
+    }
+  }
+
+  calculateMesasAsignadas() {
+    if (this.meseroId) {
+      this.mesasAsignadasCount = this.mesas.filter(
+        (mesa) => mesa.meseroId === this.meseroId && mesa.estado === MesaEstado.OCUPADA
+      ).length;
     }
   }
 }
