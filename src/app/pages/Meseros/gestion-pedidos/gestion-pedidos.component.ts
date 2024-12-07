@@ -62,6 +62,12 @@ export class GestionPedidosComponent implements OnInit {
 
   async openAsignarModal(mesaId: string): Promise<void> {
     try {
+      const mesaSeleccionada = this.mesas.find((mesa) => mesa.id === mesaId);
+      if (mesaSeleccionada?.estado === MesaEstado.OCUPADA) {
+        console.log('No se puede seleccionar una mesa ocupada.');
+        return;
+      }
+  
       await this.selectMesa(mesaId); 
       this.showAsignarModal = true; 
     } catch (error) {

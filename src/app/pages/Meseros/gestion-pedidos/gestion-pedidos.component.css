@@ -9,12 +9,19 @@
   
   .mesa-card {
     border: 1px solid #ccc;
+    background-color: #d4edda;
     border-radius: 8px;
     padding: 15px;
-    width: 250px;
+    width: 200px;
     text-align: center;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+  }
+
+  .mesa-card p {
+    margin: 5px 0; 
+    line-height: 1.2; 
+    font-size: 15px; 
   }
 
   .mesa-card.occupied {

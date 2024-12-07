@@ -1,5 +1,10 @@
 <div class="mesas-container">
-    <div *ngFor="let mesa of mesas" class="mesa-card" (click)="openAsignarModal(mesa.id)" [class.reserved]="mesa.estado === 'RESERVADA'" [class.occupied]="mesa.estado === 'OCUPADA'" [class.selected]="mesa.id === selectedMesa?.id">
+    <div *ngFor="let mesa of mesas" class="mesa-card" 
+    (click)="openAsignarModal(mesa.id)" 
+    [style.pointerEvents]="mesa.estado === 'OCUPADA' ? 'none' : 'auto'" 
+    [class.reserved]="mesa.estado === 'RESERVADA'" 
+    [class.occupied]="mesa.estado === 'OCUPADA'" 
+    [class.selected]="mesa.id === selectedMesa?.id">
       <h3>Mesa {{ mesa.numero }}</h3>
       <p><strong>Estado:</strong> {{ mesa.estado }}</p>
       <p><strong>Capacidad:</strong> {{ mesa.capacidad }}</p>

@@ -18,6 +18,9 @@ export class MesasAsignadasComponent implements OnInit {
   mesasAsignadas: MesaModel[] = [];
   meseroId: string | null = null;
   selectedMesa: MesaModel | null = null;
+  isAlimentoFormVisible = false;
+
+  
 
   constructor(
     private mesaService: MesaService,
@@ -50,6 +53,15 @@ export class MesasAsignadasComponent implements OnInit {
       //console.log('Mesa seleccionada:', this.selectedMesa);
     } catch (error) {
       console.error('Error al seleccionar la mesa:', error);
+    }
+  }
+
+  toggleAlimentoForm(): void {
+    if (this.selectedMesa) {
+      this.isAlimentoFormVisible = !this.isAlimentoFormVisible;
+      console.log(this.selectedMesa)
+    } else {
+      console.error('No hay mesa seleccionada para agregar alimentos.');
     }
   }
 }

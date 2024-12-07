@@ -1,14 +1,43 @@
 <div class="mesas-container">
-    <div *ngFor="let mesa of mesasAsignadas" class="mesa-card" (click)="selectMesa(mesa.id)"
-    [class.selected]="mesa.id === selectedMesa?.id">
+  <div *ngFor="let mesa of mesasAsignadas" class="mesa-card" (click)="selectMesa(mesa.id)"
+      [class.selected]="mesa.id === selectedMesa?.id">
       <h3>Mesa {{ mesa.numero }}</h3>
       <p><strong>Capacidad:</strong> {{ mesa.capacidad }}</p>
       <p><strong>Total:</strong> ${{ mesa.total }}</p>
-    </div>
+  </div>
 </div>
 
 <div class="selected-mesa" *ngIf="selectedMesa">
-    <h2>Detalles de la Mesa</h2>
-    <p><strong>Número:</strong> {{ selectedMesa.numero }}</p>
-    <p><strong>Total:</strong> ${{ selectedMesa.total }}</p>
+  <h2>Detalles de la Mesa  {{ selectedMesa.numero }}</h2>
+  <button class="toggle-form-button" (click)="toggleAlimentoForm()">Agregar Alimento</button>
+  <div class="alimentos-list" *ngIf="selectedMesa?.alimentos && selectedMesa.alimentos.length > 0">
+    <h3>Alimentos Agregados</h3>
+    <ul>
+        <li *ngFor="let alimento of selectedMesa.alimentos">
+            {{ alimento.nombre }} - {{ alimento.cantidad }} x ${{ alimento.precioUnitario }} = ${{ alimento.subtotal }}
+        </li>
+    </ul>
+  </div>
+  <p><strong>Total:</strong> ${{ selectedMesa.total }}</p>
+
+  <div class="add-alimento-form" *ngIf="isAlimentoFormVisible">
+      <h3>Agregar Alimento</h3>
+      <div class="form-group">
+          <label for="nombre">Nombre del Alimento</label>
+          <input type="text" id="nombre" placeholder="Ingrese el nombre del alimento" />
+      </div>
+      <div class="form-group">
+          <label for="cantidad">Cantidad</label>
+          <input type="number" id="cantidad" placeholder="Ingrese la cantidad" min="1" />
+      </div>
+      <div class="form-group">
+          <label for="precio">Precio Unitario</label>
+          <input type="number" id="precio" placeholder="Ingrese el precio unitario" min="0" step="0.01" />
+      </div>
+      <div class="button-container">
+          <button class="add-button">Agregar</button>
+      </div>
+  </div>
+
+  
 </div>
