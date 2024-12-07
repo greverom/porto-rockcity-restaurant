@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MesaEstado, MesaModel, ReservaEstado, ReservaModel } from '../../../models/mesa';
+import { AlimentoMesaModel, MesaEstado, MesaModel, ReservaEstado, ReservaModel } from '../../../models/mesa';
 import { MesaService } from '../../../services/mesas/mesa.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalDto, modalInitializer } from '../../../components/modal/modal.dto';
 import { ModalComponent } from '../../../components/modal/modal.component';
 import { selectUserData } from '../../../store/user/user.selectors';
@@ -17,7 +17,8 @@ import { map, Observable } from 'rxjs';
       CommonModule,
       RouterModule,
       ReactiveFormsModule,
-      ModalComponent
+      ModalComponent,
+      FormsModule
   ],
   templateUrl: './gestion-mesas.component.html',
   styleUrl: './gestion-mesas.component.css'
@@ -101,6 +102,10 @@ export class GestionMesasComponent {
     } catch (error) {
       console.error('Error al seleccionar la mesa:', error);
     }
+  }
+
+  onSeleccionarAlimento(alimento: AlimentoMesaModel): void {
+    console.log('Alimento seleccionado:', alimento);
   }
 
   openReservaModal(): void {

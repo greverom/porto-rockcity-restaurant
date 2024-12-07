@@ -23,7 +23,8 @@ export interface MesaModel {
     cantidad: number;            
     precioUnitario: number;      
     subtotal: number;            
-    clienteId?: string;          
+    clienteId?: string;  
+    seleccionado?: boolean;        
   }
   
   export interface PagoMesaModel {

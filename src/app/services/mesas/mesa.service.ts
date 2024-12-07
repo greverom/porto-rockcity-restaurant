@@ -191,4 +191,5 @@ async buscarAlimentosPorNombre(query: string): Promise<AlimentoModel[]> {
 
   return resultados;
 }
+
 }
