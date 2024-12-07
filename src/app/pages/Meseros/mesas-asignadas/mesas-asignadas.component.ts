@@ -90,6 +90,7 @@ export class MesasAsignadasComponent implements OnInit {
         cantidad: 1, 
         precioUnitario: alimento.precio,
         subtotal: alimento.precio, 
+        activo: alimento.activo,
       }));
      // console.log('Alimentos filtrados:', this.alimentosFiltrados);
     } catch (error) {

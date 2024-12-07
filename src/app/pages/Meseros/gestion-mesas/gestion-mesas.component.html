@@ -22,30 +22,33 @@
 </div>
 
 <div class="selected-mesa" *ngIf="selectedMesa">
-  <h2>Detalles de la Mesa</h2>
-  <p><strong>Número:</strong> {{ selectedMesa.numero }}</p>
+  <h2>Detalles de la Mesa: {{ selectedMesa.numero }}</h2>
   <p><strong>Capacidad:</strong> {{ selectedMesa.capacidad }}</p>
   <p><strong>Estado:</strong> {{ selectedMesa.estado }}</p>
-  <div *ngIf="selectedMesa?.alimentos && selectedMesa.alimentos.length > 0">
+  <div *ngIf="selectedMesa?.alimentos && selectedMesa.alimentos.length > 0" class="alimentos-container">
     <h3>Alimentos en la Mesa</h3>
-    <ul class="alimentos-list">
-      <li *ngFor="let alimento of selectedMesa.alimentos; let i = index">
-        <div class="alimento-item">
-          <input 
-            type="checkbox" 
-            [id]="'alimento-' + i" 
-            [(ngModel)]="alimento.seleccionado" 
+    <div class="alimentos-grid">
+      <div *ngFor="let alimento of selectedMesa.alimentos; let i = index" class="alimento-row">
+        <div class="checkbox-cell">
+          <input
+            type="checkbox"
+            [id]="'alimento-' + i"
+            [(ngModel)]="alimento.seleccionado"
             (change)="onSeleccionarAlimento(alimento)"
           />
-          <label [for]="'alimento-' + i">
-            {{ alimento.nombre }}
-          </label>
+        </div>
+        <div class="nombre-cell">
+          <label [for]="'alimento-' + i">{{ alimento.nombre }}</label>
+        </div>
+        <div class="precio-cell">
           <span class="alimento-precio">${{ alimento.subtotal.toFixed(2) }}</span>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
-  <p><strong>Total:</strong> ${{ selectedMesa.total }}</p>
+  <div *ngIf="selectedMesa?.alimentos && selectedMesa.alimentos.length > 0" class="total-container">
+    <p><strong>Subtotal:</strong> ${{ selectedMesa.total }}</p>
+  </div>
 
   <!-- Línea divisora -->
   <hr class="divider" />
@@ -62,17 +65,17 @@
   <button
     class="reserve-button"
     (click)="openReservaModal()"
-    [disabled]="selectedMesa.estado === 'RESERVADA'"
-    [disabled]="selectedMesa.estado === 'OCUPADA'"
-    *ngIf="isAdmin$ | async">
+    *ngIf="(isAdmin$ | async) && selectedMesa?.estado === 'DISPONIBLE'">
     Reservar Mesa
   </button>
-  <button
-    class="delete-button"
-    *ngIf="(isAdmin$ | async) && selectedMesa.estado === 'RESERVADA' && selectedMesa.reservaId" 
-    (click)="onEliminarReserva()">
-    Eliminar Reserva
-  </button>
+  <div class="delete-button-container">
+    <button
+      class="delete-button"
+      *ngIf="(isAdmin$ | async) && selectedMesa.estado === 'RESERVADA' && selectedMesa.reservaId" 
+      (click)="onEliminarReserva()">
+      Eliminar Reserva
+    </button>
+  </div>
 </div>
 
 

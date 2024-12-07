@@ -46,6 +46,9 @@
       <ul>
         <li *ngFor="let alimento of alimentosFiltrados" (click)="seleccionarAlimento(alimento)">
           {{ alimento.nombre }} - ${{ alimento.precioUnitario.toFixed(2) }}
+          <span [ngClass]="{ 'activo': alimento.activo, 'inactivo': !alimento.activo }">
+            {{ alimento.activo ? 'Disponible' : 'No Disponible' }}
+          </span>
         </li>
       </ul>
     </div>
@@ -57,7 +60,7 @@
 
     <!-- Botones -->
     <div class="button-container mt-3">
-      <button class="confirm-button" (click)="onAgregarAlimento()" [disabled]="!selectedMesa || !selectedAlimento">Agregar</button>
+      <button class="confirm-button" (click)="onAgregarAlimento()" [disabled]="!selectedMesa || !selectedAlimento || !selectedAlimento.activo">Agregar</button>
       <button class="cancel-button" (click)="toggleAlimentoForm()">Cancelar</button>
     </div>
   </div>

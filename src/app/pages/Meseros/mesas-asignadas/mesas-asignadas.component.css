@@ -78,6 +78,16 @@
   background-color: #f0f0f0;
 }
 
+.alimentos-list span.activo {
+  color: green;
+  font-weight: bold;
+}
+
+.alimentos-list span.inactivo {
+  color: red;
+  font-weight: bold;
+}
+
 .text-muted {
   color: #6c757d;
   font-size: 0.9em;
