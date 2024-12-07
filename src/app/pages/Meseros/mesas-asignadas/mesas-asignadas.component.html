@@ -20,24 +20,44 @@
   </div>
   <p><strong>Total:</strong> ${{ selectedMesa.total }}</p>
 
-  <div class="add-alimento-form" *ngIf="isAlimentoFormVisible">
-      <h3>Agregar Alimento</h3>
-      <div class="form-group">
-          <label for="nombre">Nombre del Alimento</label>
-          <input type="text" id="nombre" placeholder="Ingrese el nombre del alimento" />
-      </div>
-      <div class="form-group">
-          <label for="cantidad">Cantidad</label>
-          <input type="number" id="cantidad" placeholder="Ingrese la cantidad" min="1" />
-      </div>
-      <div class="form-group">
-          <label for="precio">Precio Unitario</label>
-          <input type="number" id="precio" placeholder="Ingrese el precio unitario" min="0" step="0.01" />
-      </div>
-      <div class="button-container">
-          <button class="add-button">Agregar</button>
-      </div>
+<!-- Formulario para agregar alimentos -->
+<div class="form-agregar-alimento" *ngIf="isAlimentoFormVisible">
+  <h3>Agregar Alimento a la Mesa {{ selectedMesa.numero }}</h3>
+
+  <!-- Input de búsqueda -->
+  <div class="form-group">
+    <label for="buscarAlimento">Buscar Alimento</label>
+    <input
+      id="buscarAlimento"
+      type="text"
+      class="form-control"
+      placeholder="Ingrese el nombre del alimento"
+      [(ngModel)]="alimentoSeleccionado"
+      (input)="onBuscarAlimento($event)"
+    />
   </div>
+
+  <!-- Resultados de búsqueda -->
+  <div class="alimentos-list" *ngIf="alimentosFiltrados.length > 0">
+    <h4>Resultados:</h4>
+    <ul>
+      <li *ngFor="let alimento of alimentosFiltrados" (click)="seleccionarAlimento(alimento)">
+        {{ alimento.nombre }} - ${{ alimento.precioUnitario.toFixed(2) }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Mensaje cuando no hay resultados -->
+  <div *ngIf="alimentosFiltrados.length === 0 && searchQuery" class="text-muted">
+    <p>No se encontraron alimentos para "<strong>{{ searchQuery }}</strong>".</p>
+  </div>
+
+  <!-- Botones -->
+  <div class="button-container mt-3">
+    <button class="confirm-button" (click)="onAgregarAlimento()" [disabled]="!selectedMesa || !selectedAlimento">Agregar</button>
+    <button class="cancel-button" (click)="toggleAlimentoForm()">Cancelar</button>
+  </div>
+</div>
 
   
 </div>

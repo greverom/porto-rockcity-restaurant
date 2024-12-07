@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Database, ref, set, update, remove, push, get, DatabaseReference } from '@angular/fire/database';
 import { MesaEstado, MesaModel, ReservaModel } from '../../models/mesa';
+import { AlimentoModel } from '../../models/food';
 
 
 @Injectable({
@@ -153,5 +154,41 @@ async getMesasPorMeseroId(meseroId: string): Promise<MesaModel[]> {
     console.error('Error al obtener las mesas asignadas:', error);
     throw new Error('No se pudieron cargar las mesas asignadas.');
   }
+}
+
+async buscarAlimentosPorNombre(query: string): Promise<AlimentoModel[]> {
+  if (!query.trim()) {
+    return []; 
+  }
+
+  const alimentosRef = ref(this.db, 'alimentos');
+  const snapshot = await get(alimentosRef);
+
+  if (!snapshot.exists()) {
+    return []; 
+  }
+
+  const alimentos = snapshot.val();
+  const resultados: AlimentoModel[] = [];
+
+  const procesarNodo = (nodo: any): void => {
+    if (typeof nodo === 'object' && nodo !== null) {
+      Object.entries(nodo).forEach(([key, value]) => {
+        if (typeof value === 'object' && value !== null) {
+          const item = value as Record<string, any>;
+
+          if (item['nombre'] && typeof item['nombre'] === 'string' && item['nombre'].toLowerCase().includes(query.toLowerCase())) {
+            resultados.push(item as AlimentoModel); 
+          } else {
+            procesarNodo(item); 
+          }
+        }
+      });
+    }
+  };
+
+  procesarNodo(alimentos); 
+
+  return resultados;
 }
 }
