@@ -28,12 +28,12 @@
 
   <div *ngIf="alimentos && alimentos.length > 0" class="payment-buttons-container">
     <button class="payment-button" (click)="openFacturaModal()">Pagar con Factura</button>
-    <button class="payment-button">Consumidor Final</button>
+    <button class="payment-button" (click)="openConsumidorFinalModal()">Consumidor Final</button>
   </div>
 
 <div *ngIf="showFacturaModal" class="modal-overlay">
   <div class="modal-content">
-    <h3>Pago con Factura</h3>
+    <h3>Factura</h3>
     <form [formGroup]="facturaForm" (ngSubmit)="onPagarConFactura()">
       
       <div class="form-group">
@@ -94,6 +94,40 @@
       <div class="button-container">
         <button type="submit" class="confirm-button" [disabled]="facturaForm.invalid">Confirmar Pago</button>
         <button type="button" class="cancel-button" (click)="closeFacturaModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="showConsumidorFinalModal" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Consumidor Final</h3>
+    <form [formGroup]="consumidorFinalForm" (ngSubmit)="onPagarConsumidorFinal()">
+      
+      <!-- Campo: Monto (Solo Lectura) -->
+      <div class="form-group">
+        <label for="monto">Monto</label>
+        <input
+          id="monto"
+          type="text"
+          class="form-control"
+          [value]="calcularTotal() | number: '1.2-2'"
+          readonly
+        />
+      </div>
+
+      <!-- Campo: Forma de Pago -->
+      <div class="form-group">
+        <label for="formaPago">Forma de Pago</label>
+        <select id="formaPago" class="form-control" formControlName="formaPago">
+          <option *ngFor="let pago of formasPago" [value]="pago">{{ pago }}</option>
+        </select>
+      </div>
+
+      <!-- Botones -->
+      <div class="button-container">
+        <button type="submit" class="confirm-button" [disabled]="consumidorFinalForm.invalid">Confirmar Pago</button>
+        <button type="button" class="cancel-button" (click)="closeConsumidorFinalModal()">Cancelar</button>
       </div>
     </form>
   </div>

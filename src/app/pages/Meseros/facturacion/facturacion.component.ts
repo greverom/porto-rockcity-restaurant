@@ -21,7 +21,9 @@ export class FacturacionComponent {
   numeroMesa: number | string = 'Desconocido';
   mesaId: string | null = null;
   showFacturaModal: boolean = false;
+  showConsumidorFinalModal: boolean = false; 
   facturaForm: FormGroup;
+  consumidorFinalForm: FormGroup;
   formasPago = Object.values(FormaPago);
   meseroNombre: string = '';
 
@@ -34,6 +36,11 @@ export class FacturacionComponent {
       clienteId: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       nombreCliente: ['', Validators.required],
       correo: [''],
+      monto: [{ value: this.calcularTotal(), disabled: true }, Validators.required],
+      formaPago: [FormaPago.EFECTIVO, Validators.required]
+    });
+
+    this.consumidorFinalForm = this.fb.group({
       monto: [{ value: this.calcularTotal(), disabled: true }, Validators.required],
       formaPago: [FormaPago.EFECTIVO, Validators.required]
     });
@@ -129,6 +136,43 @@ export class FacturacionComponent {
 
       console.log('Factura registrada:', facturaData);
       this.closeFacturaModal();
+    }
+  }
+
+  openConsumidorFinalModal(): void {
+    this.showConsumidorFinalModal = true;
+    this.consumidorFinalForm.patchValue({
+      monto: this.calcularTotal()
+    });
+  }
+
+  closeConsumidorFinalModal(): void {
+    this.showConsumidorFinalModal = false;
+    this.consumidorFinalForm.reset({
+      monto: 0,
+      formaPago: FormaPago.EFECTIVO
+    });
+  }
+
+  onPagarConsumidorFinal(): void {
+    if (this.consumidorFinalForm.valid) {
+      const pago: PagoMesaModel = {
+        clienteId: 'xxxxxxxxxx', // Dato fijo
+        nombreCliente: 'xxxxxxxxxx', // Dato fijo
+        correo: 'xxxxxxxxxx', // Sin correo
+        monto: this.calcularTotal(),
+        formaPago: this.consumidorFinalForm.value.formaPago,
+        fecha: new Date()
+      };
+
+      const facturaData = {
+        pago,
+        numeroMesa: this.numeroMesa,
+        meseroNombre: this.meseroNombre
+      };
+
+      console.log('Factura para Consumidor Final registrada:', facturaData);
+      this.closeConsumidorFinalModal();
     }
   }
 }
