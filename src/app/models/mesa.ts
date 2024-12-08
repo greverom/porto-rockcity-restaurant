@@ -29,10 +29,13 @@ export interface MesaModel {
   }
   
   export interface PagoMesaModel {
-    clienteId?: string;         
+    clienteId: string; 
+    nombreCliente: string;  
+    correo?: string;      
     monto: number;              
     formaPago: FormaPago;       
-    fecha: Date;                
+    fecha: Date; 
+    meseroId?: string;               
   }
   
   export enum FormaPago {

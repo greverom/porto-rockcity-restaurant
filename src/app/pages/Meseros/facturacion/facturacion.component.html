@@ -27,6 +27,74 @@
   </div>
 
   <div *ngIf="alimentos && alimentos.length > 0" class="payment-buttons-container">
-    <button class="payment-button">Pagar con Factura</button>
+    <button class="payment-button" (click)="openFacturaModal()">Pagar con Factura</button>
     <button class="payment-button">Consumidor Final</button>
   </div>
+
+<div *ngIf="showFacturaModal" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Pago con Factura</h3>
+    <form [formGroup]="facturaForm" (ngSubmit)="onPagarConFactura()">
+      
+      <div class="form-group">
+        <label for="clienteId">Cédula del Cliente</label>
+        <input
+          id="clienteId"
+          type="text"
+          class="form-control"
+          formControlName="clienteId"
+          placeholder="Ingrese la cédula del cliente"
+          required
+        />
+        <div *ngIf="facturaForm.get('clienteId')?.invalid && facturaForm.get('clienteId')?.touched" class="error">
+          La cédula es obligatoria.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="nombreCliente">Nombre del Cliente</label>
+        <input
+          id="nombreCliente"
+          type="text"
+          class="form-control"
+          formControlName="nombreCliente"
+          placeholder="Ingrese el nombre del cliente"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="correo">Correo Electrónico (Opcional)</label>
+        <input
+          id="correo"
+          type="email"
+          class="form-control"
+          formControlName="correo"
+          placeholder="Ingrese el correo electrónico"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="monto">Monto</label>
+        <input
+          id="monto"
+          type="text"
+          class="form-control"
+          [value]="calcularTotal() | number: '1.2-2'"
+          readonly
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="formaPago">Forma de Pago</label>
+        <select id="formaPago" class="form-control" formControlName="formaPago">
+          <option *ngFor="let pago of formasPago" [value]="pago">{{ pago }}</option>
+        </select>
+      </div>
+
+      <div class="button-container">
+        <button type="submit" class="confirm-button" [disabled]="facturaForm.invalid">Confirmar Pago</button>
+        <button type="button" class="cancel-button" (click)="closeFacturaModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
