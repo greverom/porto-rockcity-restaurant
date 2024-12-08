@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class FacturacionComponent {
   alimentos: AlimentoMesaModel[] = [];
+  numeroMesa: number | string = 'Desconocido';
   mesaId: string | null = null;
 
   constructor(
@@ -33,6 +34,7 @@ export class FacturacionComponent {
           const mesa = await this.mesaService.getMesaById(id);
           this.alimentos = mesa?.alimentos || [];
           this.ordenarAlimentosPorNombre();
+          this.numeroMesa = mesa?.numero ?? 'Desconocido';
           //console.log( this.alimentos);
         } catch (error) {
           console.log('Error al cargar los alimentos:', error);
@@ -51,5 +53,16 @@ export class FacturacionComponent {
 
   calcularSubtotal(): number {
     return this.alimentos.reduce((total, alimento) => total + alimento.subtotal, 0);
+  }
+
+  calcularIVA(): number {
+    const subtotal = this.calcularSubtotal();
+    return subtotal * 0.15; 
+  }
+  
+  calcularTotal(): number {
+    const subtotal = this.calcularSubtotal();
+    const iva = this.calcularIVA();
+    return subtotal + iva; 
   }
 }

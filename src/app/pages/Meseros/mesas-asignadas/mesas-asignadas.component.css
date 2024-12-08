@@ -24,7 +24,7 @@
 }
 
 .mesa-card.selected {
-  border: 2px solid #007bff;
+  border: 2px solid #fcb045;
   background-color: #e7f3ff;
 }
 
@@ -34,7 +34,7 @@
   margin-top: 50px;
   padding: 20px;
   border-radius: 8px;
-  background-color: #e7e9eb;
+  background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -44,7 +44,9 @@
 }
 
 .selected-mesa h2{
-  font-size: 1.4rem;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .toggle-form-button {
@@ -90,7 +92,9 @@
 }
 
 .alimentos-list {
-  max-height: 450px;
+  max-height: 600px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
   border: 1px solid rgb(215, 215, 215);
   overflow-y: auto; 
 }
@@ -101,8 +105,7 @@
 }
 
 .alimentos-list li {
-  padding: 10px;
-  border-radius: 4px;
+  padding: 8px;
   margin-bottom: 5px;
   cursor: pointer;
   background-color: transparent;
@@ -110,12 +113,12 @@
 }
 
 .alimentos-list li:hover {
-  background-color: #f0f0f0;
+  background-color: #dfdfdf;
 }
 
 .total-container {
   display: flex;
-  justify-content: flex-end; 
+  justify-content: flex-start; 
   margin-top: 20px;
   padding: 20px;
   background-color: #f9f9f9; 
@@ -162,15 +165,15 @@
 }
 
 .delete-button {
-  background-color: #dc3545; 
+  background-color: #d24351; 
   color: #fff;
   border: none;
   padding: 5px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -178,10 +181,6 @@
 
 .delete-button:hover {
   background-color: #c82333;
-}
-
-.delete-button i {
-  font-size: 16px;
 }
 
 .confirm-button,

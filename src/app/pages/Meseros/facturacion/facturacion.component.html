@@ -1,5 +1,6 @@
+
 <div *ngIf="alimentos && alimentos.length > 0" class="alimentos-container">
-    <h3>Alimentos en la Mesa</h3>
+    <h3>Alimentos en la Mesa {{ numeroMesa }}</h3>
     <div class="alimentos-grid">
       <div *ngFor="let alimento of alimentos; let i = index" class="alimento-row">
         <div class="checkbox-cell">
@@ -18,7 +19,14 @@
         </div>
       </div>
       <div *ngIf="alimentos && alimentos.length > 0" class="total-container">
-        <p><strong>Subtotal:</strong> ${{ calcularSubtotal() }}</p>
+        <p><strong>Subtotal:</strong> ${{ calcularSubtotal().toFixed(2) }}</p>
+        <p><strong>IVA (15%):</strong> ${{ calcularIVA().toFixed(2) }}</p>
+        <p><strong>Total:</strong> ${{ calcularTotal().toFixed(2) }}</p>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="alimentos && alimentos.length > 0" class="payment-buttons-container">
+    <button class="payment-button">Pagar con Factura</button>
+    <button class="payment-button">Consumidor Final</button>
   </div>
