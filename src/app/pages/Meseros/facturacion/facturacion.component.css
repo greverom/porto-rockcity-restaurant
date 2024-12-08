@@ -148,12 +148,16 @@
   
   .button-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 10px;
+  }
+
+  .button-container button{
+    width: 170px;
   }
   
   .confirm-button {
-    background-color: #4caf50;
+    background-color: #ff7e5f;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -161,12 +165,8 @@
     cursor: pointer;
   }
   
-  .confirm-button:hover {
-    background-color: #45a049;
-  }
-  
   .cancel-button {
-    background-color: #f44336;
+    background-color: #423f3f;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -175,5 +175,5 @@
   }
   
   .cancel-button:hover {
-    background-color: #d32f2f;
+    background-color: #333;
   }

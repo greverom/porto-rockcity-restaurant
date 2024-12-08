@@ -5,7 +5,11 @@
 </div>
 
 <div class="mesas-container">
-  <div *ngFor="let mesa of mesas" class="mesa-card" (click)="selectMesa(mesa.id)">
+  <div *ngFor="let mesa of mesas" 
+      class="mesa-card" 
+      (click)="selectMesa(mesa.id)" 
+      [class.selected]="mesa.id === selectedMesa?.id">
+    
     <h3>Mesa {{ mesa.numero }}</h3>
     <h3 class="mesero" *ngIf="mesa.meseroId">
       <span class="bold-label d-block">Asignado por:</span>
