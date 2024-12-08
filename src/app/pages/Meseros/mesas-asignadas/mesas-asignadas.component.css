@@ -29,23 +29,34 @@
 }
 
 .selected-mesa {
-  width: 90%;
+  width: 80%;
   margin: auto;
-  margin-top: 20px;
+  margin-top: 50px;
   padding: 20px;
   border-radius: 8px;
   background-color: #e7e9eb;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.selected-mesa h3{
+  font-size: 1.4rem;
+  margin-bottom: 30px;
+}
+
+.selected-mesa h2{
+  font-size: 1.4rem;
+}
+
 .toggle-form-button {
+  display: block;
+  margin: 0 auto;
   background: linear-gradient(45deg, #ff7f50, #ff4500);
   color: white;
   border: none;
-  padding: 10px 15px;
+  padding: 8px 12px;
   border-radius: 4px;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
 }
 
 .toggle-form-button:hover {
@@ -53,10 +64,35 @@
 }
 
 .form-agregar-alimento {
-  border: 1px solid #ddd;
+  width: 80%;
+  margin: auto;
   padding: 16px;
   border-radius: 8px;
-  background-color: #f9f9f9;
+}
+
+.form-agregar-alimento h3{
+  font-size: 1.4rem;
+  color: #ff7f50;
+}
+
+.form-group label{
+  margin-bottom: 1rem;
+}
+
+.form-group .form-control {
+  border: 1px solid #b5b5b5; 
+  border-radius: 5px; 
+  padding: 8px;
+}
+
+.form-group .form-control:focus {
+  outline: none; 
+}
+
+.alimentos-list {
+  max-height: 450px;
+  border: 1px solid rgb(215, 215, 215);
+  overflow-y: auto; 
 }
 
 .alimentos-list ul {
@@ -65,17 +101,38 @@
 }
 
 .alimentos-list li {
-  padding: 8px;
-  border: 1px solid #ddd;
+  padding: 10px;
   border-radius: 4px;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   cursor: pointer;
-  background-color: #fff;
+  background-color: transparent;
   transition: background-color 0.3s;
 }
 
 .alimentos-list li:hover {
   background-color: #f0f0f0;
+}
+
+.total-container {
+  display: flex;
+  justify-content: flex-end; 
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9; 
+  border: 1px solid #ddd; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+.total-container p {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold; 
+  color: #333; 
+}
+
+.total-container p strong {
+  color: #4caf50; 
 }
 
 .alimentos-list span.activo {
@@ -91,11 +148,6 @@
 .text-muted {
   color: #6c757d;
   font-size: 0.9em;
-}
-
-.alimentos-list li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
 }
 
 .alimento-item {

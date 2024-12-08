@@ -10,8 +10,8 @@
 <div class="selected-mesa" *ngIf="selectedMesa">
   <h2>Detalles de la Mesa  {{ selectedMesa.numero }}</h2>
   <button class="toggle-form-button" (click)="toggleAlimentoForm()">Agregar Alimento</button>
+  <h3>Pedido:</h3>
   <div class="alimentos-list" *ngIf="selectedMesa?.alimentos && selectedMesa.alimentos.length > 0">
-    <h3>Pedido:</h3>
     <ul>
       <li *ngFor="let alimento of selectedMesa.alimentos; let i = index" class="alimento-item">
         <span>{{ alimento.nombre }} - ${{ alimento.subtotal }}</span>
@@ -21,7 +21,10 @@
       </li>
     </ul>
   </div>
-  <p><strong>Total:</strong> ${{ selectedMesa.total }}</p>
+  <div *ngIf="selectedMesa?.alimentos && selectedMesa.alimentos.length > 0" class="total-container">
+    <p><strong>Subtotal:</strong> ${{ selectedMesa.total }}</p>
+  </div>
+
 
   <!-- Formulario para agregar alimentos -->
   <div class="form-agregar-alimento" *ngIf="isAlimentoFormVisible">
@@ -42,7 +45,6 @@
 
     <!-- Resultados de búsqueda -->
     <div class="alimentos-list" *ngIf="alimentosFiltrados.length > 0">
-      <h4>Resultados:</h4>
       <ul>
         <li *ngFor="let alimento of alimentosFiltrados" (click)="seleccionarAlimento(alimento)">
           {{ alimento.nombre }} - ${{ alimento.precioUnitario.toFixed(2) }}

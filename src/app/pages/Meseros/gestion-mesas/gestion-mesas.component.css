@@ -102,7 +102,7 @@
   
   .selected-mesa h2 {
     color: #d17a22; 
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     margin-bottom: 12px;
     border-bottom: 1px solid #d4a373; 
     padding-bottom: 4px;
@@ -110,7 +110,7 @@
   
   .selected-mesa p {
     margin: 8px 0;
-    font-size: 1rem;
+    font-size: .9rem;
     color: #333; 
   }
   
@@ -140,7 +140,7 @@
   display: grid;
   grid-template-columns: 50px 1fr 100px;
   align-items: center;
-  padding: 10px;
+  padding: 8px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -157,13 +157,13 @@
 }
 
 .nombre-cell label {
-  font-size: 1rem;
+  font-size: .85rem;
   font-weight: 500;
   color: #333;
 }
 
 .precio-cell .alimento-precio {
-  font-size: 1rem;
+  font-size: .85rem;
   font-weight: bold;
   color: #ff5722;
   text-align: right;
@@ -171,25 +171,24 @@
 
 .total-container {
   display: flex;
-  justify-content: flex-end; /* Alinea al lado derecho */
+  justify-content: flex-end; 
   margin-top: 20px;
   padding: 20px;
-  background-color: #f9f9f9; /* Fondo claro */
-  border: 1px solid #ddd; /* Borde ligero */
-  border-radius: 8px; /* Bordes redondeados */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+  background-color: #f9f9f9; 
+  border: 1px solid #ddd; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
 }
 
-/* Estilo del texto del total */
 .total-container p {
   margin: 0;
-  font-size: 1.2rem; /* Tamaño del texto */
-  font-weight: bold; /* Texto en negrita */
-  color: #333; /* Color oscuro */
+  font-size: 1.2rem;
+  font-weight: bold; 
+  color: #333; 
 }
 
 .total-container p strong {
-  color: #4caf50; /* Color verde para destacar "Total:" */
+  color: #4caf50; 
 }
 
   .divider {

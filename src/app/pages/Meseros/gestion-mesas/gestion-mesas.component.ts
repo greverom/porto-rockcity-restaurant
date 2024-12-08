@@ -68,7 +68,7 @@ export class GestionMesasComponent {
         if (mesa.meseroId) {
           const mesero = await this.mesaService.getEmpleadoById(mesa.meseroId);
           if (mesero) {
-            mesa.meseroId = `${mesero.nombres} ${mesero.apellidos}`; // Reutilizamos el campo para el nombre completo
+            mesa.meseroId = `${mesero.nombres} ${mesero.apellidos}`; 
           } else {
             mesa.meseroId = 'Desconocido';
           }
@@ -81,9 +81,19 @@ export class GestionMesasComponent {
     }
   }
 
+  ordenarAlimentosPorNombre(): void {
+    if (this.selectedMesa?.alimentos) {
+      this.selectedMesa.alimentos.sort((a, b) => a.nombre.localeCompare(b.nombre));
+    }
+  }
+
   async selectMesa(id: string): Promise<void> {
     try {
       this.selectedMesa = await this.mesaService.getMesaById(id);
+
+      if (this.selectedMesa?.alimentos) {
+        this.ordenarAlimentosPorNombre(); 
+      }
   
       if (this.selectedMesa?.reservaId) {
         // Obtener los datos de la reserva

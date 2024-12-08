@@ -55,6 +55,7 @@ export class MesasAsignadasComponent implements OnInit {
   async selectMesa(id: string): Promise<void> {
     try {
       this.selectedMesa = await this.mesaService.getMesaById(id);
+      this.ordenarAlimentosPorNombre();
       //console.log('Mesa seleccionada:', this.selectedMesa);
     } catch (error) {
       console.error('Error al seleccionar la mesa:', error);
@@ -125,8 +126,8 @@ export class MesasAsignadasComponent implements OnInit {
       };
   
       this.selectedMesa.alimentos.push(nuevoAlimento);
-  
       this.selectedMesa.total += nuevoAlimento.subtotal;
+      this.ordenarAlimentosPorNombre();
   
       await this.mesaService.updateMesa(this.selectedMesa.id, {
         alimentos: this.selectedMesa.alimentos,
@@ -146,6 +147,12 @@ export class MesasAsignadasComponent implements OnInit {
       this.cdr.detectChanges();
     } catch (error) {
       console.error('Error al agregar el alimento:', error);
+    }
+  }
+
+  ordenarAlimentosPorNombre(): void {
+    if (this.selectedMesa?.alimentos) {
+      this.selectedMesa.alimentos.sort((a, b) => a.nombre.localeCompare(b.nombre));
     }
   }
 
