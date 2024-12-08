@@ -29,14 +29,6 @@
     <h3>Alimentos en la Mesa</h3>
     <div class="alimentos-grid">
       <div *ngFor="let alimento of selectedMesa.alimentos; let i = index" class="alimento-row">
-        <div class="checkbox-cell">
-          <input
-            type="checkbox"
-            [id]="'alimento-' + i"
-            [(ngModel)]="alimento.seleccionado"
-            (change)="onSeleccionarAlimento(alimento)"
-          />
-        </div>
         <div class="nombre-cell">
           <label [for]="'alimento-' + i">{{ alimento.nombre }}</label>
         </div>
@@ -48,6 +40,10 @@
   </div>
   <div *ngIf="selectedMesa?.alimentos && selectedMesa.alimentos.length > 0" class="total-container">
     <p><strong>Subtotal:</strong> ${{ selectedMesa.total }}</p>
+  </div>
+
+  <div *ngIf="selectedMesa?.alimentos && selectedMesa.alimentos.length > 0" class="payment-container">
+    <button class="payment-button" (click)="proceedToPayment()">Proceder al Pago</button>
   </div>
 
   <!-- Línea divisora -->

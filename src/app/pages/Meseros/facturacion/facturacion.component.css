@@ -1,0 +1,68 @@
+.alimentos-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .alimentos-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .alimento-row {
+    display: grid;
+    grid-template-columns: 50px 1fr 100px;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .alimento-row:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .checkbox-cell {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .nombre-cell label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .precio-cell .alimento-precio {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ff5722;
+    text-align: right;
+  }
+
+  .total-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: right; 
+  }
+  
+  .total-container p {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .total-container p strong {
+    color: #4caf50; 
+  }

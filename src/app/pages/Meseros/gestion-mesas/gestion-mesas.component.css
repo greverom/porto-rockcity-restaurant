@@ -123,13 +123,6 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.alimentos-container h3 {
-  text-align: left;
-  margin-bottom: 15px;
-  font-size: 1.2rem;
-  color: #d17a22; 
-}
-
 .alimentos-grid {
   display: flex;
   flex-direction: column;
@@ -138,7 +131,7 @@
 
 .alimento-row {
   display: grid;
-  grid-template-columns: 50px 1fr 100px;
+  grid-template-columns: 1fr 100px;
   align-items: center;
   padding: 8px;
   background-color: #fff;
@@ -151,19 +144,17 @@
   background-color: #f1f1f1;
 }
 
-.checkbox-cell {
-  display: flex;
-  justify-content: center;
-}
-
 .nombre-cell label {
-  font-size: .85rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: #333;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
 }
 
 .precio-cell .alimento-precio {
-  font-size: .85rem;
+  font-size: 0.85rem;
   font-weight: bold;
   color: #ff5722;
   text-align: right;
@@ -190,6 +181,29 @@
 .total-container p strong {
   color: #4caf50; 
 }
+
+  .payment-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    margin-top: 20px; 
+  }
+
+  .payment-button {
+    background-color: #4caf50; 
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+
+  .payment-button:hover {
+    background-color: #45a049; 
+  }
 
   .divider {
     border: none;

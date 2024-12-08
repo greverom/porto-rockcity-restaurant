@@ -1,1 +1,24 @@
-<p>facturacion works!</p>
+<div *ngIf="alimentos && alimentos.length > 0" class="alimentos-container">
+    <h3>Alimentos en la Mesa</h3>
+    <div class="alimentos-grid">
+      <div *ngFor="let alimento of alimentos; let i = index" class="alimento-row">
+        <div class="checkbox-cell">
+          <input
+            type="checkbox"
+            [id]="'alimento-' + i"
+            [(ngModel)]="alimento.seleccionado"
+            (change)="onSeleccionarAlimento(alimento)"
+          />
+        </div>
+        <div class="nombre-cell">
+          <label [for]="'alimento-' + i">{{ alimento.nombre }}</label>
+        </div>
+        <div class="precio-cell">
+          <span class="alimento-precio">${{ alimento.subtotal.toFixed(2) }}</span>
+        </div>
+      </div>
+      <div *ngIf="alimentos && alimentos.length > 0" class="total-container">
+        <p><strong>Subtotal:</strong> ${{ calcularSubtotal() }}</p>
+      </div>
+    </div>
+  </div>

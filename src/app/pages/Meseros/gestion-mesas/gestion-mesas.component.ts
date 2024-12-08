@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AlimentoMesaModel, MesaEstado, MesaModel, ReservaEstado, ReservaModel } from '../../../models/mesa';
 import { MesaService } from '../../../services/mesas/mesa.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -9,6 +9,7 @@ import { ModalComponent } from '../../../components/modal/modal.component';
 import { selectUserData } from '../../../store/user/user.selectors';
 import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
+import { FacturacionService } from '../../../services/facturacion/facturacion.service';
 
 @Component({
   selector: 'app-gestion-mesas',
@@ -36,7 +37,9 @@ export class GestionMesasComponent {
   constructor(
     private mesaService: MesaService,
     private fb: FormBuilder,
-    private store: Store
+    private store: Store,
+    private facturacionService: FacturacionService,
+    private router: Router,
   ) {
     this.reservaForm = this.fb.group({
       clienteNombre: ['', [Validators.required]],
@@ -107,16 +110,13 @@ export class GestionMesasComponent {
             : 'Desconocido';
         }
       } else {
-        this.selectedReserva = null; // No hay reserva asociada
+        this.selectedReserva = null; 
       }
     } catch (error) {
       console.error('Error al seleccionar la mesa:', error);
     }
   }
 
-  onSeleccionarAlimento(alimento: AlimentoMesaModel): void {
-    console.log('Alimento seleccionado:', alimento);
-  }
 
   openReservaModal(): void {
     this.showReservaModal = true;
@@ -210,6 +210,15 @@ export class GestionMesasComponent {
     } catch (error) {
       this.showModal('Hubo un error al eliminar la reserva. Intenta nuevamente.', true);
       console.error('Error al eliminar la reserva:', error);
+    }
+  }
+
+  proceedToPayment(): void {
+    if (this.selectedMesa) {
+      this.facturacionService.setMesaId(this.selectedMesa.id);
+      this.router.navigate(['/facturacion']);
+    } else {
+      console.log('No hay mesa seleccionada.');
     }
   }
 
