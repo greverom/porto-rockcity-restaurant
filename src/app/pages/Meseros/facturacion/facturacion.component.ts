@@ -140,13 +140,20 @@ export class FacturacionComponent {
   async onPagarConFactura(): Promise<void> {
     if (this.facturaForm.valid) {
       const monto = this.facturaForm.get('monto')?.value;
+
+      const alimentosSeleccionados = this.alimentos.filter(alimento => alimento.seleccionado);
+      const descripcionAlimentos = alimentosSeleccionados.length > 0 
+      ? alimentosSeleccionados 
+      : this.alimentos;
+
       const pago: PagoMesaModel = {
         clienteId: this.facturaForm.value.clienteId,
         nombreCliente: this.facturaForm.value.nombreCliente,
         correo: this.facturaForm.value.correo,
         monto: monto,
         formaPago: this.facturaForm.value.formaPago,
-        fecha: new Date()
+        fecha: new Date(),
+        descripcionAlimentos,
       };
   
       const facturaData = {
@@ -188,13 +195,20 @@ export class FacturacionComponent {
   async onPagarConsumidorFinal(): Promise<void> {
     if (this.consumidorFinalForm.valid) {
       const monto = this.consumidorFinalForm.get('monto')?.value;
+
+      const alimentosSeleccionados = this.alimentos.filter(alimento => alimento.seleccionado);
+      const descripcionAlimentos = alimentosSeleccionados.length > 0 
+      ? alimentosSeleccionados 
+      : this.alimentos;
+
       const pago: PagoMesaModel = {
         clienteId: 'xxxxxxxxxx',
         nombreCliente: 'xxxxxxxxxx',
         correo: 'xxxxxxxxxx',
         monto: monto,
         formaPago: this.consumidorFinalForm.value.formaPago,
-        fecha: new Date()
+        fecha: new Date(),
+        descripcionAlimentos,
       };
   
       const facturaData = {

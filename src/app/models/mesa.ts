@@ -35,7 +35,8 @@ export interface MesaModel {
     monto: number;              
     formaPago: FormaPago;       
     fecha: Date; 
-    meseroId?: string;               
+    meseroId?: string;  
+    descripcionAlimentos: AlimentoMesaModel[];             
   }
   
   export enum FormaPago {
