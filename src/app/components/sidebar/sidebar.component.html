@@ -29,16 +29,16 @@
       </a>
     </li>
 
-    <!-- Facturación (solo para empleados) -->
+    <!-- Facturación (solo para empleados) 
     <li *ngIf="isVisibleForEmployee()">
       <a routerLink="/facturacion" routerLinkActive="active">
         <i class="fas fa-file-invoice-dollar"></i>
         <span *ngIf="isSidebarOpen">Facturación</span>
       </a>
-    </li>
+    </li>-->
 
     <!-- Gestión de Mesas (solo para empleados) -->
-    <li *ngIf="isVisibleForAdmin() || isVisibleForEmployee()">
+    <li *ngIf="isVisibleForAdmin()">
       <a routerLink="/gestion-mesas" routerLinkActive="active">
         <i class="fas fa-chair"></i>
         <span *ngIf="isSidebarOpen">Gestión de Mesas</span>
@@ -53,8 +53,8 @@
       </a>
     </li>
 
-    <!-- Reservas (solo para empleados) -->
-    <li *ngIf="isVisibleForEmployee()">
+    <!-- Reservas -->
+    <li *ngIf="isVisibleForEmployee() || isVisibleForAdmin()">
       <a routerLink="/reservas" routerLinkActive="active">
         <i class="fas fa-calendar-check"></i>
         <span *ngIf="isSidebarOpen">Reservas</span>

@@ -131,12 +131,13 @@ export class GestionMesasComponent {
     if (this.reservaForm.invalid || !this.selectedMesa) {
       return;
     }
+    const fechaReservaInput = this.reservaForm.value.fechaReserva;
   
-    const fechaReserva = this.reservaForm.value.fechaReserva
-      ? new Date(this.reservaForm.value.fechaReserva)
-      : null;
+    const fechaReserva = fechaReservaInput
+    ? new Date(fechaReservaInput + 'T00:00:00')
+    : null;
   
-    if (!fechaReserva) {
+    if (!fechaReserva || isNaN(fechaReserva.getTime())) {
       this.showModal('La fecha de reserva es inválida.', true);
       return;
     }
@@ -171,10 +172,10 @@ export class GestionMesasComponent {
         id: generatedReservaId,
         fechaCreacion: new Date(),
       };
+      this.closeReservaModal();
       await this.loadMesas();
   
       this.showModal('Mesa reservada.', false);
-      this.closeReservaModal();
     } catch (error) {
       this.showModal('Hubo un error al reservar la mesa. Intenta nuevamente.', true);
       console.error('Error al reservar la mesa:', error);

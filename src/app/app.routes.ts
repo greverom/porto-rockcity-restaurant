@@ -30,6 +30,12 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'gestion-mesas',
+    loadComponent: () => import('./pages/Administrador/gestion-mesas/gestion-mesas.component').then(m => m.GestionMesasComponent),
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMINISTRADORES'] }, 
+  },
+  {
     path: 'crud-mesas',
     loadComponent: () => import('./pages/Administrador/crud-mesas/crud-mesas.component').then(m => m.CrudMesasComponent),
     canActivate: [authGuard, roleGuard],
@@ -47,6 +53,12 @@ export const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'facturacion',
+    loadComponent: () => import('./pages/Meseros/facturacion/facturacion.component').then(m => m.FacturacionComponent),
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMINISTRADORES'] }, 
+  },
 
   // Rutas protegidas para Cocineros
   {
@@ -57,18 +69,7 @@ export const routes: Routes = [
   },
 
   // Rutas protegidas para Meseros
-  {
-    path: 'facturacion',
-    loadComponent: () => import('./pages/Meseros/facturacion/facturacion.component').then(m => m.FacturacionComponent),
-    canActivate: [authGuard, roleGuard],
-    data: { roles: ['EMPLEADOS'] }, 
-  },
-  {
-    path: 'gestion-mesas',
-    loadComponent: () => import('./pages/Meseros/gestion-mesas/gestion-mesas.component').then(m => m.GestionMesasComponent),
-    canActivate: [authGuard, roleGuard],
-    data: { roles: ['EMPLEADOS', 'ADMINISTRADORES'] }, 
-  },
+  
   {
     path: 'gestion-pedidos',
     loadComponent: () => import('./pages/Meseros/gestion-pedidos/gestion-pedidos.component').then(m => m.GestionPedidosComponent),
@@ -83,7 +84,7 @@ export const routes: Routes = [
     path: 'reservas',
     loadComponent: () => import('./pages/Meseros/reservas/reservas.component').then(m => m.ReservasComponent),
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['EMPLEADOS'] }, 
+    data: { roles: ['EMPLEADOS', 'ADMINISTRADORES'] }, 
   },
 
   // Ruta protegida de perfil de usuario

@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { selectUserData } from '../../../store/user/user.selectors';
 import { Store } from '@ngrx/store';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-pedidos',
@@ -26,7 +26,8 @@ export class GestionPedidosComponent implements OnInit {
   mesasAsignadasCount: number = 0;
 
   constructor(private mesaService: MesaService,
-              private store: Store
+              private store: Store,
+              private router: Router
   ) {}
 
   async ngOnInit() {
@@ -54,7 +55,7 @@ export class GestionPedidosComponent implements OnInit {
   async selectMesa(id: string): Promise<void> {
     try {
       this.selectedMesa = await this.mesaService.getMesaById(id); 
-      console.log('Mesa seleccionada:', this.selectedMesa); 
+      //console.log('Mesa seleccionada:', this.selectedMesa); 
     } catch (error) {
       console.error('Error al seleccionar la mesa:', error);
     }
@@ -82,7 +83,7 @@ export class GestionPedidosComponent implements OnInit {
 
   async onAsignarMesa(): Promise<void> {
     if (!this.selectedMesa || !this.meseroId) {
-      console.error('Faltan datos para asignar la mesa.');
+      //console.error('Faltan datos para asignar la mesa.');
       return;
     }
   
@@ -104,11 +105,11 @@ export class GestionPedidosComponent implements OnInit {
       this.selectedMesa.meseroId = this.meseroId;
       this.selectedMesa.capacidad = nuevaCapacidad; 
       const mesaIndex = this.mesas.findIndex((mesa) => mesa.id === this.selectedMesa!.id);
-  
-      this.showAsignarModal = false;
       await this.loadMesas(); 
-      console.log('Datos de la mesa asignada:', this.selectedMesa);
-      console.log('Mesa asignada correctamente.');
+      this.showAsignarModal = false;
+      this.router.navigate(['/mesas-asignadas']);
+      //console.log('Datos de la mesa asignada:', this.selectedMesa);
+      //console.log('Mesa asignada correctamente.');
     } catch (error) {
       console.error('Error al asignar la mesa:', error);
     }

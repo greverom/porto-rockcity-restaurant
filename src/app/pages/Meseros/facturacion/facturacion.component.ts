@@ -162,7 +162,7 @@ export class FacturacionComponent {
         meseroNombre: this.meseroNombre
       };
   
-      console.log('Factura registrada:', facturaData);
+      //console.log('Factura registrada:', facturaData);
   
       const alimentosParaEliminar = this.alimentos.filter(alimento => alimento.seleccionado);
       const alimentosRestantes = alimentosParaEliminar.length > 0 
@@ -217,7 +217,7 @@ export class FacturacionComponent {
         meseroNombre: this.meseroNombre
       };
   
-      console.log('Factura para Consumidor Final registrada:', facturaData);
+      //console.log('Factura para Consumidor Final registrada:', facturaData);
   
       const alimentosParaEliminar = this.alimentos.filter(alimento => alimento.seleccionado);
       const alimentosRestantes = alimentosParaEliminar.length > 0 
