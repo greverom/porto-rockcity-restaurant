@@ -79,6 +79,25 @@ export class MesaService {
       await set(newReservaRef, reservaData);
       return newReservaRef;
     }
+    //Obtener reservas
+    async getReservas(): Promise<ReservaModel[]> {
+      try {
+        const snapshot = await get(ref(this.db, 'reservas'));
+        if (snapshot.exists()) {
+          const reservas = Object.values(snapshot.val()) as ReservaModel[];
+          // Convertir fechas de string a Date
+          return reservas.map(reserva => ({
+            ...reserva,
+            fechaReserva: reserva.fechaReserva ? new Date(reserva.fechaReserva) : null,
+            fechaCreacion: reserva.fechaCreacion ? new Date(reserva.fechaCreacion) : null,
+          }));
+        }
+        return [];
+      } catch (error) {
+        console.error('Error al obtener las reservas:', error);
+        return [];
+      }
+    }
 
  // Obtener una reserva por su ID
 async getReservaById(reservaId: string): Promise<ReservaModel | null> {

@@ -1,1 +1,32 @@
-<p>reservas works!</p>
+<div class="calendar-title">
+    <h2>Calendario de Mesas Reservadas</h2>
+</div>
+
+<div class="calendar-container">
+    <div class="month-navigation">
+      <button (click)="prevMonth()" class="nav-button prev-button">
+        Anterior
+      </button>
+      
+      <span class="month-display">{{ selectedMonth }} {{ selectedYear }}</span>
+  
+      <button (click)="nextMonth()" class="nav-button next-button">
+        Siguiente
+      </button>
+    </div>
+  
+    <div class="days-header">
+      <div *ngFor="let day of daysInitials" class="day-initial">
+        {{ day }}
+      </div>
+    </div>
+  
+    <div class="days-grid">
+      <div 
+        *ngFor="let day of currentMonthDays" 
+        class="day-square" 
+        [ngClass]="{ 'empty-day': day === '' }">
+        {{ day }}
+      </div>
+    </div>
+  </div>
