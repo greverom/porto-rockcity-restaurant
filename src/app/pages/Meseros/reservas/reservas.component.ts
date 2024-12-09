@@ -49,7 +49,7 @@ export class ReservasComponent implements OnInit {
       }
   
       this.reservas = reservas;
-      console.log('Reservas obtenidas:', this.reservas);
+     // console.log('Reservas obtenidas:', this.reservas);
     } catch (error) {
       console.error('Error al cargar las reservas:', error);
     }
