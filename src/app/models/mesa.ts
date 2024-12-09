@@ -53,7 +53,8 @@ export interface MesaModel {
     fechaReserva: string | Date | null;   
     meseroNombre?: string;  
     estado: ReservaEstado;    
-    fechaCreacion: string | Date | null;      
+    fechaCreacion: string | Date | null;
+    mesaNumero?: number;
   }
   
   export enum ReservaEstado {

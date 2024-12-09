@@ -22,11 +22,40 @@
     </div>
   
     <div class="days-grid">
-      <div 
-        *ngFor="let day of currentMonthDays" 
-        class="day-square" 
-        [ngClass]="{ 'empty-day': day === '' }">
-        {{ day }}
-      </div>
+        <div 
+          *ngFor="let day of currentMonthDays" 
+          class="day-square" 
+          [ngClass]="{ 
+            'empty-day': day === '', 
+            'selected-day': day === selectedDay,
+            'reserva-day': esDiaConReserva(day)}" 
+          (click)="seleccionarDia(day)">
+          {{ day }}
+        </div>
     </div>
-  </div>
+</div>
+
+<div class="reservas-container" *ngIf="reservasFiltradas.length > 0">
+        <h3>Reservas para el {{ selectedDay }} de {{ selectedMonth }}</h3>
+        <table>
+        <thead>
+            <tr>
+            <th>Cliente</th>
+            <th>Mesa</th>
+            <th>Número de Personas</th>
+            <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let reserva of reservasFiltradas">
+            <td>{{ reserva.clienteNombre }}</td>
+            <td>{{ reserva.mesaNumero }}</td>
+            <td>{{ reserva.numeroPersonas }}</td>
+            <td>{{ reserva.estado }}</td>
+            </tr>
+        </tbody>
+        </table>
+</div>
+<div *ngIf="reservasFiltradas.length === 0 && selectedDay !== null">
+    <p>No hay reservas para el día {{ selectedDay }} de {{ selectedMonth }}.</p>
+</div>
