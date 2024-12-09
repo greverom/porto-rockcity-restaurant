@@ -19,6 +19,7 @@ export class ReservasComponent implements OnInit {
   selectedMonth!: string;
   selectedYear!: number;
   selectedDay: number | null = null;
+  selectedTextDay: { day: number | null; month: string | null } = { day: null, month: null };
   monthNames = [
     'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
@@ -96,6 +97,7 @@ export class ReservasComponent implements OnInit {
   seleccionarDia(day: number | string): void {
     if (typeof day === 'number') {
       this.selectedDay = day;
+      this.selectedTextDay = { day, month: this.selectedMonth };
   
       const monthIndex = this.monthNames.indexOf(this.selectedMonth);
       this.reservasFiltradas = this.reservas.filter(reserva => {
@@ -123,6 +125,7 @@ export class ReservasComponent implements OnInit {
       this.selectedMonth = this.monthNames[current.getMonth()];
       this.selectedYear = current.getFullYear();
       this.generateDaysForCurrentMonth();
+      this.selectedDay = null;
     }
   }
 
@@ -136,6 +139,7 @@ export class ReservasComponent implements OnInit {
       this.selectedMonth = this.monthNames[current.getMonth()];
       this.selectedYear = current.getFullYear();
       this.generateDaysForCurrentMonth();
+      this.selectedDay = null;
     }
   }
 }

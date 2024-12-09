@@ -36,7 +36,9 @@
 </div>
 
 <div class="reservas-container" *ngIf="reservasFiltradas.length > 0">
-        <h3>Reservas para el {{ selectedDay }} de {{ selectedMonth }}</h3>
+      <h3 *ngIf="selectedTextDay.day !== null && selectedTextDay.month !== null">
+        Reservas para el {{ selectedTextDay.day }} de {{ selectedTextDay.month }}
+      </h3>
         <table>
         <thead>
             <tr>
@@ -57,5 +59,7 @@
         </table>
 </div>
 <div *ngIf="reservasFiltradas.length === 0 && selectedDay !== null">
-    <p>No hay reservas para el día {{ selectedDay }} de {{ selectedMonth }}.</p>
+  <p class="no-reservas-message">
+    No hay reservas para el día {{ selectedDay }} de {{ selectedMonth }}.
+  </p>
 </div>

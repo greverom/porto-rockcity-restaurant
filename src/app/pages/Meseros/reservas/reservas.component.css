@@ -2,20 +2,18 @@
     text-align: center;
     margin-top: 3rem;
     margin-bottom: 2rem;
-    font-family: Arial, sans-serif;
     color: #333;
   }
   
   .calendar-title h2 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
   }
 
  .calendar-container {
     width: 95%;
-    max-width: 600px;
-    margin: 2rem auto;
-    font-family: Arial, sans-serif;
+    max-width: 500px;
+    margin: 1.5rem auto;
   }
   
   .month-navigation {
@@ -28,7 +26,7 @@
   .nav-button {
     background-color: #ffa726; 
     color: rgb(69, 69, 69);
-    padding: 0.5rem 1rem;
+    padding: 0.4rem .8rem;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -36,7 +34,7 @@
   }
   
   .month-display {
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: bold;
   }
   
@@ -46,6 +44,7 @@
     margin-bottom: 0.5rem;
     text-align: center;
     font-weight: bold;
+    font-size: 0.8rem;
   }
   
   .days-grid {
@@ -63,6 +62,7 @@
     border: 1px solid #ddd;
     background-color: #f9f9f9;
     border-radius: 4px;
+    font-size: 0.8rem;
     cursor: pointer;
   }
   
@@ -72,35 +72,35 @@
   }
 
   .reserva-day {
-    background-color: #898989; 
+    background-color: #aba8a8; 
     color: rgb(226, 226, 226);
   }
 
   .selected-day {
     background-color: #e99e58;
     color: white;
+    font-size: 0.8rem;
   }
   
   .reservas-container {
     margin-top: 2rem;
-    padding: 1.5rem;
+    padding: 1.2rem;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
   }
   
   .reservas-container h3 {
+    text-align: center;
     margin-bottom: 1rem;
     font-size: 1.5rem;
-    font-weight: bold;
     color: #333;
   }
   
   table {
-    width: 100%;
+    width: 90%;
     border-collapse: collapse;
-    margin-top: 1rem;
+    margin: .85rem auto;
   }
   
   table th,
@@ -112,8 +112,8 @@
   }
   
   table th {
-    background-color: #ffa726; 
-    color: rgb(71, 71, 71);
+    background-color: #595959; 
+    color: rgb(218, 215, 215);
     font-weight: bold;
     text-transform: uppercase;
   }
@@ -135,4 +135,15 @@
     font-size: 1rem;
     color: #999;
     margin-top: 1rem;
+  }
+
+  .no-reservas-message {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    text-align: center; 
+    font-size: 1rem; 
+    color: #999; 
+    margin-top: 1.5rem; 
+    padding: 1rem; 
   }
