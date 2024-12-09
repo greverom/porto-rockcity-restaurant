@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Database, ref, set, update, remove, push, get, DatabaseReference } from '@angular/fire/database';
-import { MesaEstado, MesaModel, ReservaModel } from '../../models/mesa';
+import { AlimentoMesaModel, MesaEstado, MesaModel, ReservaModel } from '../../models/mesa';
 import { AlimentoModel } from '../../models/food';
 
 
@@ -190,6 +190,33 @@ async buscarAlimentosPorNombre(query: string): Promise<AlimentoModel[]> {
   procesarNodo(alimentos); 
 
   return resultados;
+}
+
+async actualizarMesaDespuesDePago(mesaId: string, alimentosRestantes: AlimentoMesaModel[]): Promise<void> {
+  try {
+    const mesaRef = ref(this.db, `mesas/${mesaId}`);
+    let nuevaCapacidad = 4; 
+    let nuevoEstado = MesaEstado.DISPONIBLE;
+    const actualizacion: Partial<MesaModel> = {
+      alimentos: alimentosRestantes,
+      estado: nuevoEstado,
+      capacidad: nuevaCapacidad,
+      total: alimentosRestantes.reduce((total, alimento) => total + alimento.subtotal, 0),
+      fechaUltimaActualizacion: new Date(),
+    };
+
+    if (alimentosRestantes.length > 0) {
+      actualizacion.estado = MesaEstado.OCUPADA;
+      actualizacion.capacidad = alimentosRestantes.reduce((total, alimento) => total + alimento.cantidad, 0);
+    } else {
+      actualizacion.meseroId = null;
+    }
+
+    await update(mesaRef, actualizacion);
+  } catch (error) {
+    console.error('Error al actualizar la mesa después del pago:', error);
+    throw new Error('No se pudo actualizar la mesa después del pago.');
+  }
 }
 
 }

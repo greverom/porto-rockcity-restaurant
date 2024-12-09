@@ -76,12 +76,32 @@ export class FacturacionComponent {
     });
   }
 
+
   ordenarAlimentosPorNombre(): void {
     this.alimentos.sort((a, b) => a.nombre.localeCompare(b.nombre));
   }
 
   onSeleccionarAlimento(alimento: AlimentoMesaModel): void {
-    console.log('Alimento seleccionado:', alimento);
+   // console.log('Alimento seleccionado:', alimento);
+  }
+
+  calcularSubtotalSeleccionados(): number {
+    const seleccionados = this.alimentos.filter(alimento => alimento.seleccionado);
+    if (seleccionados.length === 0) {
+      return this.alimentos.reduce((total, alimento) => total + alimento.subtotal, 0);
+    }
+    return seleccionados.reduce((total, alimento) => total + alimento.subtotal, 0);
+  }
+
+  calcularIVASeleccionados(): number {
+    const subtotal = this.calcularSubtotalSeleccionados();
+    return subtotal * 0.15;
+  }
+
+  calcularTotalSeleccionados(): number {
+    const subtotal = this.calcularSubtotalSeleccionados();
+    const iva = this.calcularIVASeleccionados();
+    return subtotal + iva;
   }
 
   calcularSubtotal(): number {
@@ -100,10 +120,10 @@ export class FacturacionComponent {
   }
 
   openFacturaModal(): void {
+    const totalSeleccionados = parseFloat(this.calcularTotalSeleccionados().toFixed(2)); 
+    this.facturaForm.controls['monto'].setValue(totalSeleccionados);
+  
     this.showFacturaModal = true;
-    this.facturaForm.patchValue({
-      monto: this.calcularTotal()
-    });
   }
 
   closeFacturaModal(): void {
@@ -117,33 +137,44 @@ export class FacturacionComponent {
     });
   }
 
-  onPagarConFactura(): void {
+  async onPagarConFactura(): Promise<void> {
     if (this.facturaForm.valid) {
+      const monto = this.facturaForm.get('monto')?.value;
       const pago: PagoMesaModel = {
         clienteId: this.facturaForm.value.clienteId,
         nombreCliente: this.facturaForm.value.nombreCliente,
         correo: this.facturaForm.value.correo,
-        monto: this.calcularTotal(),
+        monto: monto,
         formaPago: this.facturaForm.value.formaPago,
         fecha: new Date()
       };
-
+  
       const facturaData = {
         pago,
         numeroMesa: this.numeroMesa,
         meseroNombre: this.meseroNombre
       };
-
+  
       console.log('Factura registrada:', facturaData);
+  
+      const alimentosParaEliminar = this.alimentos.filter(alimento => alimento.seleccionado);
+      const alimentosRestantes = alimentosParaEliminar.length > 0 
+        ? this.alimentos.filter(alimento => !alimento.seleccionado) 
+        : []; 
+  
+      await this.mesaService.actualizarMesaDespuesDePago(this.mesaId!, alimentosRestantes);
+  
+      this.alimentos = alimentosRestantes;
+  
       this.closeFacturaModal();
     }
   }
 
   openConsumidorFinalModal(): void {
+    const totalSeleccionados = parseFloat(this.calcularTotalSeleccionados().toFixed(2)); 
+    this.consumidorFinalForm.controls['monto'].setValue(totalSeleccionados);
+  
     this.showConsumidorFinalModal = true;
-    this.consumidorFinalForm.patchValue({
-      monto: this.calcularTotal()
-    });
   }
 
   closeConsumidorFinalModal(): void {
@@ -154,24 +185,34 @@ export class FacturacionComponent {
     });
   }
 
-  onPagarConsumidorFinal(): void {
+  async onPagarConsumidorFinal(): Promise<void> {
     if (this.consumidorFinalForm.valid) {
+      const monto = this.consumidorFinalForm.get('monto')?.value;
       const pago: PagoMesaModel = {
-        clienteId: 'xxxxxxxxxx', // Dato fijo
-        nombreCliente: 'xxxxxxxxxx', // Dato fijo
-        correo: 'xxxxxxxxxx', // Sin correo
-        monto: this.calcularTotal(),
+        clienteId: 'xxxxxxxxxx',
+        nombreCliente: 'xxxxxxxxxx',
+        correo: 'xxxxxxxxxx',
+        monto: monto,
         formaPago: this.consumidorFinalForm.value.formaPago,
         fecha: new Date()
       };
-
+  
       const facturaData = {
         pago,
         numeroMesa: this.numeroMesa,
         meseroNombre: this.meseroNombre
       };
-
+  
       console.log('Factura para Consumidor Final registrada:', facturaData);
+  
+      const alimentosParaEliminar = this.alimentos.filter(alimento => alimento.seleccionado);
+      const alimentosRestantes = alimentosParaEliminar.length > 0 
+        ? this.alimentos.filter(alimento => !alimento.seleccionado) 
+        : []; 
+  
+      await this.mesaService.actualizarMesaDespuesDePago(this.mesaId!, alimentosRestantes);
+  
+      this.alimentos = alimentosRestantes;
       this.closeConsumidorFinalModal();
     }
   }

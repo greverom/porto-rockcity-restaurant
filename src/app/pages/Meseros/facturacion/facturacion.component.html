@@ -19,9 +19,9 @@
         </div>
       </div>
       <div *ngIf="alimentos && alimentos.length > 0" class="total-container">
-        <p><strong>Subtotal:</strong> ${{ calcularSubtotal().toFixed(2) }}</p>
-        <p><strong>IVA (15%):</strong> ${{ calcularIVA().toFixed(2) }}</p>
-        <p><strong>Total:</strong> ${{ calcularTotal().toFixed(2) }}</p>
+        <p><strong>Subtotal:</strong> ${{ calcularSubtotalSeleccionados().toFixed(2) }}</p>
+        <p><strong>IVA (15%):</strong> ${{ calcularIVASeleccionados().toFixed(2) }}</p>
+        <p><strong>Total:</strong> ${{ calcularTotalSeleccionados().toFixed(2) }}</p>
       </div>
     </div>
   </div>
@@ -79,9 +79,9 @@
           id="monto"
           type="text"
           class="form-control"
-          [value]="calcularTotal() | number: '1.2-2'"
-          readonly
-        />
+          formControlName="monto"
+          [value]="facturaForm.get('monto')?.value | number: '1.2-2'"
+          readonly/>
       </div>
 
       <div class="form-group">
@@ -111,7 +111,8 @@
           id="monto"
           type="text"
           class="form-control"
-          [value]="calcularTotal() | number: '1.2-2'"
+          formControlName="monto"
+          [value]="facturaForm.get('monto')?.value | number: '1.2-2'"
           readonly
         />
       </div>

@@ -8,7 +8,7 @@ export interface MesaModel {
     total: number;                 
     fechaUltimaActualizacion: Date;
     reservaId?: string | null;  
-    meseroId?: string;
+    meseroId?: string | null;
   }
   
   export enum MesaEstado {
