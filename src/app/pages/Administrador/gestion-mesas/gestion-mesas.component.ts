@@ -81,7 +81,11 @@ export class GestionMesasComponent {
           mesa.meseroId = 'No asignado';
         }
   
-        // Lógica para manejar reservas
+        // Si la mesa está ocupada, respetar este estado
+        if (mesa.estado === MesaEstado.OCUPADA) {
+          continue;
+        }
+  
         if (mesa.reservaId) {
           const reserva = await this.mesaService.getReservaById(mesa.reservaId);
   
@@ -90,10 +94,7 @@ export class GestionMesasComponent {
             fechaReserva.setHours(0, 0, 0, 0); // Normalizar fecha de la reserva
   
             if (fechaReserva.getTime() < today.getTime()) {
-              // Si la fecha de la reserva ha pasado, eliminarla
               await this.mesaService.deleteReserva(reserva.id);
-  
-              // Actualizar la mesa a estado disponible
               await this.mesaService.updateMesa(mesa.id, {
                 estado: MesaEstado.DISPONIBLE,
                 reservaId: null,
@@ -102,7 +103,6 @@ export class GestionMesasComponent {
               mesa.estado = MesaEstado.DISPONIBLE;
               mesa.reservaId = null;
             } else if (fechaReserva.getTime() === today.getTime()) {
-              // Si la reserva es para hoy
               mesa.estado = MesaEstado.RESERVADA;
             } else {
               mesa.estado = MesaEstado.DISPONIBLE;
@@ -111,12 +111,10 @@ export class GestionMesasComponent {
             mesa.estado = MesaEstado.DISPONIBLE;
           }
         } else if (!mesa.estado || mesa.estado === MesaEstado.DISPONIBLE) {
-          // Mantener el estado existente si no hay reservas
           mesa.estado = MesaEstado.DISPONIBLE;
         }
       }
   
-      // Ordenar las mesas por su número
       this.mesas = mesas.sort((a, b) => a.numero - b.numero);
     } catch (error) {
       console.error('Error al cargar las mesas:', error);

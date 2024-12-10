@@ -45,8 +45,44 @@ export class GestionPedidosComponent implements OnInit {
   async loadMesas() {
     try {
       const mesas = await this.mesaService.getMesas();
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Normalizar la fecha actual
+  
+      for (const mesa of mesas) {
+        if (mesa.estado === MesaEstado.OCUPADA) {
+          continue; 
+        }
+  
+        if (mesa.reservaId) {
+          const reserva = await this.mesaService.getReservaById(mesa.reservaId);
+  
+          if (reserva && reserva.fechaReserva) {
+            const fechaReserva = new Date(reserva.fechaReserva);
+            fechaReserva.setHours(0, 0, 0, 0); // Normalizar fecha de la reserva
+  
+            if (fechaReserva.getTime() < today.getTime()) {
+              await this.mesaService.deleteReserva(reserva.id);
+              await this.mesaService.updateMesa(mesa.id, {
+                estado: MesaEstado.DISPONIBLE,
+                reservaId: null,
+              });
+              mesa.estado = MesaEstado.DISPONIBLE;
+              mesa.reservaId = null;
+            } else if (fechaReserva.getTime() === today.getTime()) {
+              mesa.estado = MesaEstado.RESERVADA;
+            } else {
+              mesa.estado = MesaEstado.DISPONIBLE;
+            }
+          } else {
+            mesa.estado = MesaEstado.DISPONIBLE;
+          }
+        } else {
+          mesa.estado = MesaEstado.DISPONIBLE;
+        }
+      }
+  
       this.mesas = mesas.sort((a, b) => a.numero - b.numero); 
-      this.calculateMesasAsignadas();
+      this.calculateMesasAsignadas(); 
     } catch (error) {
       console.error('Error al cargar las mesas:', error);
     }
