@@ -1,53 +1,50 @@
 .pedidos-cocina-container {
-    padding: 1rem;
-  }
-  
-  .title {
-    text-align: center;
-    color: #333;
-    margin-bottom: 2rem;
-  }
+  padding: 1rem;
+}
 
-  .text-muted{
-    font-size: 1.1rem;
-  }
-  
-  .spinner-container {
-    text-align: center;
-  }
-  
-  .spinner {
-    border: 4px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 4px solid #3498db;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  .mesa-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .mesa-card h3 {
-    margin-bottom: 0.5rem;
-  }
-  
-  .no-pedidos-message {
-    text-align: center;
-    color: #777;
-    margin-top: 2rem;
-  }
+.mesa-card {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.mesa-card.mesa-preparada {
+  background-color: #d4edda; 
+}
+
+ul {
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+  list-style-type: none;
+}
+
+.btn {
+  margin-top: 1rem;
+  display: block;
+  width: 200px;
+}
+
+.spinner-container {
+  text-align: center;
+}
+
+.spinner {
+  margin: 1rem auto;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

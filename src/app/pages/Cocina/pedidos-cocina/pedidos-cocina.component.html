@@ -1,25 +1,42 @@
 <div class="pedidos-cocina-container">
     <h2 class="title">Pedidos de Cocina</h2>
   
+    <!-- Indicador de carga -->
     <div *ngIf="loading" class="spinner-container">
       <div class="spinner"></div>
       <p>Cargando pedidos...</p>
     </div>
   
+    <!-- Listado de mesas con pedidos -->
     <div *ngIf="!loading && mesasConPedidos.length > 0">
-      <div *ngFor="let mesa of mesasConPedidos" class="mesa-card">
+      <div *ngFor="let mesa of mesasConPedidos" 
+           class="mesa-card"
+           [ngClass]="{ 'mesa-preparada': mesa.todosListos }">
         <h3>
-          Mesa {{ mesa.numero }}
-          <small class="text-muted">(Mesero: {{ mesa.meseroNombre }})</small>
+          Mesa {{ mesa.numero }} 
+          <small>({{ mesa.meseroNombre }})</small>
         </h3>
+  
         <ul>
           <li *ngFor="let alimento of mesa.alimentos">
+            <input 
+              type="checkbox" 
+              [checked]="alimento.listo" 
+              (change)="marcarAlimentoListo(mesa.numero, alimento.alimentoId)" />
             {{ alimento.cantidad }} x {{ alimento.nombre }}
           </li>
         </ul>
+  
+        <button 
+          class="btn btn-success" 
+          [disabled]="!mesa.todosListos" 
+          (click)="marcarMesaPreparada(mesa.numero)">
+          Imprimir Pedido
+        </button>
       </div>
     </div>
   
+    <!-- Mensaje cuando no hay pedidos -->
     <div *ngIf="!loading && mesasConPedidos.length === 0" class="no-pedidos-message">
       <p>No hay pedidos en las mesas actualmente.</p>
     </div>
