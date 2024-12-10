@@ -25,10 +25,13 @@
   </div>
 </div>
 
+
 <div class="selected-mesa" *ngIf="selectedMesa">
   <h2>Detalles de la Mesa: {{ selectedMesa.numero }}</h2>
   <p><strong>Capacidad:</strong> {{ selectedMesa.capacidad }}</p>
   <p><strong>Estado:</strong> {{ selectedMesa.estado }}</p>
+
+  <!-- Mostrar detalles de alimentos solo si están presentes -->
   <div *ngIf="selectedMesa?.alimentos && selectedMesa.alimentos.length > 0" class="alimentos-container">
     <h3>Alimentos en la Mesa</h3>
     <div class="alimentos-grid">
@@ -42,10 +45,12 @@
       </div>
     </div>
   </div>
+
   <div *ngIf="selectedMesa?.alimentos && selectedMesa.alimentos.length > 0" class="total-container">
     <p><strong>Subtotal:</strong> ${{ selectedMesa.total }}</p>
   </div>
 
+  <!-- Botón de pago -->
   <div *ngIf="selectedMesa?.alimentos && selectedMesa.alimentos.length > 0" class="payment-container">
     <button class="payment-button" (click)="proceedToPayment()">Proceder al Pago</button>
   </div>
@@ -53,6 +58,7 @@
   <!-- Línea divisora -->
   <hr class="divider" />
 
+  <!-- Detalles de la reserva, visibles solo si es el día de la reserva -->
   <div *ngIf="selectedReserva">
     <h3>Datos de la Reserva</h3>
     <p><strong>Nombre del Cliente:</strong> {{ selectedReserva.clienteNombre }}</p>
@@ -61,17 +67,18 @@
     <p><strong>Número de Personas:</strong> {{ selectedReserva.numeroPersonas }}</p>
   </div>
 
-  <!-- Botones -->
+  <!-- Botones dinámicos -->
   <button
     class="reserve-button"
     (click)="openReservaModal()"
-    *ngIf="(isAdmin$ | async) && selectedMesa?.estado === 'DISPONIBLE'">
+    *ngIf="(isAdmin$ | async) && !selectedReserva && selectedMesa?.estado === 'DISPONIBLE'">
     Reservar Mesa
   </button>
+
   <div class="delete-button-container">
     <button
       class="delete-button"
-      *ngIf="(isAdmin$ | async) && selectedMesa.estado === 'RESERVADA' && selectedMesa.reservaId" 
+      *ngIf="(isAdmin$ | async) && selectedReserva && selectedMesa?.estado === 'RESERVADA'" 
       (click)="onEliminarReserva()">
       Eliminar Reserva
     </button>

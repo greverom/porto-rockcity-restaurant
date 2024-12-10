@@ -65,20 +65,41 @@ export class GestionMesasComponent {
   async loadMesas() {
     try {
       const mesas = await this.mesaService.getMesas();
-      this.mesas = mesas.sort((a, b) => a.numero - b.numero);
-
-      for (const mesa of this.mesas) {
-        if (mesa.meseroId) {
-          const mesero = await this.mesaService.getEmpleadoById(mesa.meseroId);
-          if (mesero) {
-            mesa.meseroId = `${mesero.nombres} ${mesero.apellidos}`; 
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); 
+  
+      for (const mesa of mesas) {
+        if (mesa.reservaId) {
+          const reserva = await this.mesaService.getReservaById(mesa.reservaId);
+  
+          if (reserva && reserva.fechaReserva) {
+            const fechaReserva = new Date(reserva.fechaReserva);
+            fechaReserva.setHours(0, 0, 0, 0); 
+  
+            if (fechaReserva.getTime() < today.getTime()) {
+              await this.mesaService.deleteReserva(reserva.id);
+  
+              await this.mesaService.updateMesa(mesa.id, {
+                estado: MesaEstado.DISPONIBLE,
+                reservaId: null,
+              });
+  
+              mesa.estado = MesaEstado.DISPONIBLE;
+              mesa.reservaId = null;
+            } else if (fechaReserva.getTime() === today.getTime()) {
+              mesa.estado = MesaEstado.RESERVADA;
+            } else {
+              mesa.estado = MesaEstado.DISPONIBLE;
+            }
           } else {
-            mesa.meseroId = 'Desconocido';
+            mesa.estado = MesaEstado.DISPONIBLE;
           }
         } else {
-          mesa.meseroId = 'No asignado';
+          mesa.estado = MesaEstado.DISPONIBLE; 
         }
       }
+  
+      this.mesas = mesas.sort((a, b) => a.numero - b.numero);
     } catch (error) {
       console.error('Error al cargar las mesas:', error);
     }
@@ -93,30 +114,41 @@ export class GestionMesasComponent {
   async selectMesa(id: string): Promise<void> {
     try {
       this.selectedMesa = await this.mesaService.getMesaById(id);
-
+  
       if (this.selectedMesa?.alimentos) {
         this.ordenarAlimentosPorNombre(); 
       }
   
       if (this.selectedMesa?.reservaId) {
-        // Obtener los datos de la reserva
-        this.selectedReserva = await this.mesaService.getReservaById(this.selectedMesa.reservaId);
+        const reserva = await this.mesaService.getReservaById(this.selectedMesa.reservaId);
   
-        // Si existe un mesero asociado, obtener su información
-        if (this.selectedMesa.meseroId && this.selectedReserva) {
-          const empleado = await this.mesaService.getEmpleadoById(this.selectedMesa.meseroId);
-          this.selectedReserva.meseroNombre = empleado
-            ? `${empleado.nombres} ${empleado.apellidos}`
-            : 'Desconocido';
+        if (reserva && reserva.fechaReserva) {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0); 
+          const fechaReserva = new Date(reserva.fechaReserva);
+          fechaReserva.setHours(0, 0, 0, 0);
+  
+          if (fechaReserva.getTime() === today.getTime()) {
+            this.selectedReserva = reserva; 
+            this.selectedMesa.estado = MesaEstado.RESERVADA; 
+          } else {
+            this.selectedReserva = null; 
+            this.selectedMesa.estado = MesaEstado.DISPONIBLE; 
+          }
+        } else {
+          this.selectedReserva = null;
+          this.selectedMesa.estado = MesaEstado.DISPONIBLE; 
         }
       } else {
-        this.selectedReserva = null; 
+        this.selectedReserva = null;
+        if (this.selectedMesa) {
+          this.selectedMesa.estado = MesaEstado.DISPONIBLE; 
+        } 
       }
     } catch (error) {
       console.error('Error al seleccionar la mesa:', error);
     }
   }
-
 
   openReservaModal(): void {
     this.showReservaModal = true;
