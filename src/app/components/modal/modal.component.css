@@ -91,21 +91,21 @@
   }
   
   button.confirm-btn {
-    background-color: #007bff; 
+    background-color: #ffa726;
     color: white;
   }
   
   button.confirm-btn:hover {
-    background-color: #0056b3;
+    background-color: #fb8c00;
   }
   
   button.cancel-btn {
-    background-color: #28a745; 
+    background-color: #333333; 
     color: white;
   }
   
   button.cancel-btn:hover {
-    background-color: #218838;
+    background-color: #2a2a2a;
   }
   
   @media (max-width: 492px) {

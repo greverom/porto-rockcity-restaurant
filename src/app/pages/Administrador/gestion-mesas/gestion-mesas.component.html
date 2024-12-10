@@ -18,8 +18,7 @@
     <p [ngClass]="{
         'estado-disponible': mesa.estado === 'DISPONIBLE',
         'estado-ocupada': mesa.estado === 'OCUPADA',
-        'estado-reservada': mesa.estado === 'RESERVADA'
-      }">
+        'estado-reservada': mesa.estado === 'RESERVADA'}">
       Estado: {{ mesa.estado }}
     </p>
   </div>
@@ -31,7 +30,6 @@
   <p><strong>Capacidad:</strong> {{ selectedMesa.capacidad }}</p>
   <p><strong>Estado:</strong> {{ selectedMesa.estado }}</p>
 
-  <!-- Mostrar detalles de alimentos solo si están presentes -->
   <div *ngIf="selectedMesa?.alimentos && selectedMesa.alimentos.length > 0" class="alimentos-container">
     <h3>Alimentos en la Mesa</h3>
     <div class="alimentos-grid">
@@ -50,15 +48,12 @@
     <p><strong>Subtotal:</strong> ${{ selectedMesa.total }}</p>
   </div>
 
-  <!-- Botón de pago -->
   <div *ngIf="selectedMesa?.alimentos && selectedMesa.alimentos.length > 0" class="payment-container">
     <button class="payment-button" (click)="proceedToPayment()">Proceder al Pago</button>
   </div>
 
-  <!-- Línea divisora -->
   <hr class="divider" />
 
-  <!-- Detalles de la reserva, visibles solo si es el día de la reserva -->
   <div *ngIf="selectedReserva">
     <h3>Datos de la Reserva</h3>
     <p><strong>Nombre del Cliente:</strong> {{ selectedReserva.clienteNombre }}</p>
@@ -67,7 +62,6 @@
     <p><strong>Número de Personas:</strong> {{ selectedReserva.numeroPersonas }}</p>
   </div>
 
-  <!-- Botones dinámicos -->
   <button
     class="reserve-button"
     (click)="openReservaModal()"

@@ -66,19 +66,34 @@ export class GestionMesasComponent {
     try {
       const mesas = await this.mesaService.getMesas();
       const today = new Date();
-      today.setHours(0, 0, 0, 0); 
+      today.setHours(0, 0, 0, 0); // Normalizar la fecha actual
   
       for (const mesa of mesas) {
+        // Convertir meseroId a nombres y apellidos
+        if (mesa.meseroId) {
+          const mesero = await this.mesaService.getEmpleadoById(mesa.meseroId);
+          if (mesero) {
+            mesa.meseroId = `${mesero.nombres} ${mesero.apellidos}`; // Reemplazar ID por el nombre
+          } else {
+            mesa.meseroId = 'Desconocido';
+          }
+        } else {
+          mesa.meseroId = 'No asignado';
+        }
+  
+        // Lógica para manejar reservas
         if (mesa.reservaId) {
           const reserva = await this.mesaService.getReservaById(mesa.reservaId);
   
           if (reserva && reserva.fechaReserva) {
             const fechaReserva = new Date(reserva.fechaReserva);
-            fechaReserva.setHours(0, 0, 0, 0); 
+            fechaReserva.setHours(0, 0, 0, 0); // Normalizar fecha de la reserva
   
             if (fechaReserva.getTime() < today.getTime()) {
+              // Si la fecha de la reserva ha pasado, eliminarla
               await this.mesaService.deleteReserva(reserva.id);
   
+              // Actualizar la mesa a estado disponible
               await this.mesaService.updateMesa(mesa.id, {
                 estado: MesaEstado.DISPONIBLE,
                 reservaId: null,
@@ -87,6 +102,7 @@ export class GestionMesasComponent {
               mesa.estado = MesaEstado.DISPONIBLE;
               mesa.reservaId = null;
             } else if (fechaReserva.getTime() === today.getTime()) {
+              // Si la reserva es para hoy
               mesa.estado = MesaEstado.RESERVADA;
             } else {
               mesa.estado = MesaEstado.DISPONIBLE;
@@ -94,11 +110,13 @@ export class GestionMesasComponent {
           } else {
             mesa.estado = MesaEstado.DISPONIBLE;
           }
-        } else {
-          mesa.estado = MesaEstado.DISPONIBLE; 
+        } else if (!mesa.estado || mesa.estado === MesaEstado.DISPONIBLE) {
+          // Mantener el estado existente si no hay reservas
+          mesa.estado = MesaEstado.DISPONIBLE;
         }
       }
   
+      // Ordenar las mesas por su número
       this.mesas = mesas.sort((a, b) => a.numero - b.numero);
     } catch (error) {
       console.error('Error al cargar las mesas:', error);
@@ -115,35 +133,55 @@ export class GestionMesasComponent {
     try {
       this.selectedMesa = await this.mesaService.getMesaById(id);
   
-      if (this.selectedMesa?.alimentos) {
-        this.ordenarAlimentosPorNombre(); 
+      if (!this.selectedMesa) {
+        console.warn('Mesa no encontrada');
+        return;
       }
   
-      if (this.selectedMesa?.reservaId) {
+      if (this.selectedMesa.alimentos) {
+        this.ordenarAlimentosPorNombre();
+      }
+  
+      if (this.selectedMesa.reservaId) {
         const reserva = await this.mesaService.getReservaById(this.selectedMesa.reservaId);
   
         if (reserva && reserva.fechaReserva) {
           const today = new Date();
           today.setHours(0, 0, 0, 0); 
           const fechaReserva = new Date(reserva.fechaReserva);
-          fechaReserva.setHours(0, 0, 0, 0);
+          fechaReserva.setHours(0, 0, 0, 0); 
   
           if (fechaReserva.getTime() === today.getTime()) {
-            this.selectedReserva = reserva; 
-            this.selectedMesa.estado = MesaEstado.RESERVADA; 
+            this.selectedReserva = reserva;
+            this.selectedMesa.estado = MesaEstado.RESERVADA;
+          } else if (fechaReserva.getTime() > today.getTime()) {
+            this.selectedReserva = null;
+            if (this.selectedMesa.estado !== MesaEstado.OCUPADA) {
+              this.selectedMesa.estado = MesaEstado.DISPONIBLE;
+            }
           } else {
-            this.selectedReserva = null; 
-            this.selectedMesa.estado = MesaEstado.DISPONIBLE; 
+            await this.mesaService.deleteReserva(reserva.id);
+            await this.mesaService.updateMesa(this.selectedMesa.id, {
+              estado: MesaEstado.DISPONIBLE,
+              reservaId: null,
+            });
+  
+            this.selectedReserva = null;
+            this.selectedMesa.estado = MesaEstado.DISPONIBLE;
+            this.selectedMesa.reservaId = null;
           }
         } else {
           this.selectedReserva = null;
-          this.selectedMesa.estado = MesaEstado.DISPONIBLE; 
+          if (this.selectedMesa.estado !== MesaEstado.OCUPADA) {
+            this.selectedMesa.estado = MesaEstado.DISPONIBLE;
+          }
         }
       } else {
+        // Si no hay reserva asociada
         this.selectedReserva = null;
-        if (this.selectedMesa) {
-          this.selectedMesa.estado = MesaEstado.DISPONIBLE; 
-        } 
+        if (!this.selectedMesa.estado || this.selectedMesa.estado === MesaEstado.RESERVADA) {
+          this.selectedMesa.estado = MesaEstado.DISPONIBLE;
+        }
       }
     } catch (error) {
       console.error('Error al seleccionar la mesa:', error);
