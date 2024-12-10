@@ -1,1 +1,26 @@
-<p>pedidos-cocina works!</p>
+<div class="pedidos-cocina-container">
+    <h2 class="title">Pedidos de Cocina</h2>
+  
+    <div *ngIf="loading" class="spinner-container">
+      <div class="spinner"></div>
+      <p>Cargando pedidos...</p>
+    </div>
+  
+    <div *ngIf="!loading && mesasConPedidos.length > 0">
+      <div *ngFor="let mesa of mesasConPedidos" class="mesa-card">
+        <h3>
+          Mesa {{ mesa.numero }}
+          <small class="text-muted">(Mesero: {{ mesa.meseroNombre }})</small>
+        </h3>
+        <ul>
+          <li *ngFor="let alimento of mesa.alimentos">
+            {{ alimento.cantidad }} x {{ alimento.nombre }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  
+    <div *ngIf="!loading && mesasConPedidos.length === 0" class="no-pedidos-message">
+      <p>No hay pedidos en las mesas actualmente.</p>
+    </div>
+  </div>
