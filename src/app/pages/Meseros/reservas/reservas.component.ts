@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-reservas',
   standalone: true,
   imports: [
-      CommonModule
+      CommonModule,
   ],
   templateUrl: './reservas.component.html',
   styleUrl: './reservas.component.css'
@@ -37,20 +37,35 @@ export class ReservasComponent implements OnInit {
   async loadReservas(): Promise<void> {
     try {
       const reservas = await this.mesaService.getReservas();
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Normalizar la fecha actual
   
+      // Iterar y procesar cada reserva
       for (const reserva of reservas) {
+        if (!reserva.fechaReserva) {
+          continue; 
+        }
+  
+        const fechaReserva = new Date(reserva.fechaReserva);
+        fechaReserva.setHours(0, 0, 0, 0); // Normalizar la fecha de la reserva
+  
+        if (fechaReserva.getTime() < today.getTime()) {
+          await this.mesaService.deleteReserva(reserva.id);
+          continue; 
+        }
+  
         if (reserva.mesaId) {
           const mesa = await this.mesaService.getMesaById(reserva.mesaId);
-          if (mesa) {
-            reserva.mesaNumero = mesa.numero; 
-          } else {
-            reserva.mesaNumero = undefined; 
-          }
+          reserva.mesaNumero = mesa ? mesa.numero : undefined;
         }
       }
   
-      this.reservas = reservas;
-     // console.log('Reservas obtenidas:', this.reservas);
+      this.reservas = reservas.filter(reserva => {
+        const fechaReserva = reserva.fechaReserva ? new Date(reserva.fechaReserva) : null;
+        return fechaReserva && fechaReserva.getTime() >= today.getTime();
+      });
+  
+      //console.log('Reservas cargadas y actualizadas:', this.reservas);
     } catch (error) {
       console.error('Error al cargar las reservas:', error);
     }
@@ -112,6 +127,7 @@ export class ReservasComponent implements OnInit {
           fechaReserva.getFullYear() === this.selectedYear
         );
       });
+      
     }
   }
 

@@ -23,8 +23,8 @@ export class MesaService {
       pagos: [],
       total: 0,
       fechaUltimaActualizacion: new Date(),
-      reservaId: undefined,
-      meseroId: undefined,
+      reservaId: null,
+      meseroId: null,
     };
 
     await set(newMesaRef, mesaData);

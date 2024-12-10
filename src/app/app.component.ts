@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectIsDarkTheme } from './store/theme/theme.selectors';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -30,15 +29,11 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.authService.restoreSession();
-      this.store.select(selectIsDarkTheme).subscribe((isDarkTheme) => {
-        const theme = isDarkTheme ? 'dark' : 'light';
-        document.body.setAttribute('data-bs-theme', theme);
-      });
   
       this.isLoggedIn$ = this.store.select(selectIsLoggedIn);
   
       this.store.select(selectUserData).subscribe((userData) => {
-       // console.log('Datos del usuario logeado desde el store:', userData);
+       // console.log(userData);
       });
     }
   }

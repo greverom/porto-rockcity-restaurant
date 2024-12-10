@@ -1,12 +1,13 @@
 <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card shadow p-4">
-          <div class="card-body">
-            <h2 class="card-title text-center mb-4">Registro de Usuario</h2>
-            <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow p-4">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4">Registro de Usuario</h2>
+          <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+            <div class="row">
               <!-- Nombres -->
-              <div class="mb-3">
+              <div class="col-md-6 mb-3">
                 <label for="nombres" class="form-label">Nombres</label>
                 <input
                   type="text"
@@ -15,13 +16,16 @@
                   class="form-control"
                   placeholder="Ingrese sus nombres"
                 />
-                <div class="text-danger small" *ngIf="registerForm.get('nombres')?.invalid && registerForm.get('nombres')?.touched">
+                <div
+                  class="text-danger small"
+                  *ngIf="registerForm.get('nombres')?.invalid && registerForm.get('nombres')?.touched"
+                >
                   Este campo es requerido
                 </div>
               </div>
-  
+              
               <!-- Apellidos -->
-              <div class="mb-3">
+              <div class="col-md-6 mb-3">
                 <label for="apellidos" class="form-label">Apellidos</label>
                 <input
                   type="text"
@@ -30,13 +34,18 @@
                   class="form-control"
                   placeholder="Ingrese sus apellidos"
                 />
-                <div class="text-danger small" *ngIf="registerForm.get('apellidos')?.invalid && registerForm.get('apellidos')?.touched">
+                <div
+                  class="text-danger small"
+                  *ngIf="registerForm.get('apellidos')?.invalid && registerForm.get('apellidos')?.touched"
+                >
                   Este campo es requerido
                 </div>
               </div>
-  
+            </div>
+
+            <div class="row">
               <!-- Cédula -->
-              <div class="mb-3">
+              <div class="col-md-6 mb-3">
                 <label for="cedula" class="form-label">Cédula</label>
                 <input
                   type="text"
@@ -45,13 +54,16 @@
                   class="form-control"
                   placeholder="Ingrese su cédula"
                 />
-                <div class="text-danger small" *ngIf="registerForm.get('cedula')?.invalid && registerForm.get('cedula')?.touched">
+                <div
+                  class="text-danger small"
+                  *ngIf="registerForm.get('cedula')?.invalid && registerForm.get('cedula')?.touched"
+                >
                   Este campo es requerido
                 </div>
               </div>
-  
+              
               <!-- Rol -->
-              <div class="mb-3">
+              <div class="col-md-6 mb-3">
                 <label for="rol" class="form-label">Rol</label>
                 <select id="rol" formControlName="rol" class="form-select">
                   <option value="">Seleccione un rol</option>
@@ -59,13 +71,18 @@
                   <option value="ADMIN">Administrador</option>
                   <option value="COCINERO">Cocinero</option>
                 </select>
-                <div class="text-danger small" *ngIf="registerForm.get('rol')?.invalid && registerForm.get('rol')?.touched">
+                <div
+                  class="text-danger small"
+                  *ngIf="registerForm.get('rol')?.invalid && registerForm.get('rol')?.touched"
+                >
                   Este campo es requerido
                 </div>
               </div>
-  
-              <!-- Email -->
-              <div class="mb-3">
+            </div>
+
+            <!-- Correo Electrónico -->
+            <div class="row">
+              <div class="col-12 mb-3">
                 <label for="email" class="form-label">Correo Electrónico</label>
                 <input
                   type="email"
@@ -74,70 +91,89 @@
                   class="form-control"
                   placeholder="Ingrese su correo electrónico"
                 />
-                <div class="text-danger small" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                <div
+                  class="text-danger small"
+                  *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+                >
                   Correo inválido
                 </div>
               </div>
-  
+            </div>
+
+            <div class="row">
               <!-- Contraseña -->
-              <div class="form-group">
-                <label for="password">Contraseña</label>
+              <div class="col-md-6 mb-3">
+                <label for="password" class="form-label">Contraseña</label>
                 <div class="input-wrapper">
-                  <input 
-                    id="password" 
-                    [type]="showPassword ? 'text' : 'password'" 
-                    formControlName="password" 
-                    class="form-control" 
+                  <input
+                    id="password"
+                    [type]="showPassword ? 'text' : 'password'"
+                    formControlName="password"
+                    class="form-control"
                     placeholder="Ingrese su contraseña"
                   />
-                  <i 
-                    class="toggle-password-icon fas" 
-                    [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'" 
-                    (click)="togglePasswordVisibility()">
-                  </i>
+                  <i
+                    class="toggle-password-icon fas"
+                    [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+                    (click)="togglePasswordVisibility()"
+                  ></i>
                 </div>
-                <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger">
+                <div
+                  class="text-danger small"
+                  *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+                >
                   <small *ngIf="registerForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</small>
                   <small *ngIf="registerForm.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres.</small>
                 </div>
               </div>
               
-              <div class="form-group">
-                <label for="confirmPassword">Confirmar Contraseña</label>
+              <!-- Confirmar Contraseña -->
+              <div class="col-md-6 mb-3">
+                <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
                 <div class="input-wrapper">
-                  <input 
-                    id="confirmPassword" 
-                    [type]="showConfirmPassword ? 'text' : 'password'" 
-                    formControlName="confirmPassword" 
-                    class="form-control" 
-                    placeholder="Confirme su contraseña"/>
-                  <i 
-                    class="toggle-password-icon fas" 
-                    [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'" 
-                    (click)="toggleConfirmPasswordVisibility()">
-                  </i>
+                  <input
+                    id="confirmPassword"
+                    [type]="showConfirmPassword ? 'text' : 'password'"
+                    formControlName="confirmPassword"
+                    class="form-control"
+                    placeholder="Confirme su contraseña"
+                  />
+                  <i
+                    class="toggle-password-icon fas"
+                    [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"
+                    (click)="toggleConfirmPasswordVisibility()"
+                  ></i>
                 </div>
-                <div *ngIf="registerForm.hasError('notMatching') && registerForm.touched" class="text-danger">
+                <div *ngIf="registerForm.hasError('notMatching') && registerForm.touched" class="text-danger small">
                   <small>Las contraseñas no coinciden.</small>
                 </div>
               </div>
-  
-              <!-- Botón de Enviar -->
-              <div class="d-flex justify-content-center">
-                <button 
-                  type="submit" class="btn btn-primary btn-block btn-custom"> Registrar
+            </div>
+
+            <!-- Botón de Enviar -->
+            <div class="row">
+              <div class="col-12 text-center">
+                <button
+                  type="submit"
+                  class="btn btn-custom"
+                  [disabled]="registerForm.invalid"
+                >
+                  Registrar
                 </button>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
-
-        <app-modal
-        [showModal]="modal.show"
-        [message]="modal.message"
-        [isError]="modal.isError"
-        [isSuccess]="modal.isSuccess"
-        [autoCloseDuration]="modal.autoCloseDuration ?? 0"
-        (close)="closeModal()"
-      ></app-modal>
+      </div>
+    </div>
+  </div>
+  
+  <app-modal
+    [showModal]="modal.show"
+    [message]="modal.message"
+    [isError]="modal.isError"
+    [isSuccess]="modal.isSuccess"
+    [autoCloseDuration]="modal.autoCloseDuration ?? 0"
+    (close)="closeModal()"
+  ></app-modal>
 </div>

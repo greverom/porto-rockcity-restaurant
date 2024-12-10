@@ -113,6 +113,17 @@
     opacity: 0; 
     animation-fill-mode: forwards;
   }
+
+  @keyframes popIn {
+    0% {
+      transform: scale(0.5); 
+      opacity: 0; 
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1; 
+    }
+  }
   
   .reservas-container h3 {
     text-align: center;
@@ -154,16 +165,7 @@
     color: #555;
   }
   
-  @keyframes popIn {
-    0% {
-      transform: scale(0.5); 
-      opacity: 0; 
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1; 
-    }
-  }
+ 
 
   .no-reservas-message {
     display: flex;
