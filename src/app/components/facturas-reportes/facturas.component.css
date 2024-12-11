@@ -1,5 +1,5 @@
 .facturas-container {
-    max-width: 800px;
+    max-width: 550px;
     margin: 20px auto;
     padding: 10px;
   }
@@ -8,7 +8,7 @@
     text-align: center;
     font-size: 2rem;
     margin-bottom: 20px;
-    color: #333;
+    color: #555555;
   }
   
   .factura-card {
@@ -18,7 +18,7 @@
     padding: 20px;
     margin-bottom: 20px;
     font-family: Arial, sans-serif;
-    color: #333;
+    color: #696969;
   }
   
   .factura-header {
@@ -30,12 +30,10 @@
   .factura-header h3 {
     margin: 0;
     font-size: 1.5rem;
-    color: #007bff;
   }
   
   .factura-header .fecha {
     font-size: 0.9rem;
-    color: #666;
   }
   
   .factura-body {
@@ -44,24 +42,31 @@
   
   .factura-body p {
     margin: 5px 0;
-    font-size: 1rem;
+    font-size: .9rem;
   }
   
   .factura-body h4 {
-    margin-top: 15px;
-    font-size: 1.2rem;
-    color: #333;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
   }
   
-  ul {
-    list-style: none;
-    padding: 0;
+  .productos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
   }
   
-  ul li {
-    margin: 5px 0;
-    font-size: 0.95rem;
-    color: #555;
+  .productos-table th,
+  .productos-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: .9rem;
+    text-align: left;
+  }
+  
+  .productos-table th {
+    background-color: #f4f4f4;
   }
   
   hr {

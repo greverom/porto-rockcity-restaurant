@@ -8,19 +8,31 @@
       <hr />
   
       <div class="factura-body">
-        <p><strong>Fecha:</strong> {{ factura.fecha | date: 'EEEE, dd \'de\' MMMM \'de\' yyyy, h:mm a' }}</p>
+        <p>{{ factura.fecha | date: 'EEEE, dd \'de\' MMMM \'de\' yyyy, h:mm a' }}</p>
         <p><strong>Número de Mesa:</strong> {{ factura.numeroMesa }}</p>
         <p><strong>Mesero:</strong> {{ factura.meseroNombre }}</p>
-        <p><strong>Cliente ID:</strong> {{ factura.pago.clienteId }}</p>
+        <h4>Datos del Cliente</h4>
+        <p><strong>Cédula/R.U.C:</strong> {{ factura.pago.clienteId }}</p>
         <p><strong>Nombre del Cliente:</strong> {{ factura.pago.nombreCliente }}</p>
         <p *ngIf="factura.pago.correo"><strong>Correo:</strong> {{ factura.pago.correo }}</p>
   
         <h4>Productos Consumidos:</h4>
-      <ul>
-        <li *ngFor="let alimento of factura.pago.descripcionAlimentos">
-          {{ alimento.cantidad }} x {{ alimento.nombre }} ({{ alimento.subtotal | currency }})
-        </li>
-      </ul>
+        <table class="productos-table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let alimento of factura.pago.descripcionAlimentos">
+              <td>{{ alimento.nombre }}</td>
+              <td>{{ alimento.cantidad }}</td>
+              <td>{{ alimento.subtotal }}</td>
+            </tr>
+          </tbody>
+        </table>
 
       <p><strong>Subtotal:</strong> {{ factura.subtotal | currency }}</p>
       <p><strong>IVA (15%):</strong> {{ factura.iva | currency }}</p>

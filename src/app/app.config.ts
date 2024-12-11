@@ -1,4 +1,4 @@
-import { ApplicationConfig, isDevMode, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, isDevMode, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient } from '@angular/common/http';
@@ -15,6 +15,9 @@ import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { themeReducer } from './store/theme/theme.reducer';
 import { spinnerReducer } from './store/spinner/spinner.reducer';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+registerLocaleData(localeEs, 'es');
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -38,6 +41,10 @@ export const appConfig: ApplicationConfig = {
     // Firebase
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideDatabase(() => getDatabase()),
-    provideAuth(() => getAuth())
+    provideAuth(() => getAuth()),
+
+    // Registrar idioma español
+    { provide: LOCALE_ID, useValue: 'es' },
   ]
+  
 };
