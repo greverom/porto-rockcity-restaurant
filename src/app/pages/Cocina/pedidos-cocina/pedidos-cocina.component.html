@@ -16,7 +16,7 @@
           Mesa {{ mesa.numero }} 
           <small>({{ mesa.meseroNombre }})</small>
         </h3>
-  
+        <p class="fecha-actualizacion">Última actualización: {{ mesa.fechaUltimaActualizacion | date: 'shortTime' }}</p>
         <ul>
           <li *ngFor="let alimento of mesa.alimentos">
             <input 

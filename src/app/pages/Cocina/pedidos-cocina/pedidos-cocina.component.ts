@@ -19,6 +19,7 @@ export class PedidosCocinaComponent implements OnInit {
     alimentos: (AlimentoMesaModel & { listo: boolean })[];
     meseroNombre: string;
     todosListos: boolean;
+    fechaUltimaActualizacion: Date;
   }[] = [];
   loading = true;
 
@@ -40,6 +41,8 @@ export class PedidosCocinaComponent implements OnInit {
             : 'Sin asignar';
   
           const todosListos = mesa.alimentos.every((alimento) => alimento.listo);
+          const fechaAjustada = new Date(mesa.fechaUltimaActualizacion);
+          fechaAjustada.setHours(fechaAjustada.getHours());
   
           return {
             id: mesa.id,
@@ -49,7 +52,8 @@ export class PedidosCocinaComponent implements OnInit {
               listo: alimento.listo || false,
             })),
             meseroNombre,
-            todosListos, 
+            todosListos: mesa.alimentos.every((alimento) => alimento.listo),
+            fechaUltimaActualizacion: fechaAjustada, 
           };
         })
       );
