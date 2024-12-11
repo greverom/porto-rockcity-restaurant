@@ -92,6 +92,7 @@ export class MesasAsignadasComponent implements OnInit {
         precioUnitario: alimento.precio,
         subtotal: alimento.precio, 
         activo: alimento.activo,
+        listo: false,
       }));
      // console.log('Alimentos filtrados:', this.alimentosFiltrados);
     } catch (error) {
@@ -123,6 +124,7 @@ export class MesasAsignadasComponent implements OnInit {
         cantidad: this.selectedAlimento.cantidad || 1,
         precioUnitario: this.selectedAlimento.precioUnitario,
         subtotal: this.selectedAlimento.precioUnitario * (this.selectedAlimento.cantidad || 1),
+        listo: false
       };
   
       this.selectedMesa.alimentos.push(nuevoAlimento);

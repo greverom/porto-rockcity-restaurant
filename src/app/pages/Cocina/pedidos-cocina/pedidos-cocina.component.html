@@ -22,7 +22,7 @@
             <input 
               type="checkbox" 
               [checked]="alimento.listo" 
-              (change)="marcarAlimentoListo(mesa.numero, alimento.alimentoId)" />
+              (change)="marcarAlimentoListo(mesa.id, alimento.alimentoId)" />
             {{ alimento.cantidad }} x {{ alimento.nombre }}
           </li>
         </ul>

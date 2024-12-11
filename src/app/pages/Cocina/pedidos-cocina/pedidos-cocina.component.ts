@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlimentoMesaModel, MesaModel } from '../../../models/mesa';
-import { MesaService } from '../../../services/cocina/cocina.service';
+import { CocinaService} from '../../../services/cocina/cocina.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class PedidosCocinaComponent implements OnInit {
   mesasConPedidos: {
+    id: string;
     numero: number;
     alimentos: (AlimentoMesaModel & { listo: boolean })[];
     meseroNombre: string;
@@ -21,7 +22,7 @@ export class PedidosCocinaComponent implements OnInit {
   }[] = [];
   loading = true;
 
-  constructor(private mesaService: MesaService) {}
+  constructor(private cocinaService: CocinaService) {}
 
   async ngOnInit(): Promise<void> {
     await this.loadMesasConPedidos();
@@ -30,7 +31,7 @@ export class PedidosCocinaComponent implements OnInit {
   async loadMesasConPedidos(): Promise<void> {
     try {
       this.loading = true;
-      const mesas = await this.mesaService.getMesasConPedidos();
+      const mesas = await this.cocinaService.getMesasConPedidos();
 
       this.mesasConPedidos = await Promise.all(
         mesas.map(async (mesa) => {
@@ -39,10 +40,11 @@ export class PedidosCocinaComponent implements OnInit {
             : 'Sin asignar';
 
           return {
+            id: mesa.id, // Incluye el id
             numero: mesa.numero,
             alimentos: mesa.alimentos.map((alimento) => ({
               ...alimento,
-              listo: false, // Campo local para manejar el estado del alimento
+              listo: alimento.listo || false,
             })),
             meseroNombre,
             todosListos: false,
@@ -56,14 +58,29 @@ export class PedidosCocinaComponent implements OnInit {
     }
   }
 
-  marcarAlimentoListo(mesaNumero: number, alimentoId: string): void {
-    const mesa = this.mesasConPedidos.find((m) => m.numero === mesaNumero);
+  marcarAlimentoListo(mesaId: string, alimentoId: string): void {
+    const mesa = this.mesasConPedidos.find((m) => m.id === mesaId);
     if (mesa) {
       const alimento = mesa.alimentos.find((a) => a.alimentoId === alimentoId);
       if (alimento) {
-        alimento.listo = !alimento.listo; // Alternar estado
-        mesa.todosListos = mesa.alimentos.every((a) => a.listo); 
+        alimento.listo = !alimento.listo;
+
+        this.cocinaService.updateAlimentoEstado(mesaId, alimentoId, alimento.listo)
+          .then(() => {
+            console.log(`Estado del alimento ${alimento.nombre} actualizado a ${alimento.listo}`);
+          })
+          .catch((error) => {
+            console.error('Error al actualizar el estado del alimento:', error);
+          });
+
+        mesa.todosListos = mesa.alimentos.every((a) => a.listo);
+
+        if (mesa.todosListos) {
+          console.log(`Todos los alimentos de la mesa ${mesa.numero} están listos.`);
+        }
       }
+    } else {
+      console.error(`No se encontró la mesa con ID ${mesaId}`);
     }
   }
 
@@ -149,7 +166,7 @@ export class PedidosCocinaComponent implements OnInit {
 
   private async getMeseroNombre(meseroId: string): Promise<string> {
     try {
-      const mesero = await this.mesaService.getEmpleadoById(meseroId);
+      const mesero = await this.cocinaService.getEmpleadoById(meseroId);
       return mesero ? `${mesero.nombres} ${mesero.apellidos}` : 'Desconocido';
     } catch (error) {
       console.error('Error al obtener el nombre del mesero:', error);

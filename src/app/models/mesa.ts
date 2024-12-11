@@ -25,7 +25,8 @@ export interface MesaModel {
     subtotal: number;            
     clienteId?: string;  
     seleccionado?: boolean;  
-    activo?: boolean;      
+    activo?: boolean;  
+    listo:boolean;    
   }
   
   export interface PagoMesaModel {

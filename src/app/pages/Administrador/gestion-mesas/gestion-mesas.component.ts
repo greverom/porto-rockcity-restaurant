@@ -69,11 +69,10 @@ export class GestionMesasComponent {
       today.setHours(0, 0, 0, 0); // Normalizar la fecha actual
   
       for (const mesa of mesas) {
-        // Convertir meseroId a nombres y apellidos
         if (mesa.meseroId) {
           const mesero = await this.mesaService.getEmpleadoById(mesa.meseroId);
           if (mesero) {
-            mesa.meseroId = `${mesero.nombres} ${mesero.apellidos}`; // Reemplazar ID por el nombre
+            mesa.meseroId = `${mesero.nombres} ${mesero.apellidos}`; 
           } else {
             mesa.meseroId = 'Desconocido';
           }
@@ -81,7 +80,6 @@ export class GestionMesasComponent {
           mesa.meseroId = 'No asignado';
         }
   
-        // Si la mesa está ocupada, respetar este estado
         if (mesa.estado === MesaEstado.OCUPADA) {
           continue;
         }

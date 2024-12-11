@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Database, ref, get } from '@angular/fire/database';
+import { Database, ref, get, update } from '@angular/fire/database';
 import { MesaModel } from '../../models/mesa';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MesaService {
+export class CocinaService {
   constructor(private db: Database) {}
 
   async getMesasConPedidos(): Promise<MesaModel[]> {
@@ -42,6 +42,36 @@ export class MesaService {
         } catch (error) {
           console.error('Error al obtener los datos del empleado:', error);
           return null;
+        }
+      }
+
+      // Actualizar un alimento dentro de una mesa
+      async updateAlimentoEstado(mesaId: string, alimentoId: string, listo: boolean): Promise<void> {
+        try {
+          // Referencia a los alimentos dentro de la mesa
+          const alimentosRef = ref(this.db, `mesas/${mesaId}/alimentos`);
+          const snapshot = await get(alimentosRef);
+      
+          if (snapshot.exists()) {
+            const alimentos = snapshot.val(); // Alimentos dentro de la mesa
+            const index = Object.keys(alimentos).find(
+              (key) => alimentos[key].alimentoId === alimentoId
+            );
+      
+            if (index !== undefined) {
+              // Actualiza el estado del alimento
+              const alimentoRef = ref(this.db, `mesas/${mesaId}/alimentos/${index}`);
+              await update(alimentoRef, { listo });
+              console.log(`Estado del alimento con ID ${alimentoId} actualizado a ${listo}`);
+            } else {
+              console.error(`No se encontró el alimento con ID ${alimentoId} en la mesa ${mesaId}`);
+            }
+          } else {
+            console.error(`No se encontró la mesa con ID ${mesaId}`);
+          }
+        } catch (error) {
+          console.error('Error al actualizar el estado del alimento:', error);
+          throw new Error('No se pudo actualizar el estado del alimento.');
         }
       }
 }
