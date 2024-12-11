@@ -32,22 +32,24 @@ export class PedidosCocinaComponent implements OnInit {
     try {
       this.loading = true;
       const mesas = await this.cocinaService.getMesasConPedidos();
-
+  
       this.mesasConPedidos = await Promise.all(
         mesas.map(async (mesa) => {
           const meseroNombre = mesa.meseroId
             ? await this.getMeseroNombre(mesa.meseroId)
             : 'Sin asignar';
-
+  
+          const todosListos = mesa.alimentos.every((alimento) => alimento.listo);
+  
           return {
-            id: mesa.id, // Incluye el id
+            id: mesa.id,
             numero: mesa.numero,
             alimentos: mesa.alimentos.map((alimento) => ({
               ...alimento,
               listo: alimento.listo || false,
             })),
             meseroNombre,
-            todosListos: false,
+            todosListos, 
           };
         })
       );
@@ -67,7 +69,7 @@ export class PedidosCocinaComponent implements OnInit {
 
         this.cocinaService.updateAlimentoEstado(mesaId, alimentoId, alimento.listo)
           .then(() => {
-            console.log(`Estado del alimento ${alimento.nombre} actualizado a ${alimento.listo}`);
+            //console.log(`Estado del alimento ${alimento.nombre} actualizado a ${alimento.listo}`);
           })
           .catch((error) => {
             console.error('Error al actualizar el estado del alimento:', error);
@@ -76,7 +78,7 @@ export class PedidosCocinaComponent implements OnInit {
         mesa.todosListos = mesa.alimentos.every((a) => a.listo);
 
         if (mesa.todosListos) {
-          console.log(`Todos los alimentos de la mesa ${mesa.numero} están listos.`);
+          //console.log(`Todos los alimentos de la mesa ${mesa.numero} están listos.`);
         }
       }
     } else {
@@ -89,6 +91,16 @@ export class PedidosCocinaComponent implements OnInit {
     if (mesa) {
       mesa.todosListos = true; 
       this.imprimirPedido(mesa); 
+    }
+  }
+
+  private async getMeseroNombre(meseroId: string): Promise<string> {
+    try {
+      const mesero = await this.cocinaService.getEmpleadoById(meseroId);
+      return mesero ? `${mesero.nombres} ${mesero.apellidos}` : 'Desconocido';
+    } catch (error) {
+      console.error('Error al obtener el nombre del mesero:', error);
+      return 'Desconocido';
     }
   }
   
@@ -164,13 +176,5 @@ export class PedidosCocinaComponent implements OnInit {
     }
   }
 
-  private async getMeseroNombre(meseroId: string): Promise<string> {
-    try {
-      const mesero = await this.cocinaService.getEmpleadoById(meseroId);
-      return mesero ? `${mesero.nombres} ${mesero.apellidos}` : 'Desconocido';
-    } catch (error) {
-      console.error('Error al obtener el nombre del mesero:', error);
-      return 'Desconocido';
-    }
-  }
+  
 }
