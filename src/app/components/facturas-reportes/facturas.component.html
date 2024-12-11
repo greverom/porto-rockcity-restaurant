@@ -3,12 +3,12 @@
     
     <div *ngFor="let factura of facturas; let i = index" class="factura-card">
       <div class="factura-header">
-        <h3>Factura {{i+1}}</h3>
-        <p class="fecha">{{ factura.pago.fecha | date: 'fullDate' }}</p>
+        <h3>Factura {{ i + 1 }}</h3>
       </div>
       <hr />
   
       <div class="factura-body">
+        <p><strong>Fecha:</strong> {{ factura.fecha | date: 'EEEE, dd \'de\' MMMM \'de\' yyyy, h:mm a' }}</p>
         <p><strong>Número de Mesa:</strong> {{ factura.numeroMesa }}</p>
         <p><strong>Mesero:</strong> {{ factura.meseroNombre }}</p>
         <p><strong>Cliente ID:</strong> {{ factura.pago.clienteId }}</p>

@@ -24,17 +24,25 @@ export class FacturasComponent implements OnInit {
   async loadFacturas(): Promise<void> {
     try {
       const rawFacturas = await this.mesaService.getFacturas();
-      this.facturas = rawFacturas.map(factura => ({
-        ...factura,
-        subtotal: factura.pago.descripcionAlimentos.reduce(
-          (subtotal: number, alimento: any) => subtotal + alimento.subtotal,
-          0
-        ),
-        iva: factura.pago.descripcionAlimentos.reduce(
-          (subtotal: number, alimento: any) => subtotal + alimento.subtotal,
-          0
-        ) * 0.15,
-      }));
+      this.facturas = rawFacturas.map(factura => {
+        const fechaValida = factura.pago.fecha ? new Date(factura.pago.fecha) : null;
+  
+        return {
+          ...factura,
+          pago: {
+            ...factura.pago,
+            fecha: fechaValida && !isNaN(fechaValida.getTime()) ? fechaValida : null, 
+          },
+          subtotal: factura.pago.descripcionAlimentos.reduce(
+            (subtotal: number, alimento: any) => subtotal + alimento.subtotal,
+            0
+          ),
+          iva: factura.pago.descripcionAlimentos.reduce(
+            (subtotal: number, alimento: any) => subtotal + alimento.subtotal,
+            0
+          ) * 0.15,
+        };
+      });
     } catch (error) {
       console.error('Error al cargar las facturas:', error);
     }

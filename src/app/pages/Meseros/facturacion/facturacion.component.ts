@@ -147,20 +147,23 @@ export class FacturacionComponent {
       ? alimentosSeleccionados 
       : this.alimentos;
 
+      const fechaActual = new Date();
+
       const pago: PagoMesaModel = {
         clienteId: this.facturaForm.value.clienteId,
         nombreCliente: this.facturaForm.value.nombreCliente,
         correo: this.facturaForm.value.correo,
         monto: monto,
         formaPago: this.facturaForm.value.formaPago,
-        fecha: new Date(),
+        fecha: fechaActual,
         descripcionAlimentos,
       };
   
       const facturaData = {
         pago,
         numeroMesa: this.numeroMesa,
-        meseroNombre: this.meseroNombre
+        meseroNombre: this.meseroNombre,
+        fecha: fechaActual.toISOString(),
       };
   
       //console.log('Factura registrada:', facturaData);
@@ -203,20 +206,23 @@ export class FacturacionComponent {
       ? alimentosSeleccionados 
       : this.alimentos;
 
+      const fechaActual = new Date();
+
       const pago: PagoMesaModel = {
         clienteId: 'xxxxxxxxxx',
         nombreCliente: 'xxxxxxxxxx',
         correo: 'xxxxxxxxxx',
         monto: monto,
         formaPago: this.consumidorFinalForm.value.formaPago,
-        fecha: new Date(),
+        fecha: fechaActual,
         descripcionAlimentos,
       };
   
       const facturaData = {
         pago,
         numeroMesa: this.numeroMesa,
-        meseroNombre: this.meseroNombre
+        meseroNombre: this.meseroNombre,
+        fecha: fechaActual.toISOString(),
       };
   
       //console.log('Factura para Consumidor Final registrada:', facturaData);
