@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Database, ref, set, update, remove, push, get, DatabaseReference } from '@angular/fire/database';
-import { AlimentoMesaModel, MesaEstado, MesaModel, ReservaModel } from '../../models/mesa';
+import { AlimentoMesaModel, MesaEstado, MesaModel, PagoMesaModel, ReservaModel } from '../../models/mesa';
 import { AlimentoModel } from '../../models/food';
 
 
@@ -235,6 +235,51 @@ async actualizarMesaDespuesDePago(mesaId: string, alimentosRestantes: AlimentoMe
   } catch (error) {
     console.error('Error al actualizar la mesa después del pago:', error);
     throw new Error('No se pudo actualizar la mesa después del pago.');
+  }
+}
+//registrar un pago en el nodo factura
+async registrarFactura(facturaData: {
+  pago: PagoMesaModel;
+  numeroMesa: number | string;
+  meseroNombre: string;
+}): Promise<void> {
+  try {
+    const facturasRef = ref(this.db, 'pagos/facturas');
+    await push(facturasRef, facturaData);
+    console.log('Factura registrada correctamente:', facturaData);
+  } catch (error) {
+    console.error('Error al registrar la factura:', error);
+    throw error;
+  }
+}
+
+//obtener las facturas
+async getFacturas(): Promise<any[]> {
+  try {
+    const snapshot = await get(ref(this.db, 'pagos/facturas'));
+    if (snapshot.exists()) {
+      return Object.values(snapshot.val());
+    }
+    return [];
+  } catch (error) {
+    console.error('Error al obtener las facturas:', error);
+    throw error;
+  }
+}
+
+// Registrar un pago en el nodo de notas de venta
+async registrarNotaDeVenta(facturaData: {
+  pago: PagoMesaModel;
+  numeroMesa: number | string;
+  meseroNombre: string;
+}): Promise<void> {
+  try {
+    const notasDeVentaRef = ref(this.db, 'pagos/notasDeVenta');
+    await push(notasDeVentaRef, facturaData);
+    console.log('Nota de venta registrada correctamente:', facturaData);
+  } catch (error) {
+    console.error('Error al registrar la nota de venta:', error);
+    throw error;
   }
 }
 

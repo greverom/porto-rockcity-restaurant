@@ -42,6 +42,12 @@ export const routes: Routes = [
     data: { roles: ['ADMINISTRADORES'], animation: 'animate__fadeInLeft' }, 
   },
   {
+    path: 'reportes',
+    loadComponent: () => import('./pages/Administrador/reportes/reportes.component').then(m => m.ReportesComponent),
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMINISTRADORES'] }, 
+  },
+  {
     path: 'gestion-usuarios',
     loadComponent: () => import('./pages/Administrador/gestion-usuario/gestion-usuario.component').then(m => m.GestionUsuarioComponent),
     canActivate: [authGuard, roleGuard],

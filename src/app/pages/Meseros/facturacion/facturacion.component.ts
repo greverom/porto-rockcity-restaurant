@@ -4,6 +4,7 @@ import { FacturacionService } from '../../../services/facturacion/facturacion.se
 import { MesaService } from '../../../services/mesas/mesa.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-facturacion',
@@ -30,7 +31,8 @@ export class FacturacionComponent {
   constructor(
     private facturacionService: FacturacionService,
     private mesaService: MesaService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.facturaForm = this.fb.group({
       clienteId: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
@@ -75,7 +77,6 @@ export class FacturacionComponent {
       }
     });
   }
-
 
   ordenarAlimentosPorNombre(): void {
     this.alimentos.sort((a, b) => a.nombre.localeCompare(b.nombre));
@@ -163,6 +164,7 @@ export class FacturacionComponent {
       };
   
       //console.log('Factura registrada:', facturaData);
+      await this.mesaService.registrarFactura(facturaData);
   
       const alimentosParaEliminar = this.alimentos.filter(alimento => alimento.seleccionado);
       const alimentosRestantes = alimentosParaEliminar.length > 0 
@@ -172,8 +174,8 @@ export class FacturacionComponent {
       await this.mesaService.actualizarMesaDespuesDePago(this.mesaId!, alimentosRestantes);
   
       this.alimentos = alimentosRestantes;
-  
       this.closeFacturaModal();
+      this.router.navigate(['/gestion-mesas']);
     }
   }
 
@@ -218,6 +220,7 @@ export class FacturacionComponent {
       };
   
       //console.log('Factura para Consumidor Final registrada:', facturaData);
+      await this.mesaService.registrarNotaDeVenta(facturaData)
   
       const alimentosParaEliminar = this.alimentos.filter(alimento => alimento.seleccionado);
       const alimentosRestantes = alimentosParaEliminar.length > 0 
@@ -228,6 +231,7 @@ export class FacturacionComponent {
   
       this.alimentos = alimentosRestantes;
       this.closeConsumidorFinalModal();
+      this.router.navigate(['/gestion-mesas']);
     }
   }
 }

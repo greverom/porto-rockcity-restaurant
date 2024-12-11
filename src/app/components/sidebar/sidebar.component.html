@@ -37,11 +37,27 @@
       </a>
     </li>-->
 
-    <!-- Gestión de Mesas (solo para empleados) -->
+    <!-- Gestión de Mesas (solo para Admin) -->
     <li *ngIf="isVisibleForAdmin()">
       <a routerLink="/gestion-mesas" routerLinkActive="active">
         <i class="fas fa-chair"></i>
         <span *ngIf="isSidebarOpen">Gestión de Mesas</span>
+      </a>
+    </li>
+
+       <!-- Reservas -->
+    <li *ngIf="isVisibleForEmployee() || isVisibleForAdmin()">
+      <a routerLink="/reservas" routerLinkActive="active">
+        <i class="fas fa-calendar-check"></i>
+        <span *ngIf="isSidebarOpen">Reservas</span>
+      </a>
+    </li>
+
+    <!-- Reportes (solo para Admin) -->
+    <li *ngIf="isVisibleForAdmin()">
+      <a routerLink="/reportes" routerLinkActive="active">
+        <i class="fas fa-box"></i>
+        <span *ngIf="isSidebarOpen">Reportes</span>
       </a>
     </li>
 
@@ -53,13 +69,7 @@
       </a>
     </li>
 
-    <!-- Reservas -->
-    <li *ngIf="isVisibleForEmployee() || isVisibleForAdmin()">
-      <a routerLink="/reservas" routerLinkActive="active">
-        <i class="fas fa-calendar-check"></i>
-        <span *ngIf="isSidebarOpen">Reservas</span>
-      </a>
-    </li>
+ 
 
     <!-- Pedidos de Cocina (solo para cocineros) -->
     <li *ngIf="isVisibleForCook()">
