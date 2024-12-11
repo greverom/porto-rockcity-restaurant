@@ -1,0 +1,86 @@
+.nota-de-venta-container {
+    max-width: 550px;
+    margin: 20px auto;
+    padding: 10px;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #555555;
+  }
+  
+  .nota-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+    color: #696969;
+  }
+  
+  .nota-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nota-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  .nota-header .fecha {
+    font-size: 0.9rem;
+  }
+  
+  .nota-body {
+    margin-top: 15px;
+  }
+
+  .nota-body p {
+    margin: 5px 0;
+    font-size: .9rem;
+  }
+
+  .nota-body h4 {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  
+  .productos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .productos-table th,
+  .productos-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: .9rem;
+    text-align: left;
+  }
+  
+  .productos-table th {
+    background-color: #f4f4f4;
+  }
+
+  hr {
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+
+  .no-notas {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 18px;
+    color: #666;
+    font-style: italic;
+  }
+  
+  

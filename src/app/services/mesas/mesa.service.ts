@@ -283,4 +283,17 @@ async registrarNotaDeVenta(facturaData: {
   }
 }
 
+async getNotasDeVenta(): Promise<any[]> {
+  try {
+    const snapshot = await get(ref(this.db, 'pagos/notasDeVenta'));
+    if (snapshot.exists()) {
+      return Object.values(snapshot.val());
+    }
+    return [];
+  } catch (error) {
+    console.error('Error al obtener las notas de venta:', error);
+    throw error;
+  }
+}
+
 }

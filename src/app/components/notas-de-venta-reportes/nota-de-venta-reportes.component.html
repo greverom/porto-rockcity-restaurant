@@ -1,1 +1,47 @@
-<p>nota-de-venta-reportes works!</p>
+<div class="nota-de-venta-container">
+    <h2 class="title">Notas de Venta</h2>
+  
+    <div *ngIf="loading" class="loading">
+      <p>Cargando notas de venta...</p>
+    </div>
+
+    <div *ngIf="!loading && notasDeVenta.length === 0" class="no-notas">
+        <p>No hay notas de venta registradas.</p>
+    </div>
+  
+    <div *ngFor="let nota of notasDeVenta; let i = index" class="nota-card">
+      <div class="nota-header">
+        <h3>Nota de Venta {{ i + 1 }}</h3>
+      </div>
+      <hr />
+  
+      <div class="nota-body">
+        <p>{{ nota.fecha | date: 'fullDate' }} {{ nota.fecha | date: 'shortTime' }}</p>
+        <p><strong>Número de Mesa:</strong> {{ nota.numeroMesa }}</p>
+        <p><strong>Mesero:</strong> {{ nota.meseroNombre }}</p>
+  
+        <h4>Productos Consumidos:</h4>
+        <table class="productos-table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let alimento of nota.pago.descripcionAlimentos">
+              <td>{{ alimento.nombre }}</td>
+              <td>{{ alimento.cantidad }}</td>
+              <td>{{ alimento.subtotal }}</td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <p><strong>Subtotal:</strong> {{ nota.subtotal | currency }}</p>
+        <p><strong>IVA (15%):</strong> {{ nota.iva | currency }}</p>
+        <p><strong>Total:</strong> {{ nota.pago.monto | currency }}</p>
+        <p><strong>Forma de Pago:</strong> {{ nota.pago.formaPago }}</p>
+      </div>
+    </div>
+  </div>

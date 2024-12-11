@@ -1,4 +1,14 @@
 <div class="reportes-container">
     <h2 class="title">Reportes</h2>
-</div>
-<app-facturas></app-facturas>
+  
+    <div class="toggle-buttons">
+      <button (click)="alternarVista()">{{ botonTexto }}</button>
+    </div>
+  
+    <div *ngIf="mostrarFacturas">
+      <app-facturas></app-facturas>
+    </div>
+    <div *ngIf="!mostrarFacturas">
+      <app-nota-de-venta-reportes></app-nota-de-venta-reportes>
+    </div>
+  </div>
