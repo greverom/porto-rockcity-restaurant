@@ -16,9 +16,16 @@ import { BalanceService } from '../../services/balances/balance.service';
 export class BalancesComponent {
   mostrarBalanceDiario: boolean = false;
   fechaSeleccionada: string = '';
-  totalFacturas: number = 0; 
+  facturas: any[] = [];
+  totalFacturas: number = 0;
+  cantidadFacturas: number = 0; 
+  notasDeVenta: any[] = [];
   totalNotasDeVenta: number = 0;
+  cantidadNotasDeVenta: number = 0;
   totalGeneral: number = 0;
+
+  selectedFactura: any = null; 
+  selectedNota: any = null;
 
   constructor(private balanceService: BalanceService){}
 
@@ -29,16 +36,32 @@ export class BalancesComponent {
     this.mostrarBalanceDiario = true;
   }
 
+  onFacturaChange() {
+    //console.log('Factura seleccionada:', this.selectedFactura);
+  }
+  
+  onNotaChange() {
+    //console.log('Nota de venta seleccionada:', this.selectedNota);
+  }
+
   async cargarBalancesPorFecha() {
     if (!this.fechaSeleccionada) return;
-
+  
     try {
-      this.totalFacturas = await this.balanceService.getTotalFacturasPorFecha(this.fechaSeleccionada);
-      this.totalNotasDeVenta = await this.balanceService.getTotalNotasDeVentaPorFecha(this.fechaSeleccionada);
-
+      const facturas = await this.balanceService.getFacturasPorFecha(this.fechaSeleccionada);
+      this.totalFacturas = facturas.total;
+      this.cantidadFacturas = facturas.cantidad;
+      this.facturas = facturas.facturas; 
+  
+      const notasDeVenta = await this.balanceService.getNotasDeVentaPorFecha(this.fechaSeleccionada);
+      this.totalNotasDeVenta = notasDeVenta.total;
+      this.cantidadNotasDeVenta = notasDeVenta.cantidad;
+      this.notasDeVenta = notasDeVenta.notas; 
+  
       this.totalGeneral = this.totalFacturas + this.totalNotasDeVenta;
-      //console.log('Total Facturas:', this.totalFacturas);
-      //console.log('Total Notas de Venta:', this.totalNotasDeVenta);
+  
+      //console.log('Facturas:', this.facturas);
+     // console.log('Notas de Venta:', this.notasDeVenta);
     } catch (error) {
       console.error('Error cargando balances:', error);
     }
