@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BalanceService } from '../../services/balances/balance.service';
+import { BalanceService } from '../../../services/balances/balance.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-balances',
@@ -27,13 +28,19 @@ export class BalancesComponent {
   selectedFactura: any = null; 
   selectedNota: any = null;
 
-  constructor(private balanceService: BalanceService){}
+  constructor(private balanceService: BalanceService,
+              private router: Router
+  ){}
 
   ngOnInit() {
   }
 
   activarBalanceDiario() {
     this.mostrarBalanceDiario = true;
+  }
+
+  irABalanceSemanal():void{
+    this.router.navigate(['/balance-semanal'])
   }
 
   onFacturaChange() {

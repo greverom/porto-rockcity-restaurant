@@ -67,7 +67,13 @@ export const routes: Routes = [
   },
   {
     path: 'balances',
-    loadComponent: () => import('./components/balances/balances.component').then(m => m.BalancesComponent),
+    loadComponent: () => import('./pages/Administrador/balances/balances.component').then(m => m.BalancesComponent),
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMINISTRADORES'] }, 
+  },
+  {
+    path: 'balance-semanal',
+    loadComponent: () => import('./components/balance-semanal/balance-semanal.component').then(m => m.BalanceSemanalComponent),
     canActivate: [authGuard, roleGuard],
     data: { roles: ['ADMINISTRADORES'] }, 
   },
