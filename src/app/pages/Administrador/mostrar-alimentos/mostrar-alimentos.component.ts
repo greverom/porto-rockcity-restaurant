@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AlimentoModel } from '../../models/food';
-import { AlimentosService } from '../../services/alimentos/alimentos.service';
+import { AlimentoModel } from '../../../models/food';
+import { AlimentosService } from '../../../services/alimentos/alimentos.service';
 
 @Component({
   selector: 'app-mostrar-alimentos',

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AlimentoModel } from '../../models/food';
-import { FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AlimentosService } from '../../services/alimentos/alimentos.service';
+import { Component} from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AlimentosService } from '../../../services/alimentos/alimentos.service';
+import { AlimentoModel } from '../../../models/food';
 
 @Component({
   selector: 'app-crud-alimentos',

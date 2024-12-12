@@ -17,13 +17,13 @@ export const routes: Routes = [
     children: [
       {
         path: 'crud',
-        loadComponent: () => import('./components/crud-alimentos/crud-alimentos.component').then(m => m.CrudAlimentoComponent),
+        loadComponent: () => import('./pages/Administrador/crud-alimentos/crud-alimentos.component').then(m => m.CrudAlimentoComponent),
         canActivate: [authGuard, roleGuard],
         data: { roles: ['ADMINISTRADORES'], animation: 'animate__fadeInRight' }, 
       },
       {
         path: 'mostrar-alimentos',
-        loadComponent: () => import('./components/mostrar-alimentos/mostrar-alimentos.component').then(m => m.MostrarAlimentosComponent),
+        loadComponent: () => import('./pages/Administrador/mostrar-alimentos/mostrar-alimentos.component').then(m => m.MostrarAlimentosComponent),
         canActivate: [authGuard, roleGuard],
         data: { roles: ['ADMINISTRADORES'], animation: 'animate__fadeInLeft' }, 
       }
@@ -61,7 +61,7 @@ export const routes: Routes = [
   },
   {
     path: 'facturacion',
-    loadComponent: () => import('./pages/Meseros/facturacion/facturacion.component').then(m => m.FacturacionComponent),
+    loadComponent: () => import('./pages/Administrador/facturacion/facturacion.component').then(m => m.FacturacionComponent),
     canActivate: [authGuard, roleGuard],
     data: { roles: ['ADMINISTRADORES'] }, 
   },
