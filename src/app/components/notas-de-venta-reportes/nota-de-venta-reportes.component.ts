@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { MesaService } from '../../services/mesas/mesa.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-nota-de-venta-reportes',
   standalone: true,
   imports: [
-      CommonModule
+      CommonModule,
+      FormsModule
   ],
   templateUrl: './nota-de-venta-reportes.component.html',
   styleUrl: './nota-de-venta-reportes.component.css'
 })
 export class NotaDeVentaReportesComponent implements OnInit {
   notasDeVenta: any[] = [];
+  selectedNota: any = null;
   loading = true;
 
   constructor(private mesaService: MesaService) {}
@@ -41,5 +44,9 @@ export class NotaDeVentaReportesComponent implements OnInit {
     } finally {
       this.loading = false;
     }
+  }
+
+  onNotaChange(): void {
+    console.log('Nota de Venta seleccionada:', this.selectedNota);
   }
 }

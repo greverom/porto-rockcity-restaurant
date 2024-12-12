@@ -1,49 +1,64 @@
 <div class="nota-de-venta-container">
-    <h2 class="title">Notas de Venta</h2>
-  
-    <div *ngIf="loading" class="loading">
-      <p>Cargando notas de venta...</p>
-    </div>
+  <h2 class="title">Notas de Venta (Total: {{ notasDeVenta.length }})</h2>
 
-    <div *ngIf="!loading && notasDeVenta.length === 0" class="no-notas">
-        <p>No hay notas de venta registradas.</p>
+  <!-- Input Select para seleccionar una Nota de Venta -->
+  <div class="nota-select-container">
+    <label for="notaSelect">Seleccione Nota de Venta:</label>
+    <select
+      id="notaSelect"
+      [(ngModel)]="selectedNota"
+      (change)="onNotaChange()"
+      [class.default-option]="!selectedNota"
+      class="styled-select"
+    >
+      <option [ngValue]="null" disabled>Seleccionar Nota de Venta</option>
+      <option *ngFor="let nota of notasDeVenta; let i = index" [ngValue]="nota">
+        Nota de Venta {{ i + 1 }} - Mesa {{ nota.numeroMesa }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Mostrar la Nota de Venta seleccionada -->
+  <div *ngIf="selectedNota" class="nota-card">
+    <div class="nota-header">
+      <h3>Nota de Venta</h3>
     </div>
-  
-    <div *ngFor="let nota of notasDeVenta; let i = index" class="nota-card">
-      <div class="nota-header">
-        <h3>Nota de Venta {{ i + 1 }}</h3>
-      </div>
-      <hr />
-  
-      <div class="nota-body">
-        <p>{{ nota.fecha | date: 'fullDate' }} {{ nota.fecha | date: 'shortTime' }}</p>
-        <p><strong>Número de Mesa:</strong> {{ nota.numeroMesa }}</p>
-        <p><strong>Atendido por:</strong> {{ nota.meseroNombre }}</p>
-  
-        <h4>Productos Consumidos:</h4>
-        <table class="productos-table">
-          <thead>
-            <tr>
-              <th>Producto</th>
-              <th>Cantidad</th>
-              <th>Precio</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let alimento of nota.pago.descripcionAlimentos">
-              <td>{{ alimento.nombre }}</td>
-              <td>{{ alimento.cantidad }}</td>
-              <td>{{ alimento.subtotal }}</td>
-            </tr>
-          </tbody>
-        </table>
-  
-        <div class="total">
-            <p><strong>Subtotal:</strong> {{ nota.subtotal | currency }}</p>
-            <p><strong>IVA (15%):</strong> {{ nota.iva | currency }}</p>
-            <p><strong>Total:</strong> {{ nota.pago.monto | currency }}</p>
-            <p><strong>Forma de Pago:</strong> {{ nota.pago.formaPago }}</p>
-        </div>
+    <hr />
+
+    <div class="nota-body">
+      <p>{{ selectedNota.fecha | date: 'EEEE, dd \'de\' MMMM \'de\' yyyy, h:mm a' }}</p>
+      <p><strong>Mesa:</strong> {{ selectedNota.numeroMesa }}</p>
+      <p><strong>Atendido por:</strong> {{ selectedNota.meseroNombre }}</p>
+
+      <h4>Productos Consumidos:</h4>
+      <table class="productos-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let alimento of selectedNota.pago.descripcionAlimentos">
+            <td>{{ alimento.nombre }}</td>
+            <td>{{ alimento.cantidad }}</td>
+            <td>{{ alimento.subtotal }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="total">
+        <p><strong>Subtotal:</strong> {{ selectedNota.subtotal | currency }}</p>
+        <p><strong>IVA (15%):</strong> {{ selectedNota.iva | currency }}</p>
+        <p><strong>Total:</strong> {{ selectedNota.pago.monto | currency }}</p>
+        <p><strong>Forma de Pago:</strong> {{ selectedNota.pago.formaPago }}</p>
       </div>
     </div>
   </div>
+
+  <!-- Mensaje si no hay Notas de Venta -->
+  <div *ngIf="!loading && notasDeVenta.length === 0" class="no-notas">
+    <p>No hay notas de venta registradas.</p>
+  </div>
+</div>

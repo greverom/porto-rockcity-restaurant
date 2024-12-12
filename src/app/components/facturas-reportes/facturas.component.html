@@ -1,44 +1,57 @@
 <div class="facturas-container">
-    <h2 class="title">Facturas</h2>
-    
-    <div *ngFor="let factura of facturas; let i = index" class="factura-card">
-      <div class="factura-header">
-        <h3>Factura {{ i + 1 }}</h3>
+  <!-- Mostrar la cantidad total de facturas -->
+  <h2 class="title">Facturas (Total: {{ facturas.length }})</h2>
+
+  <!-- Bloque del Select -->
+  <div class="select-container">
+    <label for="facturaSelect"><strong>Seleccionar Factura:</strong></label>
+    <select id="facturaSelect" [(ngModel)]="selectedFactura" (change)="onFacturaChange()" [class.default-option]="!selectedFactura" class="styled-select">
+      <option [ngValue]="null" disabled>Seleccionar Factura</option>
+      <option *ngFor="let factura of facturas; let i = index" [ngValue]="factura">
+        Factura {{ i + 1 }} - Mesa {{ factura.numeroMesa }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Mostrar la factura seleccionada -->
+  <div *ngIf="selectedFactura" class="factura-card">
+    <div class="factura-header">
+      <h3>Factura</h3>
+    </div>
+    <hr />
+
+    <div class="factura-body">
+      <p>{{ selectedFactura.fecha | date: 'EEEE, dd \'de\' MMMM \'de\' yyyy, h:mm a' }}</p>
+      <p><strong>Mesa:</strong> {{ selectedFactura.numeroMesa }}</p>
+      <p><strong>Atendido por:</strong> {{ selectedFactura.meseroNombre }}</p>
+      <h4>Datos del Cliente</h4>
+      <p><strong>Cédula/R.U.C:</strong> {{ selectedFactura.pago.clienteId }}</p>
+      <p><strong>Nombre del Cliente:</strong> {{ selectedFactura.pago.nombreCliente }}</p>
+      <p *ngIf="selectedFactura.pago.correo"><strong>Correo:</strong> {{ selectedFactura.pago.correo }}</p>
+
+      <h4>Productos Consumidos:</h4>
+      <table class="productos-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let alimento of selectedFactura.pago.descripcionAlimentos">
+            <td>{{ alimento.nombre }}</td>
+            <td>{{ alimento.cantidad }}</td>
+            <td>{{ alimento.subtotal | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="total">
+        <p><strong>Subtotal:</strong> {{ selectedFactura.subtotal | currency }}</p>
+        <p><strong>IVA (15%):</strong> {{ selectedFactura.iva | currency }}</p>
+        <p><strong>Total:</strong> {{ selectedFactura.pago.monto | currency }}</p>
+        <p><strong>Forma de Pago:</strong> {{ selectedFactura.pago.formaPago }}</p>
       </div>
-      <hr />
-  
-      <div class="factura-body">
-        <p>{{ factura.fecha | date: 'EEEE, dd \'de\' MMMM \'de\' yyyy, h:mm a' }}</p>
-        <p><strong>Mesa:</strong> {{ factura.numeroMesa }}</p>
-        <p><strong>Atendido por:</strong> {{ factura.meseroNombre }}</p>
-        <h4>Datos del Cliente</h4>
-        <p><strong>Cédula/R.U.C:</strong> {{ factura.pago.clienteId }}</p>
-        <p><strong>Nombre del Cliente:</strong> {{ factura.pago.nombreCliente }}</p>
-        <p *ngIf="factura.pago.correo"><strong>Correo:</strong> {{ factura.pago.correo }}</p>
-  
-        <h4>Productos Consumidos:</h4>
-        <table class="productos-table">
-          <thead>
-            <tr>
-              <th>Producto</th>
-              <th>Cantidad</th>
-              <th>Precio</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let alimento of factura.pago.descripcionAlimentos">
-              <td>{{ alimento.nombre }}</td>
-              <td>{{ alimento.cantidad }}</td>
-              <td>{{ alimento.subtotal }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="total">
-          <p><strong>Subtotal:</strong> {{ factura.subtotal | currency }}</p>
-          <p><strong>IVA (15%):</strong> {{ factura.iva | currency }}</p>
-          <p><strong>Total:</strong> {{ factura.pago.monto | currency }}</p>
-          <p><strong>Forma de Pago:</strong> {{ factura.pago.formaPago }}</p>
-        </div>
     </div>
   </div>
 </div>

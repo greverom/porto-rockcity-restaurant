@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { MesaService } from '../../services/mesas/mesa.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-facturas',
   standalone: true,
   imports: [
-      CommonModule
+      CommonModule,
+      FormsModule
   ],
   templateUrl: './facturas.component.html',
   styleUrl: './facturas.component.css'
 })
 export class FacturasComponent implements OnInit {
   facturas: any[] = [];
+  selectedFactura: any = null;
   loading = true;
 
   constructor(private mesaService: MesaService) {}
@@ -46,5 +49,9 @@ export class FacturasComponent implements OnInit {
     } catch (error) {
       console.error('Error al cargar las facturas:', error);
     }
+  }
+
+  onFacturaChange(): void {
+    console.log('Factura seleccionada:', this.selectedFactura);
   }
 }

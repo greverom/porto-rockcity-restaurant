@@ -10,6 +10,22 @@
     margin-bottom: 20px;
     color: #555555;
   }
+
+  /* Estilos básicos del select */
+.styled-select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  appearance: none; /* Ocultar flecha nativa */
+}
+
+/* Estilo para la opción predeterminada */
+.default-option {
+  color: rgb(155, 153, 153); /* Color para el texto de la opción predeterminada */
+}
   
   .factura-card {
     background: #fff;
