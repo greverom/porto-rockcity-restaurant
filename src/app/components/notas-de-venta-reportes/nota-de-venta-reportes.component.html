@@ -18,7 +18,7 @@
       <div class="nota-body">
         <p>{{ nota.fecha | date: 'fullDate' }} {{ nota.fecha | date: 'shortTime' }}</p>
         <p><strong>Número de Mesa:</strong> {{ nota.numeroMesa }}</p>
-        <p><strong>Mesero:</strong> {{ nota.meseroNombre }}</p>
+        <p><strong>Atendido por:</strong> {{ nota.meseroNombre }}</p>
   
         <h4>Productos Consumidos:</h4>
         <table class="productos-table">
@@ -38,10 +38,12 @@
           </tbody>
         </table>
   
-        <p><strong>Subtotal:</strong> {{ nota.subtotal | currency }}</p>
-        <p><strong>IVA (15%):</strong> {{ nota.iva | currency }}</p>
-        <p><strong>Total:</strong> {{ nota.pago.monto | currency }}</p>
-        <p><strong>Forma de Pago:</strong> {{ nota.pago.formaPago }}</p>
+        <div class="total">
+            <p><strong>Subtotal:</strong> {{ nota.subtotal | currency }}</p>
+            <p><strong>IVA (15%):</strong> {{ nota.iva | currency }}</p>
+            <p><strong>Total:</strong> {{ nota.pago.monto | currency }}</p>
+            <p><strong>Forma de Pago:</strong> {{ nota.pago.formaPago }}</p>
+        </div>
       </div>
     </div>
   </div>

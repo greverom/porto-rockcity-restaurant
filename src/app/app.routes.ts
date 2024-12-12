@@ -88,7 +88,7 @@ export const routes: Routes = [
   },
   {
     path: 'reservas',
-    loadComponent: () => import('./pages/Meseros/reservas/reservas.component').then(m => m.ReservasComponent),
+    loadComponent: () => import('./pages/Administrador/reservas/reservas.component').then(m => m.ReservasComponent),
     canActivate: [authGuard, roleGuard],
     data: { roles: ['EMPLEADOS', 'ADMINISTRADORES'] }, 
   },

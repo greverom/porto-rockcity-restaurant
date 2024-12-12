@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { SpinnerService } from '../../services/spinner.service';
+import { SpinnerService } from '../../services/spinner/spinner.service';
 import { selectIsLoading } from '../../store/spinner/spinner.selector';
 import { Store } from '@ngrx/store';
 

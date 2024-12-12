@@ -9,8 +9,8 @@
   
       <div class="factura-body">
         <p>{{ factura.fecha | date: 'EEEE, dd \'de\' MMMM \'de\' yyyy, h:mm a' }}</p>
-        <p><strong>Número de Mesa:</strong> {{ factura.numeroMesa }}</p>
-        <p><strong>Mesero:</strong> {{ factura.meseroNombre }}</p>
+        <p><strong>Mesa:</strong> {{ factura.numeroMesa }}</p>
+        <p><strong>Atendido por:</strong> {{ factura.meseroNombre }}</p>
         <h4>Datos del Cliente</h4>
         <p><strong>Cédula/R.U.C:</strong> {{ factura.pago.clienteId }}</p>
         <p><strong>Nombre del Cliente:</strong> {{ factura.pago.nombreCliente }}</p>
@@ -33,11 +33,12 @@
             </tr>
           </tbody>
         </table>
-
-      <p><strong>Subtotal:</strong> {{ factura.subtotal | currency }}</p>
-      <p><strong>IVA (15%):</strong> {{ factura.iva | currency }}</p>
-      <p><strong>Total:</strong> {{ factura.pago.monto | currency }}</p>
-      <p><strong>Forma de Pago:</strong> {{ factura.pago.formaPago }}</p>
+        <div class="total">
+          <p><strong>Subtotal:</strong> {{ factura.subtotal | currency }}</p>
+          <p><strong>IVA (15%):</strong> {{ factura.iva | currency }}</p>
+          <p><strong>Total:</strong> {{ factura.pago.monto | currency }}</p>
+          <p><strong>Forma de Pago:</strong> {{ factura.pago.formaPago }}</p>
+        </div>
     </div>
   </div>
 </div>
