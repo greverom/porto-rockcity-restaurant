@@ -1,5 +1,19 @@
 <div class="balance-buttons">
-    <button class="btn btn-daily">Balance Diario</button>
+    <button class="btn btn-daily" (click)="activarBalanceDiario()">Balance Diario</button>
     <button class="btn btn-weekly">Balance Semanal</button>
     <button class="btn btn-monthly">Balance Mensual</button>
+  </div>
+
+  <div *ngIf="mostrarBalanceDiario">
+    <div class="date-picker">
+      <label for="fecha">Seleccionar Fecha:</label>
+      <input id="fecha" type="date" [(ngModel)]="fechaSeleccionada" (change)="cargarBalancesPorFecha()" />
+    </div>
+  
+    <div class="balance-result">
+      <h3>Resultados para la fecha: {{ fechaSeleccionada }}</h3>
+      <p><strong>Total Facturas:</strong> {{ totalFacturas | currency }}</p>
+      <p><strong>Total Notas de Venta:</strong> {{ totalNotasDeVenta | currency }}</p>
+      <p><strong>Total General:</strong> {{ totalGeneral | currency }}</p>
+    </div>
   </div>

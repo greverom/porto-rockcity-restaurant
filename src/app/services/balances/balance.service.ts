@@ -7,51 +7,57 @@ import { Database, ref, query, orderByChild, startAt, endAt, get } from '@angula
 export class BalanceService {
   constructor(private db: Database) {}
 
-  async getFacturasPorFecha(fecha: string): Promise<any[]> {
-    const startDate = fecha;
-    const endDate = this.incrementarUnDia(fecha);
-
+  // Método para obtener el total de facturas por día
+  async getTotalFacturasPorFecha(fecha: string): Promise<number> {
     const facturasRef = ref(this.db, 'pagos/facturas');
-    const facturasQuery = query(facturasRef, orderByChild('fecha'), startAt(startDate), endAt(endDate));
-
-    const snapshot = await get(facturasQuery);
-    const facturas: any[] = [];
+    const snapshot = await get(facturasRef);
+  
+    let total = 0;
     snapshot.forEach((childSnapshot) => {
-      facturas.push(childSnapshot.val());
-    });
-
-    return facturas;
-  }
-
-  calcularBalanceDiario(facturas: any[]) {
-    let totalVentas = 0;
-    const metodosDePago: { [key: string]: number } = {};
-    const productosVendidos: { [key: string]: number } = {};
-
-    facturas.forEach((factura) => {
-      totalVentas += factura.pago.monto;
-
-      // Métodos de pago
-      const metodoPago = factura.pago.formaPago;
-      if (metodosDePago[metodoPago]) {
-        metodosDePago[metodoPago] += factura.pago.monto;
-      } else {
-        metodosDePago[metodoPago] = factura.pago.monto;
+      const factura = childSnapshot.val();
+      
+      // Convertir la fecha UTC a la zona horaria local (UTC-5)
+      const fechaFacturaUTC = new Date(factura.fecha);
+      const fechaFacturaLocal = new Date(fechaFacturaUTC.getTime() - 5 * 60 * 60 * 1000);
+      const fechaLocalString = fechaFacturaLocal.toISOString().split('T')[0];
+  
+      //console.log('Fecha Local:', fechaLocalString, 'Fecha Seleccionada:', fecha); 
+  
+      if (fechaLocalString === fecha) {
+        total += factura.pago.monto || 0; 
       }
-
-      // Productos vendidos
-      factura.pago.descripcionAlimentos.forEach((alimento: any) => {
-        if (productosVendidos[alimento.nombre]) {
-          productosVendidos[alimento.nombre] += alimento.cantidad;
-        } else {
-          productosVendidos[alimento.nombre] = alimento.cantidad;
-        }
-      });
     });
-
-    return { totalVentas, metodosDePago, productosVendidos };
+  
+    //console.log('Total Facturas:', total); 
+    return total;
   }
 
+  // Método para obtener el total de notas de venta por día
+  async getTotalNotasDeVentaPorFecha(fecha: string): Promise<number> {
+    const notasRef = ref(this.db, 'pagos/notasDeVenta');
+    const snapshot = await get(notasRef);
+  
+    let total = 0;
+    snapshot.forEach((childSnapshot) => {
+      const nota = childSnapshot.val();
+  
+      // Convertir la fecha UTC a la zona horaria local (UTC-5)
+      const fechaNotaUTC = new Date(nota.fecha);
+      const fechaNotaLocal = new Date(fechaNotaUTC.getTime() - 5 * 60 * 60 * 1000);
+      const fechaLocalString = fechaNotaLocal.toISOString().split('T')[0]; 
+  
+      //console.log('Fecha Local:', fechaLocalString, 'Fecha Seleccionada:', fecha); 
+  
+      if (fechaLocalString === fecha) {
+        total += nota.pago.monto || 0; 
+      }
+    });
+  
+   // console.log('Total Notas de Venta:', total); 
+    return total;
+  }
+
+  // Método auxiliar para incrementar un día
   private incrementarUnDia(fecha: string): string {
     const date = new Date(fecha);
     date.setDate(date.getDate() + 1);
