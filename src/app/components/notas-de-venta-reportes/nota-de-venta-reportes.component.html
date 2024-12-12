@@ -1,5 +1,5 @@
 <div class="nota-de-venta-container">
-  <h2 class="title">Notas de Venta (Total: {{ notasDeVenta.length }})</h2>
+  <h2 class="title">Recibos (Total: {{ notasDeVenta.length }})</h2>
 
   <!-- Input Select para seleccionar una Nota de Venta -->
   <div class="nota-select-container">
@@ -21,14 +21,14 @@
   <!-- Mostrar la Nota de Venta seleccionada -->
   <div *ngIf="selectedNota" class="nota-card">
     <div class="nota-header">
-      <h3>Nota de Venta</h3>
+      <h3>Consumidor Final</h3>
     </div>
     <hr />
 
     <div class="nota-body">
-      <p>{{ selectedNota.fecha | date: 'EEEE, dd \'de\' MMMM \'de\' yyyy, h:mm a' }}</p>
       <p><strong>Mesa:</strong> {{ selectedNota.numeroMesa }}</p>
       <p><strong>Atendido por:</strong> {{ selectedNota.meseroNombre }}</p>
+      <p><strong>Emitido:</strong> {{ selectedNota.fecha | date: 'EEEE, dd \'de\' MMMM \'de\' yyyy, h:mm a' }}</p>
 
       <h4>Productos Consumidos:</h4>
       <table class="productos-table">

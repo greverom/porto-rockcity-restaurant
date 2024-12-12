@@ -21,13 +21,12 @@
     <hr />
 
     <div class="factura-body">
-      <p>{{ selectedFactura.fecha | date: 'EEEE, dd \'de\' MMMM \'de\' yyyy, h:mm a' }}</p>
       <p><strong>Mesa:</strong> {{ selectedFactura.numeroMesa }}</p>
       <p><strong>Atendido por:</strong> {{ selectedFactura.meseroNombre }}</p>
       <h4>Datos del Cliente</h4>
       <p><strong>Cédula/R.U.C:</strong> {{ selectedFactura.pago.clienteId }}</p>
       <p><strong>Nombre del Cliente:</strong> {{ selectedFactura.pago.nombreCliente }}</p>
-      <p *ngIf="selectedFactura.pago.correo"><strong>Correo:</strong> {{ selectedFactura.pago.correo }}</p>
+      <p><strong>Emitido:</strong> {{ selectedFactura.fecha | date: 'EEEE, dd \'de\' MMMM \'de\' yyyy, h:mm a' }}</p>
 
       <h4>Productos Consumidos:</h4>
       <table class="productos-table">

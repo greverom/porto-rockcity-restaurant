@@ -47,6 +47,6 @@ export class NotaDeVentaReportesComponent implements OnInit {
   }
 
   onNotaChange(): void {
-    console.log('Nota de Venta seleccionada:', this.selectedNota);
+    //console.log('Nota de Venta seleccionada:', this.selectedNota);
   }
 }

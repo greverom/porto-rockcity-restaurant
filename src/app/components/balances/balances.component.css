@@ -1,0 +1,47 @@
+/* Contenedor principal */
+.balance-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Espacio entre botones */
+    margin: 20px 0;
+  }
+  
+  /* Estilo base para los botones */
+  .btn {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-daily {
+    background-color: #f57c00; 
+    color: #ffffff; 
+  }
+  
+  .btn-daily:hover {
+    background-color: #ef6c00; 
+  }
+  
+  .btn-weekly {
+    background-color: #616161;
+    color: #ffffff; 
+  }
+  
+  .btn-weekly:hover {
+    background-color: #424242; 
+  }
+  
+  .btn-monthly {
+    background-color: #ffffff; 
+    color: #f57c00; 
+    border: 2px solid #f57c00; 
+  }
+  
+  .btn-monthly:hover {
+    background-color: #fbe9e7; 
+  }

@@ -11,28 +11,26 @@
     color: #555555;
   }
 
-  /* Estilos básicos del select */
-.styled-select {
-  width: 100%;
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: white;
-  appearance: none; /* Ocultar flecha nativa */
-}
+  .styled-select {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    appearance: none; 
+  }
 
-/* Estilo para la opción predeterminada */
-.default-option {
-  color: rgb(155, 153, 153); /* Color para el texto de la opción predeterminada */
-}
+  .default-option {
+    color: rgb(155, 153, 153); 
+  }
   
   .factura-card {
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin: 20px auto;
     color: #696969;
   }
   
@@ -87,7 +85,7 @@
   .total{
     display: block;
     text-align: right;
-    margin-right: 25px;
+    margin-right: 20px;
   }
   
   hr {

@@ -65,6 +65,12 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard],
     data: { roles: ['ADMINISTRADORES'] }, 
   },
+  {
+    path: 'balances',
+    loadComponent: () => import('./components/balances/balances.component').then(m => m.BalancesComponent),
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMINISTRADORES'] }, 
+  },
 
   // Rutas protegidas para Cocineros
   {

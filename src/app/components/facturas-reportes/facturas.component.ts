@@ -52,6 +52,6 @@ export class FacturasComponent implements OnInit {
   }
 
   onFacturaChange(): void {
-    console.log('Factura seleccionada:', this.selectedFactura);
+   // console.log('Factura seleccionada:', this.selectedFactura);
   }
 }

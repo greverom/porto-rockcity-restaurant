@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FacturasComponent } from '../../../components/facturas-reportes/facturas.component';
 import { NotaDeVentaReportesComponent } from "../../../components/notas-de-venta-reportes/nota-de-venta-reportes.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reportes',
@@ -17,8 +18,14 @@ import { NotaDeVentaReportesComponent } from "../../../components/notas-de-venta
 export class ReportesComponent {
   mostrarFacturas = true; 
 
+  constructor(private router: Router){}
+
   alternarVista(): void {
     this.mostrarFacturas = !this.mostrarFacturas;
+  }
+
+  irABalances():void{
+    this.router.navigate(['/balances']);
   }
 
   get botonTexto(): string {
