@@ -1,4 +1,4 @@
-/* Selector de rango de fechas */
+
 .date-picker {
     display: flex;
     flex-direction: column;
@@ -10,7 +10,7 @@
   .date-picker label {
     font-size: 16px;
     font-weight: bold;
-    margin-bottom: 5px; /* Espaciado debajo del label */
+    margin-bottom: 5px; 
   }
   
   .date-picker input {
@@ -18,7 +18,7 @@
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+    width: 100%; 
   }
   
   .date-picker button {
@@ -35,7 +35,6 @@
     background-color: #d35400;
   }
   
-  /* Resultados del balance */
   .balance-result {
     margin-top: 20px;
     display: flex;
@@ -51,7 +50,6 @@
     margin-top: 10px; 
   }
   
-  /* Diseño de la fila de selectores */
   .row {
     display: flex;
     justify-content: space-between;
@@ -63,7 +61,6 @@
     flex: 1;
   }
   
-  /* Contenedor de los selectores */
   .select-container,
   .nota-select-container {
     width: 100%;
@@ -95,7 +92,6 @@
     color: #999; 
   }
   
-  /* Estilo de las tarjetas de factura y nota */
   .factura-card,
   .nota-card {
     width: 100%;
@@ -139,7 +135,6 @@
     font-weight: bold;
   }
   
-  /* Tabla de productos consumidos */
   .productos-table {
     width: 100%;
     border-collapse: collapse;
@@ -158,7 +153,6 @@
     background-color: #f9f9f9;
   }
   
-  /* Total de factura o nota */
   .total {
     display: block;
     text-align: right;
@@ -171,7 +165,6 @@
     border-top: 1px solid #ddd;
   }
   
-  /* Estilos Responsivos */
   @media (max-width: 768px) {
     .row {
       flex-direction: column;
