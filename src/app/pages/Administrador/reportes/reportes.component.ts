@@ -1,34 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FacturasComponent } from '../../../components/facturas-reportes/facturas.component';
-import { NotaDeVentaReportesComponent } from "../../../components/notas-de-venta-reportes/nota-de-venta-reportes.component";
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-reportes',
   standalone: true,
   imports: [
     CommonModule,
-    FacturasComponent,
-    NotaDeVentaReportesComponent
+    RouterOutlet
 ],
   templateUrl: './reportes.component.html',
   styleUrl: './reportes.component.css'
 })
 export class ReportesComponent {
-  mostrarFacturas = true; 
 
   constructor(private router: Router){}
 
-  alternarVista(): void {
-    this.mostrarFacturas = !this.mostrarFacturas;
+  irAFacturas(): void {
+    this.router.navigate(['/reportes/facturas']);
   }
 
   irABalances():void{
-    this.router.navigate(['/balances']);
+    this.router.navigate(['/reportes/balances']);
   }
 
-  get botonTexto(): string {
-    return this.mostrarFacturas ? 'Ver Notas de Venta' : 'Ver Facturas';
-  }
 }

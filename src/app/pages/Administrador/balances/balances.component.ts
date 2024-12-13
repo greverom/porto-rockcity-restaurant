@@ -21,11 +21,11 @@ export class BalancesComponent {
 
 
   irABalanceDiario():void {
-    this.router.navigate(['balances/diario'])
+    this.router.navigate(['/reportes/balances/diario'])
   }
 
   irABalanceSemanal():void{
-    this.router.navigate(['balances/semanal'])
+    this.router.navigate(['/reportes/balances/semanal'])
   }
 
 }

@@ -1,56 +1,124 @@
-<div class="facturas-container">
-  <!-- Mostrar la cantidad total de facturas -->
-  <h2 class="title">Facturas (Total: {{ facturas.length }})</h2>
-
-  <!-- Bloque del Select -->
-  <div class="select-container">
-    <label for="facturaSelect"><strong>Seleccionar Factura:</strong></label>
-    <select id="facturaSelect" [(ngModel)]="selectedFactura" (change)="onFacturaChange()" [class.default-option]="!selectedFactura" class="styled-select">
-      <option [ngValue]="null" disabled>Seleccionar Factura</option>
-      <option *ngFor="let factura of facturas; let i = index" [ngValue]="factura">
-        Factura {{ i + 1 }} - Mesa {{ factura.numeroMesa }}
-      </option>
-    </select>
-  </div>
-
-  <!-- Mostrar la factura seleccionada -->
-  <div *ngIf="selectedFactura" class="factura-card">
-    <div class="factura-header">
-      <h3>Factura</h3>
+<div class="reportes-row">
+  <div class="facturas-container">
+    <!-- Mostrar la cantidad total de facturas -->
+    <h2 class="title">Facturas (Total: {{ facturas.length }})</h2>
+  
+    <!-- Bloque del Select -->
+    <div class="select-container">
+      <label for="facturaSelect">Seleccionar Factura:</label>
+      <select id="facturaSelect" [(ngModel)]="selectedFactura" (change)="onFacturaChange()" [class.default-option]="!selectedFactura" class="styled-select">
+        <option [ngValue]="null" disabled>Seleccionar Factura</option>
+        <option *ngFor="let factura of facturas; let i = index" [ngValue]="factura">
+          Factura {{ i + 1 }} - Mesa {{ factura.numeroMesa }}
+        </option>
+      </select>
     </div>
-    <hr />
-
-    <div class="factura-body">
-      <p><strong>Mesa:</strong> {{ selectedFactura.numeroMesa }}</p>
-      <p><strong>Atendido por:</strong> {{ selectedFactura.meseroNombre }}</p>
-      <h4>Datos del Cliente</h4>
-      <p><strong>Cédula/R.U.C:</strong> {{ selectedFactura.pago.clienteId }}</p>
-      <p><strong>Nombre del Cliente:</strong> {{ selectedFactura.pago.nombreCliente }}</p>
-      <p><strong>Emitido:</strong> {{ selectedFactura.fecha | date: 'EEEE, dd \'de\' MMMM \'de\' yyyy, h:mm a' }}</p>
-
-      <h4>Productos Consumidos:</h4>
-      <table class="productos-table">
-        <thead>
-          <tr>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let alimento of selectedFactura.pago.descripcionAlimentos">
-            <td>{{ alimento.nombre }}</td>
-            <td>{{ alimento.cantidad }}</td>
-            <td>{{ alimento.subtotal | currency }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="total">
-        <p><strong>Subtotal:</strong> {{ selectedFactura.subtotal | currency }}</p>
-        <p><strong>IVA (15%):</strong> {{ selectedFactura.iva | currency }}</p>
-        <p><strong>Total:</strong> {{ selectedFactura.pago.monto | currency }}</p>
-        <p><strong>Forma de Pago:</strong> {{ selectedFactura.pago.formaPago }}</p>
+  
+    <!-- Mostrar la factura seleccionada -->
+    <div *ngIf="selectedFactura" class="factura-card">
+      <div class="factura-header">
+        <h3>Factura</h3>
       </div>
+      <hr />
+  
+      <div class="factura-body">
+        <p><strong>Mesa:</strong> {{ selectedFactura.numeroMesa }}</p>
+        <p><strong>Atendido por:</strong> {{ selectedFactura.meseroNombre }}</p>
+        <h4>Datos del Cliente</h4>
+        <p><strong>Cédula/R.U.C:</strong> {{ selectedFactura.pago.clienteId }}</p>
+        <p><strong>Nombre del Cliente:</strong> {{ selectedFactura.pago.nombreCliente }}</p>
+        <p><strong>Emitido:</strong> {{ selectedFactura.fecha | date: 'EEEE, dd \'de\' MMMM \'de\' yyyy, h:mm a' }}</p>
+  
+        <h4>Productos Consumidos:</h4>
+        <table class="productos-table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let alimento of selectedFactura.pago.descripcionAlimentos">
+              <td>{{ alimento.nombre }}</td>
+              <td>{{ alimento.cantidad }}</td>
+              <td>{{ alimento.subtotal | currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="total">
+          <p><strong>Subtotal:</strong> {{ selectedFactura.subtotal | currency }}</p>
+          <p><strong>IVA (15%):</strong> {{ selectedFactura.iva | currency }}</p>
+          <p><strong>Total:</strong> {{ selectedFactura.pago.monto | currency }}</p>
+          <p><strong>Forma de Pago:</strong> {{ selectedFactura.pago.formaPago }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="nota-de-venta-container">
+    <h2 class="title">Recibos (Total: {{ notasDeVenta.length }})</h2>
+  
+    <!-- Input Select para seleccionar una Nota de Venta -->
+    <div class="nota-select-container">
+      <label for="notaSelect">Seleccione Nota de Venta:</label>
+      <select
+        id="notaSelect"
+        [(ngModel)]="selectedNota"
+        (change)="onNotaChange()"
+        [class.default-option]="!selectedNota"
+        class="styled-select"
+      >
+        <option [ngValue]="null" disabled>Seleccionar Nota de Venta</option>
+        <option *ngFor="let nota of notasDeVenta; let i = index" [ngValue]="nota">
+          Nota de Venta {{ i + 1 }} - Mesa {{ nota.numeroMesa }}
+        </option>
+      </select>
+    </div>
+  
+    <!-- Mostrar la Nota de Venta seleccionada -->
+    <div *ngIf="selectedNota" class="nota-card">
+      <div class="nota-header">
+        <h3>Consumidor Final</h3>
+      </div>
+      <hr />
+  
+      <div class="nota-body">
+        <p><strong>Mesa:</strong> {{ selectedNota.numeroMesa }}</p>
+        <p><strong>Atendido por:</strong> {{ selectedNota.meseroNombre }}</p>
+        <p><strong>Emitido:</strong> {{ selectedNota.fecha | date: 'EEEE, dd \'de\' MMMM \'de\' yyyy, h:mm a' }}</p>
+  
+        <h4>Productos Consumidos:</h4>
+        <table class="productos-table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let alimento of selectedNota.pago.descripcionAlimentos">
+              <td>{{ alimento.nombre }}</td>
+              <td>{{ alimento.cantidad }}</td>
+              <td>{{ alimento.subtotal }}</td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <div class="total">
+          <p><strong>Subtotal:</strong> {{ selectedNota.subtotal | currency }}</p>
+          <p><strong>IVA (15%):</strong> {{ selectedNota.iva | currency }}</p>
+          <p><strong>Total:</strong> {{ selectedNota.pago.monto | currency }}</p>
+          <p><strong>Forma de Pago:</strong> {{ selectedNota.pago.formaPago }}</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mensaje si no hay Notas de Venta -->
+    <div *ngIf="!loading && notasDeVenta.length === 0" class="no-notas">
+      <p>No hay notas de venta registradas.</p>
     </div>
   </div>
 </div>

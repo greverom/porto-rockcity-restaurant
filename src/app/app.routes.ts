@@ -8,7 +8,7 @@ export const routes: Routes = [
   { path: 'home', loadComponent: () => import('./pages/Paginas_iniciales/home/home.component').then(m => m.HomeComponent) },
   { path: 'login', loadComponent: () => import('./pages/Paginas_iniciales/login/login.component').then(m => m.LoginComponent) },
   
-  // Rutas protegidas para Administradores
+  // Rutas para Administradores
   {
     path: 'gestion-alimentos',
     loadComponent: () => import('./pages/Administrador/gestion-alimentos/gestion-alimentos.component').then(m => m.GestionAlimentosComponent),
@@ -41,12 +41,7 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard],
     data: { roles: ['ADMINISTRADORES'], animation: 'animate__fadeInLeft' }, 
   },
-  {
-    path: 'reportes',
-    loadComponent: () => import('./pages/Administrador/reportes/reportes.component').then(m => m.ReportesComponent),
-    canActivate: [authGuard, roleGuard],
-    data: { roles: ['ADMINISTRADORES'] }, 
-  },
+  
   {
     path: 'gestion-usuarios',
     loadComponent: () => import('./pages/Administrador/gestion-usuario/gestion-usuario.component').then(m => m.GestionUsuarioComponent),
@@ -66,29 +61,46 @@ export const routes: Routes = [
     data: { roles: ['ADMINISTRADORES'] }, 
   },
   {
-    path: 'balances',
+    path: 'reportes',
     loadComponent: () => 
-      import('./pages/Administrador/balances/balances.component').then(m => m.BalancesComponent),
+      import('./pages/Administrador/reportes/reportes.component').then(m => m.ReportesComponent),
     canActivate: [authGuard, roleGuard],
     data: { roles: ['ADMINISTRADORES'] },
     children: [
       {
-        path: 'diario',
+        path: 'facturas',
         loadComponent: () => 
-          import('./components/balances/balance-diario/balance-diario.component').then(m => m.BalanceDiarioComponent),
+          import('./components/facturas-reportes/facturas.component').then(m => m.FacturasComponent),
         canActivate: [authGuard, roleGuard],
         data: { roles: ['ADMINISTRADORES'] }
       },
       {
-        path: 'semanal',
+        path: 'balances',
         loadComponent: () => 
-          import('./components/balances/balance-semanal/balance-semanal.component').then(m => m.BalanceSemanalComponent),
+          import('./pages/Administrador/balances/balances.component').then(m => m.BalancesComponent),
         canActivate: [authGuard, roleGuard],
-        data: { roles: ['ADMINISTRADORES'] }
+        data: { roles: ['ADMINISTRADORES'] },
+        children: [
+          {
+            path: 'diario',
+            loadComponent: () => 
+              import('./components/balances/balance-diario/balance-diario.component').then(m => m.BalanceDiarioComponent),
+            canActivate: [authGuard, roleGuard],
+            data: { roles: ['ADMINISTRADORES'] }
+          },
+          {
+            path: 'semanal',
+            loadComponent: () => 
+              import('./components/balances/balance-semanal/balance-semanal.component').then(m => m.BalanceSemanalComponent),
+            canActivate: [authGuard, roleGuard],
+            data: { roles: ['ADMINISTRADORES'] }
+          }
+        ]
       }
     ]
   },
-  // Rutas protegidas para Cocineros
+ 
+  // Rutas para Cocineros
   {
     path: 'pedidos-cocina',
     loadComponent: () => import('./pages/Cocina/pedidos-cocina/pedidos-cocina.component').then(m => m.PedidosCocinaComponent),
@@ -96,8 +108,7 @@ export const routes: Routes = [
     data: { roles: ['COCINEROS'] },
   },
 
-  // Rutas protegidas para Meseros
-  
+  // Rutas para Meseros
   {
     path: 'gestion-pedidos',
     loadComponent: () => import('./pages/Meseros/gestion-pedidos/gestion-pedidos.component').then(m => m.GestionPedidosComponent),
@@ -115,7 +126,7 @@ export const routes: Routes = [
     data: { roles: ['EMPLEADOS', 'ADMINISTRADORES'] }, 
   },
 
-  // Ruta protegida de perfil de usuario
+  // Ruta perfil de usuario
   {
     path: 'perfil-usuario',
     loadComponent: () => import('./pages/Pag_genericas/perfil-usuario/perfil-usuario.component').then(m => m.PerfilUsuarioComponent),

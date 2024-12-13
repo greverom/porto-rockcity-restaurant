@@ -1,19 +1,13 @@
 <div class="reportes-container">
   <h2 class="title">Reportes</h2>
 
-  <!-- Botones de alternancia -->
+
   <div class="toggle-buttons">
-    <button (click)="alternarVista()">{{ botonTexto }}</button>
+    <button (click)="irAFacturas()">Todas las Facturas</button>
     <button (click)="irABalances()">Balances</button>
   </div>
 
-  <!-- Sección para Facturas y Notas de Venta -->
-  <div *ngIf="mostrarFacturas">
-    <app-facturas></app-facturas>
-  </div>
-  <div *ngIf="!mostrarFacturas">
-    <app-nota-de-venta-reportes></app-nota-de-venta-reportes>
-  </div>
+  <router-outlet></router-outlet>
 
 
 </div>
