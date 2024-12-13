@@ -23,9 +23,9 @@ export class BalanceDiarioComponent {
   totalNotasDeVenta: number = 0;
   cantidadNotasDeVenta: number = 0;
   totalGeneral: number = 0;
-
   selectedFactura: any = null; 
   selectedNota: any = null;
+  mostrarResultados: boolean = false;
 
   constructor(private balanceService: BalanceService,
   ){}
@@ -45,6 +45,7 @@ export class BalanceDiarioComponent {
     if (!this.fechaSeleccionada) return;
   
     try {
+      this.mostrarResultados = false;
       const facturas = await this.balanceService.getFacturasPorFecha(this.fechaSeleccionada);
       this.totalFacturas = facturas.total;
       this.cantidadFacturas = facturas.cantidad;
@@ -56,7 +57,7 @@ export class BalanceDiarioComponent {
       this.notasDeVenta = notasDeVenta.notas; 
   
       this.totalGeneral = this.totalFacturas + this.totalNotasDeVenta;
-  
+      this.mostrarResultados = true;
       //console.log('Facturas:', this.facturas);
      // console.log('Notas de Venta:', this.notasDeVenta);
     } catch (error) {

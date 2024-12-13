@@ -25,6 +25,7 @@ export class BalanceSemanalComponent {
   totalGeneral: number = 0;
   selectedFactura: any = null;
   selectedNota: any = null;
+  mostrarResultados: boolean = false;
 
   constructor(private balanceService: BalanceService) {}
 
@@ -40,6 +41,7 @@ export class BalanceSemanalComponent {
     if (!this.fechaInicio || !this.fechaFin) return;
 
     try {
+      this.mostrarResultados = false;
       const facturasResult = await this.balanceService.getFacturasPorRango(this.fechaInicio, this.fechaFin);
       this.totalFacturas = facturasResult.total;
       this.cantidadFacturas = facturasResult.cantidad;
@@ -51,6 +53,7 @@ export class BalanceSemanalComponent {
       this.notasDeVenta = notasResult.notas;
 
       this.totalGeneral = this.totalFacturas + this.totalNotasDeVenta;
+      this.mostrarResultados = true;
     } catch (error) {
       console.error('Error al calcular el balance semanal:', error);
     }
