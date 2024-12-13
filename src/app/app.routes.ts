@@ -70,7 +70,7 @@ export const routes: Routes = [
       {
         path: 'facturas',
         loadComponent: () => 
-          import('./components/facturas-reportes/facturas.component').then(m => m.FacturasComponent),
+          import('./pages/Administrador/facturas-reportes/facturas.component').then(m => m.FacturasComponent),
         canActivate: [authGuard, roleGuard],
         data: { roles: ['ADMINISTRADORES'] }
       },
@@ -84,14 +84,14 @@ export const routes: Routes = [
           {
             path: 'diario',
             loadComponent: () => 
-              import('./components/balances/balance-diario/balance-diario.component').then(m => m.BalanceDiarioComponent),
+              import('./components/balances/diario/balance-diario.component').then(m => m.BalanceDiarioComponent),
             canActivate: [authGuard, roleGuard],
             data: { roles: ['ADMINISTRADORES'] }
           },
           {
             path: 'semanal',
             loadComponent: () => 
-              import('./components/balances/balance-semanal/balance-semanal.component').then(m => m.BalanceSemanalComponent),
+              import('./components/balances/rango-fecha/balance-semanal.component').then(m => m.BalanceSemanalComponent),
             canActivate: [authGuard, roleGuard],
             data: { roles: ['ADMINISTRADORES'] }
           }

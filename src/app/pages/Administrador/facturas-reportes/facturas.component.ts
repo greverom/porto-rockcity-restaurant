@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MesaService } from '../../services/mesas/mesa.service';
+import { MesaService } from '../../../services/mesas/mesa.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
