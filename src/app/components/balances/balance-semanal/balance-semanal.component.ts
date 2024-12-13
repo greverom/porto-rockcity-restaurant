@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { BalanceService } from '../../services/balances/balance.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { BalanceService } from '../../../services/balances/balance.service';
 
 @Component({
   selector: 'app-balance-semanal',

@@ -3,7 +3,6 @@
 .reportes-container {
   max-width: 800px;
   margin: 20px auto;
-  font-family: Arial, sans-serif;
 }
 
 .reportes-container h2{
@@ -13,8 +12,8 @@
 
 .toggle-buttons {
   display: flex;
-  justify-content: space-between;
-  gap: 10px; 
+  justify-content: center;
+  gap: 15px; 
   margin: 20px 0;
 }
 

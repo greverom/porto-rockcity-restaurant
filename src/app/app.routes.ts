@@ -67,17 +67,27 @@ export const routes: Routes = [
   },
   {
     path: 'balances',
-    loadComponent: () => import('./pages/Administrador/balances/balances.component').then(m => m.BalancesComponent),
+    loadComponent: () => 
+      import('./pages/Administrador/balances/balances.component').then(m => m.BalancesComponent),
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['ADMINISTRADORES'] }, 
+    data: { roles: ['ADMINISTRADORES'] },
+    children: [
+      {
+        path: 'diario',
+        loadComponent: () => 
+          import('./components/balances/balance-diario/balance-diario.component').then(m => m.BalanceDiarioComponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMINISTRADORES'] }
+      },
+      {
+        path: 'semanal',
+        loadComponent: () => 
+          import('./components/balances/balance-semanal/balance-semanal.component').then(m => m.BalanceSemanalComponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMINISTRADORES'] }
+      }
+    ]
   },
-  {
-    path: 'balance-semanal',
-    loadComponent: () => import('./components/balance-semanal/balance-semanal.component').then(m => m.BalanceSemanalComponent),
-    canActivate: [authGuard, roleGuard],
-    data: { roles: ['ADMINISTRADORES'] }, 
-  },
-
   // Rutas protegidas para Cocineros
   {
     path: 'pedidos-cocina',

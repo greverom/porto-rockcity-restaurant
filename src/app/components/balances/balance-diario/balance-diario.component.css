@@ -1,0 +1,167 @@
+
+    .date-picker {
+      display: flex;
+      flex-direction: column;
+      margin: 20px auto;
+      width: 90%; 
+      max-width: 350px;
+    }
+    
+    .date-picker label {
+      font-size: 16px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    
+    .date-picker input {
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  
+    .balance-result {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column; 
+      align-items: center; 
+      text-align: center; 
+    }
+  
+    .total-general {
+      font-size: 1.2rem; 
+      font-weight: bold;
+      color: #e67e22; 
+      text-align: right; 
+      margin-top: 10px; 
+    }
+  
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .col {
+      flex: 1; 
+    }
+    
+    .select-container,
+    .nota-select-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      max-width: 400px; 
+      margin: 0 auto; 
+    }
+    
+    .select-container label,
+    .nota-select-container label {
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center; 
+    }
+    
+    .styled-select {
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+      width: 100%;
+    }
+    
+    .styled-select.default-option {
+      color: #999; 
+    }
+  
+    .factura-card,
+    .nota-card {
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    color: #696969;
+  }
+  
+  .factura-header,
+  .nota-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .factura-header h3,
+  .nota-header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+  
+  .factura-body,
+  .nota-body {
+    margin-top: 10px;
+  }
+  
+  .factura-body p,
+  .nota-body p {
+    margin: 4px 0;
+    font-size: 0.8rem;
+  }
+  
+  .factura-body h4,
+  .nota-body h4 {
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  .productos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .productos-table th,
+  .productos-table td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    font-size: 0.8rem;
+    text-align: left;
+  }
+  
+  .productos-table th {
+    background-color: #f9f9f9;
+  }
+  
+  .total {
+    display: block;
+    text-align: right;
+    margin-right: 20px;
+  }
+  
+  hr {
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+  
+  @media (max-width: 768px) {
+    .balance-buttons {
+      flex-direction: column; 
+      gap: 15px; 
+    }
+  
+    .balance-buttons .btn {
+      width: 90%; 
+      margin: auto;
+      font-size: 1rem; 
+    }
+  }
+  
+  
