@@ -22,12 +22,13 @@ button {
   font-size: 16px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
+  background-color: #ff7f00;
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #ff4500;
+  color: white;
 }

@@ -14,20 +14,20 @@ export class BalanceService {
   
     let total = 0;
     let cantidad = 0;
-    const facturas: any[] = []; // Almacenar facturas filtradas
+    const facturas: any[] = []; 
   
     snapshot.forEach((childSnapshot) => {
       const factura = childSnapshot.val();
   
-      // Convertir la fecha UTC a la zona horaria local (UTC-5)
+    // Convertir la fecha UTC a la zona horaria local (UTC-5)
       const fechaFacturaUTC = new Date(factura.fecha);
       const fechaFacturaLocal = new Date(fechaFacturaUTC.getTime() - 5 * 60 * 60 * 1000);
       const fechaLocalString = fechaFacturaLocal.toISOString().split('T')[0];
   
       if (fechaLocalString === fecha) {
-        total += factura.pago.monto || 0; // Suma el monto
-        cantidad++; // Incrementa la cantidad de facturas
-        facturas.push(factura); // Almacena la factura filtrada
+        total += factura.pago.monto || 0; 
+        cantidad++; 
+        facturas.push(factura);
       }
     });
   
@@ -41,20 +41,19 @@ export class BalanceService {
   
     let total = 0;
     let cantidad = 0;
-    const notas: any[] = []; // Almacenar notas de venta filtradas
+    const notas: any[] = []; 
   
     snapshot.forEach((childSnapshot) => {
       const nota = childSnapshot.val();
   
-      // Convertir la fecha UTC a la zona horaria local (UTC-5)
       const fechaNotaUTC = new Date(nota.fecha);
       const fechaNotaLocal = new Date(fechaNotaUTC.getTime() - 5 * 60 * 60 * 1000);
       const fechaLocalString = fechaNotaLocal.toISOString().split('T')[0];
   
       if (fechaLocalString === fecha) {
-        total += nota.pago.monto || 0; // Suma el monto
-        cantidad++; // Incrementa la cantidad de notas
-        notas.push(nota); // Almacena la nota filtrada
+        total += nota.pago.monto || 0; 
+        cantidad++; 
+        notas.push(nota); 
       }
     });
   
@@ -75,16 +74,14 @@ export class BalanceService {
     snapshot.forEach((childSnapshot) => {
       const factura = childSnapshot.val();
 
-      // Convertir la fecha UTC a la zona horaria local (UTC-5)
       const fechaFacturaUTC = new Date(factura.fecha);
       const fechaFacturaLocal = new Date(fechaFacturaUTC.getTime() - 5 * 60 * 60 * 1000);
       const fechaLocalString = fechaFacturaLocal.toISOString().split('T')[0];
 
-      // Verificar si la fecha está dentro del rango
       if (fechaLocalString >= fechaInicio && fechaLocalString <= fechaFin) {
-        total += factura.pago.monto || 0; // Suma el monto
-        cantidad++; // Incrementa la cantidad de facturas
-        facturas.push(factura); // Almacena la factura filtrada
+        total += factura.pago.monto || 0; 
+        cantidad++; 
+        facturas.push(factura); 
       }
     });
 
@@ -106,24 +103,20 @@ export class BalanceService {
     snapshot.forEach((childSnapshot) => {
       const nota = childSnapshot.val();
 
-      // Convertir la fecha UTC a la zona horaria local (UTC-5)
       const fechaNotaUTC = new Date(nota.fecha);
       const fechaNotaLocal = new Date(fechaNotaUTC.getTime() - 5 * 60 * 60 * 1000);
       const fechaLocalString = fechaNotaLocal.toISOString().split('T')[0];
 
-      // Verificar si la fecha está dentro del rango
       if (fechaLocalString >= fechaInicio && fechaLocalString <= fechaFin) {
-        total += nota.pago.monto || 0; // Suma el monto
-        cantidad++; // Incrementa la cantidad de notas
-        notas.push(nota); // Almacena la nota filtrada
+        total += nota.pago.monto || 0; 
+        cantidad++; 
+        notas.push(nota); 
       }
     });
 
     return { total, cantidad, notas };
   }
 
-
-  // Método auxiliar para incrementar un día
   private incrementarUnDia(fecha: string): string {
     const date = new Date(fecha);
     date.setDate(date.getDate() + 1);
