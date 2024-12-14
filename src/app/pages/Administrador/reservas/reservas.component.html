@@ -48,6 +48,7 @@
             <th>Mesa</th>
             <th>Número de Personas</th>
             <th>Estado</th>
+            <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -56,6 +57,11 @@
             <td>{{ reserva.mesaNumero }}</td>
             <td>{{ reserva.numeroPersonas }}</td>
             <td>{{ reserva.estado }}</td>
+            <td>
+              <button class="icono-eliminar" (click)="confirmarEliminarReserva(reserva)" title="Eliminar Reserva">
+                🗑️
+              </button>
+            </td>
             </tr>
         </tbody>
         </table>
@@ -65,3 +71,14 @@
     No hay reservas para el día {{ selectedDay }} de {{ selectedMonth }}.
   </p>
 </div>
+
+<app-modal
+  *ngIf="modalData.show"
+  [showModal]="modalData.show"
+  [message]="modalData.message"
+  [isError]="modalData.isError"
+  [isSuccess]="modalData.isSuccess"
+  [isConfirm]="modalData.isConfirm"
+  (close)="modalData.close()"
+  (confirm)="modalData.confirm && modalData.confirm()">
+</app-modal>

@@ -165,7 +165,14 @@
     color: #555;
   }
   
- 
+  .icono-eliminar {
+    border: none;        
+    background: none;   
+    padding: 0;         
+    cursor: pointer;    
+    color: inherit;     
+    font-size: 1.2rem;  
+  }
 
   .no-reservas-message {
     display: flex;

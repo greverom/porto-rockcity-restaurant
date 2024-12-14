@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ReservaModel } from '../../../models/mesa';
+import { MesaEstado, ReservaModel } from '../../../models/mesa';
 import { MesaService } from '../../../services/mesas/mesa.service';
 import { CommonModule } from '@angular/common';
+import { ModalDto, modalInitializer } from '../../../components/modal/modal.dto';
+import { ModalComponent } from '../../../components/modal/modal.component';
 
 @Component({
   selector: 'app-reservas',
   standalone: true,
   imports: [
       CommonModule,
+      ModalComponent
   ],
   templateUrl: './reservas.component.html',
   styleUrl: './reservas.component.css'
@@ -15,6 +18,7 @@ import { CommonModule } from '@angular/common';
 export class ReservasComponent implements OnInit {
   reservas: ReservaModel[] = [];
   reservasFiltradas: ReservaModel[] = [];
+  modalData: ModalDto = modalInitializer();
   currentMonthDays: (number | string)[] = [];
   selectedMonth!: string;
   selectedYear!: number;
@@ -156,6 +160,41 @@ export class ReservasComponent implements OnInit {
       this.selectedYear = current.getFullYear();
       this.generateDaysForCurrentMonth();
       this.selectedDay = null;
+    }
+  }
+
+  confirmarEliminarReserva(reserva: ReservaModel): void {
+    this.modalData = {
+      ...modalInitializer(),
+      show: true,
+      message: `¿Estás seguro de que deseas eliminar la reserva de ${reserva.clienteNombre}?`,
+      isConfirm: true,
+      confirm: () => this.eliminarReserva(reserva), 
+      close: () => (this.modalData.show = false), 
+    };
+  }
+
+  async eliminarReserva(reserva: ReservaModel): Promise<void> {
+    try {
+      if (!reserva.id) {
+        console.error('No se puede eliminar una reserva sin ID.');
+        return;
+      }
+
+      await this.mesaService.deleteReserva(reserva.id);
+
+      if (reserva.mesaId) {
+        await this.mesaService.updateMesa(reserva.mesaId, {
+          estado: MesaEstado.DISPONIBLE,
+          reservaId: null,
+        });
+      }
+
+      this.reservasFiltradas = this.reservasFiltradas.filter(r => r.id !== reserva.id);
+      this.reservas = this.reservas.filter(r => r.id !== reserva.id);
+
+    } catch (error) {
+      console.error('Error al eliminar la reserva:', error);
     }
   }
 }
