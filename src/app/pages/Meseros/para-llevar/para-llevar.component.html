@@ -1,0 +1,33 @@
+<button class="open-modal-button" (click)="abrirModalCrearPedido()">Agregar Pedido</button>
+
+
+<div class="pedidos-section">
+    <h2 class="section-title">Pedidos Para Llevar</h2>
+    <div class="pedidos-container">
+      <div *ngFor="let pedido of pedidos" class="pedido-card" (click)="seleccionarPedido(pedido.id)">
+        <h3>{{ pedido.clienteNombre }}</h3>
+      </div>
+    </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showCrearPedidoModal">
+    <div class="modal-content">
+      <h3>Crear Pedido para Llevar</h3>
+  
+      <!-- Formulario -->
+      <div class="form-group">
+        <label for="clienteNombre">Nombre del Cliente</label>
+        <input
+          id="clienteNombre"
+          type="text"
+          [(ngModel)]="clienteNombre"
+          placeholder="Ingrese el nombre del cliente"
+        />
+      </div>
+  
+      <div class="button-container">
+        <button class="confirm-button" (click)="crearPedido()">Crear Pedido</button>
+        <button class="cancel-button" (click)="cerrarModalCrearPedido()">Cancelar</button>
+      </div>
+    </div>
+  </div>

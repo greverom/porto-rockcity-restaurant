@@ -1,0 +1,150 @@
+.open-modal-button {
+    display: block; 
+    margin: 50px auto; 
+    padding: 12px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, #ff9500, #ff5722);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  
+  .open-modal-button:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    background: linear-gradient(45deg, #ff5722, #ff9500); 
+  }
+
+  .pedidos-container {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: center; 
+    margin: 20px;
+  }
+
+  .pedidos-section {
+    margin: 20px;
+    text-align: center; 
+  }
+  
+  .section-title {
+    font-size: 24px;
+    color: #ff7f00; 
+    margin-bottom: 20px; 
+    font-weight: bold;
+  }
+  
+  .pedido-card {
+    background-color: #ffffff; 
+    border: 1px solid #ddd; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    padding: 15px 20px;
+    width: 200px; 
+    text-align: center; 
+    font-size: 18px; 
+    color: #555555; 
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    cursor: pointer; 
+  }
+  
+  .pedido-card:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
+  }
+  
+  .pedido-card h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #ff7f00; 
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; 
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px; 
+    width: 400px; 
+    max-width: 90%; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+    text-align: left; 
+  }
+  
+  .modal-content h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #555;
+  }
+
+  .form-group {
+    margin-bottom: 20px; 
+  }
+  
+  label {
+    display: block; 
+    margin-bottom: 5px; 
+    font-weight: bold;
+    color: #555; 
+  }
+  
+  input {
+    width: 100%; 
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; 
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between; 
+    gap: 10px; 
+    margin-top: 20px;
+  }
+  
+  button {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  
+  .confirm-button {
+    background: linear-gradient(45deg, #ff7f00, #ff4500); 
+  }
+  
+  .confirm-button:hover {
+    background: linear-gradient(45deg, #ff4500, #ff7f00); 
+    transform: scale(1.05);
+  }
+  
+  .cancel-button {
+    background: linear-gradient(45deg, #dc3545, #c82333); 
+  }
+  
+  .cancel-button:hover {
+    background: linear-gradient(45deg, #c82333, #dc3545);
+    transform: scale(1.05);
+  }

@@ -118,6 +118,14 @@ export const routes: Routes = [
   {
     path: 'mesas-asignadas',
     loadComponent: () => import('./pages/Meseros/mesas-asignadas/mesas-asignadas.component').then(m => m.MesasAsignadasComponent),
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['EMPLEADOS'] },
+  },
+  {
+    path: 'para-llevar',
+    loadComponent: () => import('./pages/Meseros/para-llevar/para-llevar.component').then(m => m.ParaLlevarComponent),
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['EMPLEADOS'] },
   },
   {
     path: 'reservas',

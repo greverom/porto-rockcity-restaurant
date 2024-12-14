@@ -37,7 +37,7 @@ export class GestionPedidosComponent implements OnInit {
       if (userData?.id) {
         this.meseroId = userData.id;
         this.calculateMesasAsignadas();
-        //console.log('Mesero ID:', this.meseroId); 
+        //console.log(this.meseroId); 
       }
     });
   }
@@ -91,7 +91,7 @@ export class GestionPedidosComponent implements OnInit {
   async selectMesa(id: string): Promise<void> {
     try {
       this.selectedMesa = await this.mesaService.getMesaById(id); 
-      //console.log('Mesa seleccionada:', this.selectedMesa); 
+      //console.log(this.selectedMesa); 
     } catch (error) {
       console.error('Error al seleccionar la mesa:', error);
     }
@@ -157,5 +157,9 @@ export class GestionPedidosComponent implements OnInit {
         (mesa) => mesa.meseroId === this.meseroId && mesa.estado === MesaEstado.OCUPADA
       ).length;
     }
+  }
+
+  onParaLlevar(): void {
+    this.router.navigate(['/para-llevar']); 
   }
 }
