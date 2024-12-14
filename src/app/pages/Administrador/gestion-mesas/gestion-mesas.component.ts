@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AlimentoMesaModel, MesaEstado, MesaModel, ReservaEstado, ReservaModel } from '../../../models/mesa';
+import { MesaEstado, MesaModel, ReservaEstado, ReservaModel } from '../../../models/mesa';
 import { MesaService } from '../../../services/mesas/mesa.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalDto, modalInitializer } from '../../../components/modal/modal.dto';
@@ -238,9 +238,12 @@ export class GestionMesasComponent {
         id: generatedReservaId,
         fechaCreacion: new Date(),
       };
-      this.closeReservaModal();
+
+      this.selectedMesa = null;
+      this.selectedReserva = null;
       await this.loadMesas();
-  
+      this.closeReservaModal();
+
       this.showModal('Mesa reservada.', false);
     } catch (error) {
       this.showModal('Hubo un error al reservar la mesa. Intenta nuevamente.', true);
@@ -266,11 +269,10 @@ export class GestionMesasComponent {
         estado: MesaEstado.DISPONIBLE,
         reservaId: null, 
       });
-  
-      // Recargar las mesas y limpiar selección
+
       await this.loadMesas();
       this.selectedMesa.estado = MesaEstado.DISPONIBLE;
-      this.selectedMesa.reservaId = null; 
+      this.selectedMesa = null;
       this.selectedReserva = null;
   
       this.showModal('Reserva eliminada exitosamente.', false);
