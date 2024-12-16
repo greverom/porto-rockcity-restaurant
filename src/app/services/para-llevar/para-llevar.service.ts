@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Database, ref, push, set, query, orderByChild, equalTo, get } from '@angular/fire/database';
+import { Database, ref, push, set, query, orderByChild, equalTo, get, update } from '@angular/fire/database';
 import { PedidoParaLlevarModel } from '../../models/para-llevar';
+import { AlimentoModel } from '../../models/food';
 
 @Injectable({
   providedIn: 'root',
@@ -63,5 +64,48 @@ export class ParaLlevarService {
       console.error('Error al obtener el pedido por ID:', error);
       throw error; 
     }
+  }
+  async updatePedido(id: string, pedido: Partial<PedidoParaLlevarModel>): Promise<void> {
+    const pedidoRef = ref(this.db, `para-llevar/${id}`); 
+    await update(pedidoRef, {
+      ...pedido,
+      fechaUltimaActualizacion: new Date(), 
+    });
+  }
+
+  async buscarAlimentosPorNombre(query: string): Promise<AlimentoModel[]> {
+    if (!query.trim()) {
+      return []; 
+    }
+  
+    const alimentosRef = ref(this.db, 'alimentos');
+    const snapshot = await get(alimentosRef);
+  
+    if (!snapshot.exists()) {
+      return []; 
+    }
+  
+    const alimentos = snapshot.val();
+    const resultados: AlimentoModel[] = [];
+  
+    const procesarNodo = (nodo: any): void => {
+      if (typeof nodo === 'object' && nodo !== null) {
+        Object.entries(nodo).forEach(([key, value]) => {
+          if (typeof value === 'object' && value !== null) {
+            const item = value as Record<string, any>;
+  
+            if (item['nombre'] && typeof item['nombre'] === 'string' && item['nombre'].toLowerCase().includes(query.toLowerCase())) {
+              resultados.push(item as AlimentoModel); 
+            } else {
+              procesarNodo(item); 
+            }
+          }
+        });
+      }
+    };
+  
+    procesarNodo(alimentos); 
+  
+    return resultados;
   }
 }

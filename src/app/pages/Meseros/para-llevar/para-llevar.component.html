@@ -8,7 +8,81 @@
         <h3>{{ pedido.clienteNombre }}</h3>
       </div>
     </div>
-</div>
+  </div>
+  
+  <div class="pedido-detalle" *ngIf="pedidoSeleccionado">
+    <h2>Detalles del Pedido</h2>
+    <p><strong>Cliente:</strong> {{ pedidoSeleccionado.clienteNombre }}</p>
+    <p><strong>Teléfono:</strong> {{ pedidoSeleccionado.telefono }}</p>
+  
+    <!-- Botón para mostrar/ocultar el formulario de alimentos -->
+    <div *ngIf="!isAlimentoFormVisible">
+      <button class="toggle-form-button" (click)="toggleAlimentoForm()">Agregar Alimento</button>
+    </div>
+  
+    <!-- Formulario para agregar alimentos -->
+    <div class="form-agregar-alimento" *ngIf="isAlimentoFormVisible">
+      <h3>Agregar Alimento al Pedido</h3>
+  
+      <!-- Campo de búsqueda -->
+      <div class="form-group">
+        <label for="buscarAlimento">Buscar Alimento</label>
+        <input
+          id="buscarAlimento"
+          type="text"
+          [(ngModel)]="alimentoSeleccionado"
+          (input)="onBuscarAlimento($event)"
+          placeholder="Ingrese el nombre del alimento"
+        />
+      </div>
+  
+      <!-- Lista de resultados filtrados -->
+      <div *ngIf="alimentosFiltrados.length > 0">
+        <ul>
+          <li *ngFor="let alimento of alimentosFiltrados" (click)="seleccionarAlimento(alimento)">
+            {{ alimento.nombre }} - ${{ alimento.precioUnitario.toFixed(2) }}
+            <span [ngClass]="{ 'activo': alimento.activo, 'inactivo': !alimento.activo }">
+              {{ alimento.activo ? 'Disponible' : 'No Disponible' }}
+            </span>
+          </li>
+        </ul>
+      </div>
+  
+      <!-- Mensaje cuando no hay resultados -->
+      <div *ngIf="alimentosFiltrados.length === 0 && alimentoSeleccionado" class="text-muted">
+        <p>No se encontraron alimentos para "<strong>{{ alimentoSeleccionado }}</strong>".</p>
+      </div>
+  
+      <!-- Botones -->
+      <div class="button-container mt-3">
+        <button 
+          class="confirm-button" 
+          (click)="onAgregarAlimento()" 
+          [disabled]="!pedidoSeleccionado || !selectedAlimento || !selectedAlimento.activo">
+          Agregar
+        </button>
+        <button class="cancel-button" (click)="toggleAlimentoForm()">Cancelar</button>
+      </div>
+    </div>
+  
+    <!-- Lista de Alimentos -->
+    <h3>Alimentos en el Pedido:</h3>
+    <div class="alimentos-list" *ngIf="pedidoSeleccionado?.alimentos && pedidoSeleccionado.alimentos.length > 0">
+      <ul>
+        <li *ngFor="let alimento of pedidoSeleccionado.alimentos; let i = index">
+          {{ alimento.nombre }} - ${{ alimento.subtotal }}
+          <button class="delete-button" (click)="onEliminarAlimento(i)">
+            <i class="fas fa-times"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+  
+    <!-- Subtotal -->
+    <div *ngIf="pedidoSeleccionado?.alimentos && pedidoSeleccionado.alimentos.length > 0">
+      <p><strong>Total:</strong> ${{ pedidoSeleccionado.total }}</p>
+    </div>
+  </div>
 
 <div class="modal-overlay" *ngIf="showCrearPedidoModal">
     <div class="modal-content">
@@ -22,6 +96,15 @@
           type="text"
           [(ngModel)]="clienteNombre"
           placeholder="Ingrese el nombre del cliente"
+        />
+      </div>
+      <div class="form-group">
+        <label for="telefono">Teléfono del Cliente</label>
+        <input
+          id="telefono"
+          type="text"
+          [(ngModel)]="telefono"
+          placeholder="Ingrese el número de teléfono"
         />
       </div>
   

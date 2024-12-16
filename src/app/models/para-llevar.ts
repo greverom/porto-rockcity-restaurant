@@ -3,7 +3,8 @@ export interface PedidoParaLlevarModel {
   id: string;                    
   esParaLlevar: boolean;                                    
   meseroId: string | null; 
-  clienteNombre: string;          
+  clienteNombre: string; 
+  telefono: string;          
   alimentos: AlimentoPedidoModel[];
   costoAdicional?: number; 
   total: number;                 
