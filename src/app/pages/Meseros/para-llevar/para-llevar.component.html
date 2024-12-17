@@ -1,11 +1,12 @@
 <button class="open-modal-button" (click)="abrirModalCrearPedido()">Agregar Pedido</button>
 
 
-<div class="pedidos-section">
-    <h2 class="section-title">Pedidos Para Llevar</h2>
-    <div class="pedidos-container">
-      <div *ngFor="let pedido of pedidos" class="pedido-card" (click)="seleccionarPedido(pedido.id)">
-        <h3>{{ pedido.clienteNombre }}</h3>
+  <div class="pedidos-container">
+    <div *ngFor="let pedido of pedidos" class="pedido-card" (click)="seleccionarPedido(pedido.id)">
+      <h3>{{ pedido.clienteNombre }}</h3>
+      <div class="subtotal-row">
+        <span><strong>Sub-total:</strong></span>
+        <span>{{ pedido.total | currency }}</span>
       </div>
     </div>
   </div>
@@ -59,20 +60,19 @@
       </div>
     </div>
   
-    <h3>Alimentos en el Pedido:</h3>
+    <h3 *ngIf="pedidoSeleccionado?.alimentos">Alimentos en el Pedido:</h3>
     <div class="alimentos-list" *ngIf="pedidoSeleccionado?.alimentos && pedidoSeleccionado.alimentos.length > 0">
       <ul>
         <li *ngFor="let alimento of pedidoSeleccionado.alimentos; let i = index">
-          {{ alimento.nombre }} - ${{ alimento.subtotal }}
+          <span>{{ alimento.nombre }}</span> 
           <button class="delete-button" (click)="onEliminarAlimento(i)">
             <i class="fas fa-times"></i>
-          </button>
+          </button> 
         </li>
       </ul>
     </div>
   
     <div *ngIf="pedidoSeleccionado?.alimentos && pedidoSeleccionado.alimentos.length > 0">
-      <p><strong>Total:</strong> ${{ pedidoSeleccionado.total }}</p>
     </div>
   </div>
 

@@ -60,7 +60,16 @@
   .pedido-card h3 {
     margin: 0;
     font-size: 20px;
-    color: #ff7f00; 
+    color: #323231; 
+  }
+
+  .subtotal-row {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-top: 10px; 
+    font-size: 1rem;
+    color: #333; 
   }
 
   .pedido-detalle {
@@ -69,7 +78,8 @@
     border: 1px solid #ddd;
     border-radius: 10px;
     background-color: #ffffff;
-    width: 90%; 
+    width: 90%;
+    max-width: 600px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-size: 1rem;
     line-height: 1.6;
@@ -251,15 +261,37 @@
   transform: scale(1.05);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-  .delete-button {
-    background: none;
-    border: none;
-    color: #dc3545; 
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: color 0.2s ease;
-  }
-  
-  .delete-button:hover {
-    color: #bd2130; 
-  }
+
+.alimentos-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alimentos-list li {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 10px 15px;
+  border-bottom: 1px solid #e0e0e0; 
+  font-size: 1rem;
+  color: #333;
+  transition: background 0.2s ease;
+}
+
+.alimentos-list li:hover {
+  background-color: #f8f9fa;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  color: #dc3545; 
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.delete-button:hover {
+  color: #bd2130; 
+}

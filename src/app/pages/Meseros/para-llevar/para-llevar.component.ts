@@ -43,7 +43,6 @@ export class ParaLlevarComponent implements OnInit {
     });
   }
   
-
   async seleccionarPedido(pedidoId: string): Promise<void> {
     try {
       this.pedidoSeleccionado = await this.paraLlevarService.getPedidoById(pedidoId);
@@ -181,7 +180,7 @@ async onAgregarAlimento(): Promise<void> {
     });
 
     //console.log('Alimento agregado correctamente:', nuevoAlimento);
-
+    this.actualizarTotalEnListaPedidos();
     this.selectedAlimento = null;
     this.alimentoSeleccionado = '';
     this.isAlimentoFormVisible = false; 
@@ -204,10 +203,19 @@ async onEliminarAlimento(index: number): Promise<void> {
       alimentos: this.pedidoSeleccionado.alimentos,
       total: this.pedidoSeleccionado.total,
     });
-
+    this.actualizarTotalEnListaPedidos();
     //console.log('Alimento eliminado correctamente:', alimentoEliminado);
   } catch (error) {
     console.error('Error al eliminar el alimento:', error);
+  }
+}
+
+actualizarTotalEnListaPedidos(): void {
+  if (!this.pedidoSeleccionado) return;
+
+  const index = this.pedidos.findIndex(p => p.id === this.pedidoSeleccionado!.id);
+  if (index !== -1) {
+    this.pedidos[index].total = this.pedidoSeleccionado.total;
   }
 }
 }

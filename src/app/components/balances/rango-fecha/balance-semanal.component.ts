@@ -29,12 +29,30 @@ export class BalanceSemanalComponent {
 
   constructor(private balanceService: BalanceService) {}
 
-  onFacturaChange() {
-    //console.log(this.selectedFactura);
+  calcularSubtotalEIVA(facturaONota: any): void {
+    if (!facturaONota || !facturaONota.pago?.descripcionAlimentos) return;
+  
+    const subtotal = facturaONota.pago.descripcionAlimentos.reduce(
+      (acc: number, alimento: any) => acc + (alimento.subtotal || 0),
+      0
+    );
+  
+    const iva = subtotal * 0.15;
+  
+    facturaONota.subtotal = subtotal;
+    facturaONota.iva = iva;
+  }
+
+  onFacturaChange(): void {
+    if (this.selectedFactura) {
+      this.calcularSubtotalEIVA(this.selectedFactura);
+    }
   }
   
-  onNotaChange() {
-    //console.log(this.selectedNota);
+  onNotaChange(): void {
+    if (this.selectedNota) {
+      this.calcularSubtotalEIVA(this.selectedNota);
+    }
   }
 
   async calcularBalanceSemanal() {
