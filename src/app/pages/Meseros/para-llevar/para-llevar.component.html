@@ -15,16 +15,13 @@
     <p><strong>Cliente:</strong> {{ pedidoSeleccionado.clienteNombre }}</p>
     <p><strong>Teléfono:</strong> {{ pedidoSeleccionado.telefono }}</p>
   
-    <!-- Botón para mostrar/ocultar el formulario de alimentos -->
     <div *ngIf="!isAlimentoFormVisible">
       <button class="toggle-form-button" (click)="toggleAlimentoForm()">Agregar Alimento</button>
     </div>
   
-    <!-- Formulario para agregar alimentos -->
     <div class="form-agregar-alimento" *ngIf="isAlimentoFormVisible">
       <h3>Agregar Alimento al Pedido</h3>
   
-      <!-- Campo de búsqueda -->
       <div class="form-group">
         <label for="buscarAlimento">Buscar Alimento</label>
         <input
@@ -36,7 +33,6 @@
         />
       </div>
   
-      <!-- Lista de resultados filtrados -->
       <div *ngIf="alimentosFiltrados.length > 0">
         <ul>
           <li *ngFor="let alimento of alimentosFiltrados" (click)="seleccionarAlimento(alimento)">
@@ -48,12 +44,10 @@
         </ul>
       </div>
   
-      <!-- Mensaje cuando no hay resultados -->
       <div *ngIf="alimentosFiltrados.length === 0 && alimentoSeleccionado" class="text-muted">
         <p>No se encontraron alimentos para "<strong>{{ alimentoSeleccionado }}</strong>".</p>
       </div>
   
-      <!-- Botones -->
       <div class="button-container mt-3">
         <button 
           class="confirm-button" 
@@ -65,7 +59,6 @@
       </div>
     </div>
   
-    <!-- Lista de Alimentos -->
     <h3>Alimentos en el Pedido:</h3>
     <div class="alimentos-list" *ngIf="pedidoSeleccionado?.alimentos && pedidoSeleccionado.alimentos.length > 0">
       <ul>
@@ -78,7 +71,6 @@
       </ul>
     </div>
   
-    <!-- Subtotal -->
     <div *ngIf="pedidoSeleccionado?.alimentos && pedidoSeleccionado.alimentos.length > 0">
       <p><strong>Total:</strong> ${{ pedidoSeleccionado.total }}</p>
     </div>
@@ -88,7 +80,6 @@
     <div class="modal-content">
       <h3>Crear Pedido para Llevar</h3>
   
-      <!-- Formulario -->
       <div class="form-group">
         <label for="clienteNombre">Nombre del Cliente</label>
         <input

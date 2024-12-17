@@ -33,12 +33,30 @@ export class BalanceDiarioComponent {
   ngOnInit() {
   }
 
-  onFacturaChange() {
-    //console.log('Factura seleccionada:', this.selectedFactura);
+  calcularSubtotalEIVA(facturaONota: any): void {
+    if (!facturaONota || !facturaONota.pago?.descripcionAlimentos) return;
+  
+    const subtotal = facturaONota.pago.descripcionAlimentos.reduce(
+      (acc: number, alimento: any) => acc + (alimento.subtotal || 0),
+      0
+    );
+  
+    const iva = subtotal * 0.15;
+  
+    facturaONota.subtotal = subtotal;
+    facturaONota.iva = iva;
+  }
+
+  onFacturaChange(): void {
+    if (this.selectedFactura) {
+      this.calcularSubtotalEIVA(this.selectedFactura);
+    }
   }
   
-  onNotaChange() {
-    //console.log('Nota de venta seleccionada:', this.selectedNota);
+  onNotaChange(): void {
+    if (this.selectedNota) {
+      this.calcularSubtotalEIVA(this.selectedNota);
+    }
   }
 
   async cargarBalancesPorFecha() {
