@@ -35,6 +35,28 @@
         </button>
       </div>
     </div>
+    
+    <div class="pedidos-para-llevar" *ngIf="!loading && pedidosParaLlevar.length > 0">
+      <div *ngFor="let pedido of pedidosParaLlevar" class="pedido-card" [ngClass]="{ 'pedido-preparado': pedido.todosListos }">
+        <h3>{{ pedido.clienteNombre }} ({{ pedido.telefono }})</h3>
+        <p class="fecha-actualizacion">Última actualización: {{ pedido.fechaUltimaActualizacion | date: 'shortTime' }}</p>
+        <ul>
+          <li *ngFor="let alimento of pedido.alimentos">
+            <input 
+              type="checkbox" 
+              [checked]="alimento.listo" 
+              (change)="marcarAlimentoListoParaLlevar(pedido.id, alimento.alimentoId)" />
+            {{ alimento.cantidad }} x {{ alimento.nombre }}
+          </li>
+        </ul>
+        <button 
+          class="btn btn-success" 
+          [disabled]="!pedido.todosListos" 
+          (click)="imprimirPedidoParaLlevar(pedido)">
+          Imprimir Pedido
+        </button>
+      </div>
+    </div>
   
     <!-- Mensaje cuando no hay pedidos -->
     <div *ngIf="!loading && mesasConPedidos.length === 0" class="no-pedidos-message">

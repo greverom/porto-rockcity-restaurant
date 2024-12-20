@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Database, ref, get, update } from '@angular/fire/database';
 import { MesaModel } from '../../models/mesa';
+import { PedidoParaLlevarModel } from '../../models/para-llevar';
 
 @Injectable({
   providedIn: 'root',
@@ -69,6 +70,35 @@ export class CocinaService {
         } catch (error) {
           console.error('Error al actualizar el estado del alimento:', error);
           throw new Error('No se pudo actualizar el estado del alimento.');
+        }
+      }
+
+      async obtenerPedidosConAlimentos(): Promise<PedidoParaLlevarModel[]> {
+        try {
+          const paraLlevarRef = ref(this.db, 'para-llevar');
+          const snapshot = await get(paraLlevarRef);
+    
+          if (!snapshot.exists()) {
+            //console.warn('No se encontraron pedidos para llevar.');
+            return [];
+          }
+          const pedidos = Object.values(snapshot.val()) as PedidoParaLlevarModel[];
+          // Filtrar pedidos que tengan alimentos
+          return pedidos.filter(pedido => pedido.alimentos && pedido.alimentos.length > 0);
+        } catch (error) {
+          console.error('Error al obtener pedidos con alimentos:', error);
+          throw error;
+        }
+      }
+
+      async updateAlimentoEstadoParaLlevar( pedidoId: string, alimentoIndex: number, listo: boolean): Promise<void> {
+        try {
+          const alimentoRef = ref(this.db, `para-llevar/${pedidoId}/alimentos/${alimentoIndex}`);
+          await update(alimentoRef, { listo });
+          //console.log(`alimento en pedido ${pedidoId} actualizado a ${listo}.`);
+        } catch (error) {
+          console.error('Error al actualizar el estado del alimento para llevar:', error);
+          throw new Error('No se pudo actualizar el estado del alimento para llevar.');
         }
       }
 }
